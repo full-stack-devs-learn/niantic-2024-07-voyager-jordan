@@ -21,7 +21,8 @@ public class ClairesCookies
      */
     public double calculateSubtotal(int quantity)
     {
-        return 0;
+        double pricePerDozen = 12.95;
+        return quantity * pricePerDozen;
     }
 
     /*
@@ -43,7 +44,16 @@ public class ClairesCookies
      */
     public double calculateTotal(int quantity)
     {
-        return 0;
+        //Declared a taxRate Variable
+        double taxRate = 5.75;
+        //Convert to percentRate to be able to calculate the tax total
+        double percentRate = taxRate / 100;
+        //Used previous function to get total before tax
+        double beforeTaxTotal = calculateSubtotal(quantity);
+        //Calculate tax amount
+        double taxTotal = beforeTaxTotal * percentRate;
+        //Return the before price and tax price together
+        return beforeTaxTotal + taxTotal;
     }
 
     /*
@@ -75,7 +85,22 @@ public class ClairesCookies
      */
     public double calculateQuickOrder(int snickerDozen, int chocolateDozen, int frostedDozen)
     {
-        return 0;
+        double taxRate = 5.75;
+        double percentRate = taxRate / 100;
+        double snickerDoodlePrice = 12.95;
+        double chocolateChipPrice = 13.95;
+        double frostedChipPrice = 15.95;
+
+        double grandTotal = 0;
+        // Cookie * percentRate gives TAX AMOUNT + cookie price gives TAXED TOTAL of ONE order than multiplied for qty
+        double snickerDoodleTotal = (snickerDoodlePrice * percentRate + snickerDoodlePrice) * snickerDozen;
+        double chocolateChipTotal = (chocolateChipPrice * percentRate + chocolateChipPrice) * chocolateDozen;
+        double frostedChipTotal = (frostedChipPrice * percentRate + frostedChipPrice) * frostedDozen;
+
+        // Adds all totals and returns
+        grandTotal = snickerDoodleTotal + chocolateChipTotal + frostedChipTotal;
+
+        return grandTotal;
     }
 
 
@@ -103,7 +128,25 @@ public class ClairesCookies
      */
     public double calculateCustomOrder (int quantity, boolean hasChocolateChips, boolean hasFrosting)
     {
-        return 0;
+        double currentTotal = 0;
+        double taxRate = 5.75;
+        double percentRate = taxRate / 100;
+
+        for (int i = 0; i < quantity; i++){
+            double cookiePrice = 12.95;
+            //Adds extras
+            if (hasChocolateChips){
+                cookiePrice += 1;
+            }
+            if (hasFrosting){
+                cookiePrice += 2;
+            }
+            //Calculates tax then adds to cookie price; Adds to current total
+            currentTotal += cookiePrice * percentRate + cookiePrice;
+        }
+        return currentTotal;
+
+
     }
 
 }

@@ -24,7 +24,12 @@ public class BackyardBasketball
      */
     public int calculateWinningPercentage(int gamesWon, int gamesLost)
     {
-        return 0;
+
+        //Calculates total games then gets double.
+        int totalGamesPlayed = gamesWon + gamesLost;
+        double winPercentage = (double)gamesWon / totalGamesPlayed * 100;
+        //Convert Double to Int for return
+        return (int)winPercentage;
     }
 
 
@@ -43,7 +48,19 @@ public class BackyardBasketball
      */
     public int calculatePointsScored(int shotPercentage, int shotsTaken, boolean isThree)
     {
-        return 0;
+        //Return Variable
+        int pointsScored;
+
+        //Calculates total shots made converts from double back to int
+        int totalShotsMade = (int)(shotsTaken * (double)shotPercentage / 100);
+
+        //Checks Boolean Value
+        if(isThree){
+            pointsScored = totalShotsMade * 3;
+        } else {
+            pointsScored = totalShotsMade * 2;
+        }
+        return pointsScored;
     }
 
 
@@ -69,6 +86,26 @@ public class BackyardBasketball
      */
     public int calculateShotsRequired(int shotPercentage, int desiredScore, boolean isThree)
     {
-        return 0;
+        double basketsNeeded;
+        double newPercent = (double)shotPercentage / 100;
+        double totalShotsTaken;
+
+
+        if(isThree){
+
+            //Finds total baskets needed to score more than desired scored
+            basketsNeeded = Math.ceil((double)desiredScore / 3);
+            //Using the total baskets I divide the shot rate to find total shots needed
+            totalShotsTaken = Math.ceil(basketsNeeded / newPercent);
+
+        } else {
+            //Finds total baskets needed to score more than desired scored
+            basketsNeeded = (double)desiredScore / 2;
+            //Using the total baskets I divide the shot rate to find total shots needed
+            totalShotsTaken = Math.ceil(basketsNeeded / newPercent);
+
+        }
+
+        return (int)totalShotsTaken;
     }
 }

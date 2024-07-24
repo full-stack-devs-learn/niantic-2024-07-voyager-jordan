@@ -265,8 +265,8 @@ public class Main
 
         // What percentage of his shots did he make?
         double peteShotPercent = ((double)basketsMadeByPete / peteTotalBaskets) * 100;
-
-        System.out.println("Petes Shot Percentage is: " + (int)peteShotPercent + "%");
+        peteShotPercent = Math.round(peteShotPercent);
+        System.out.println("Petes Shot Percentage is: " + peteShotPercent + "%");
 
 
 
@@ -278,7 +278,7 @@ public class Main
         double currPercent = (double) 70 / 100;
         int threePointShotsNeeded = rivalTeamsPoints / 3 + 1;
         double totalShotsTook = Math.ceil(threePointShotsNeeded / currPercent);
-
+        
 
 
 

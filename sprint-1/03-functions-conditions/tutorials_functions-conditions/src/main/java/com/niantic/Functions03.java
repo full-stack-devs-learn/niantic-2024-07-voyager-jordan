@@ -43,6 +43,6 @@ public class Functions03
         // the RETURN statement is REQUIRED
         return answer;
     }
-    
+
 }
 
