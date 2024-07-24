@@ -2,6 +2,7 @@ package com.niantic;
 
 public class Functions03
 {
+
     public static void main(String[] args)
     {    
         doWork();
@@ -10,7 +11,7 @@ public class Functions03
         // but it ignores the returned value
         // so it appears as though it did not do anything
         add(12.5, 52.1);
-        System.out.println("I have no way of knowing what was returend.");
+        System.out.println("I have no way of knowing what was returned.");
     
         double answer;
         // we need a variable to store the returned value
@@ -42,4 +43,6 @@ public class Functions03
         // the RETURN statement is REQUIRED
         return answer;
     }
+    
 }
+
