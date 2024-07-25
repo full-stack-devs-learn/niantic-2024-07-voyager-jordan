@@ -111,12 +111,16 @@ public class ElliotsYardCare
     {
         //Base Price 25
         int amountCharged = 25;
+        //Wage Goal
+        int wageGoalPerHour = 10;
+        
         //Calculates current Profit and Time to find Dollars made per hour ** GOAL: 10$/hr **
         double currentProfit = calculateProfit(width, length, isTrimming, amountCharged);
         double currentTimeInHours = calculateTime(width, length, isTrimming);
         double dollarsPerHour = currentProfit / currentTimeInHours;
 
-        while(dollarsPerHour < 10){
+        //While the dollars per hour is less than goal
+        while(dollarsPerHour < wageGoalPerHour){
             amountCharged+=25;
             currentProfit = calculateProfit(width, length, isTrimming, amountCharged);
             currentTimeInHours = calculateTime(width, length, isTrimming);
