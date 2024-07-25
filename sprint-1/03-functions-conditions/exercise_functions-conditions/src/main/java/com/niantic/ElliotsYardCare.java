@@ -126,7 +126,6 @@ public class ElliotsYardCare
             currentTimeInHours = calculateTime(width, length, isTrimming);
             dollarsPerHour = currentProfit / currentTimeInHours;
         }
-
         return amountCharged;
     }
 }

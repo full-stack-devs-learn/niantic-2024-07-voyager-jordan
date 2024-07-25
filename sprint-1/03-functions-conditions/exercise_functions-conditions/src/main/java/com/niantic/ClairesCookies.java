@@ -98,7 +98,7 @@ public class ClairesCookies
         double frostedChipTotal = frostedChipPrice * frostedDozen;
 
         // Adds all totals and returns
-        grandTotal = (snickerDoodleTotal + chocolateChipTotal + frostedChipTotal) * percentRate;
+        grandTotal = (snickerDoodleTotal + chocolateChipTotal + frostedChipTotal) * (1 + percentRate);
 
         return grandTotal;
     }
