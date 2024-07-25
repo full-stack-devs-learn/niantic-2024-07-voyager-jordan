@@ -11,7 +11,16 @@ public class Exercises
      */
     public String[] daysOfTheWeek()
     {
-        return null;
+        String[] arrOfDays = {
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+        };
+        return arrOfDays;
     }
 
     /*
@@ -23,7 +32,22 @@ public class Exercises
      */
     public String[] monthsOfTheYear()
     {
-        return null;
+        String[] nameOfMonths = new String[12];
+
+        nameOfMonths[0] = "January";
+        nameOfMonths[1] = "February";
+        nameOfMonths[2] = "March";
+        nameOfMonths[3] = "April";
+        nameOfMonths[4] = "May";
+        nameOfMonths[5] = "June";
+        nameOfMonths[6] = "July";
+        nameOfMonths[7] = "August";
+        nameOfMonths[8] = "September";
+        nameOfMonths[9] = "October";
+        nameOfMonths[10] = "November";
+        nameOfMonths[11] = "December";
+
+        return nameOfMonths;
     }
 
     /*
@@ -38,7 +62,13 @@ public class Exercises
      */
     public int[] oneToFifty()
     {
-        return null;
+        int[] arrOfFifty = new int[50];
+
+        for (int i = 0; i < 50; i++){
+            arrOfFifty[i] = i+1;
+        }
+
+        return arrOfFifty;
     }
 
     /*
@@ -53,7 +83,14 @@ public class Exercises
      */
     public int[] evenNumbers()
     {
-        return null;
+        int[] arrOfEvenNums = new int[100];
+        int start = 2;
+
+        for (int i = 0; i < 100; i++){
+            arrOfEvenNums[i] = start;
+            start+=2;
+        }
+        return arrOfEvenNums;
     }
 
     /*
@@ -75,7 +112,7 @@ public class Exercises
      */
     public String firstDayOfWeek(String[] daysOfTheWeek)
     {
-        return null;
+        return daysOfTheWeek[0];
     }
 
     /*
@@ -97,7 +134,7 @@ public class Exercises
      */
     public String lastDayOfWeek(String[] daysOfTheWeek)
     {
-        return null;
+        return daysOfTheWeek[daysOfTheWeek.length - 1];
     }
 
     /*
@@ -116,7 +153,7 @@ public class Exercises
      */
     public String monthName(String[] months, int monthNumber)
     {
-        return null;
+        return months[monthNumber - 1];
     }
 
     /*
@@ -138,7 +175,17 @@ public class Exercises
      */
     public boolean hasName(String[] names, String nameToFind)
     {
-        return false;
+        boolean nameFound = false;
+
+        for (int i = 0; i < names.length; i++) {
+            if(names[i].equalsIgnoreCase(nameToFind)){
+                nameFound = true;
+                break;
+            }
+        }
+
+        return nameFound;
+
     }
 
     /*
@@ -159,7 +206,13 @@ public class Exercises
      */
     public int countName(String[] names, String nameToFind)
     {
-        return -1;
+        int nameCount = 0;
+        for (int i = 0; i < names.length; i++) {
+            if(names[i].equalsIgnoreCase(nameToFind)){
+                nameCount++;
+            }
+        }
+        return nameCount;
     }
 
     /*
@@ -173,7 +226,11 @@ public class Exercises
      */
     public int sumNumbers(int[] numbers)
     {
-        return -1;
+        int sumOfArr = 0;
+        for (int i = 0; i < numbers.length; i++) {
+           sumOfArr += numbers[i];
+        }
+        return sumOfArr;
     }
 
     /*
@@ -188,7 +245,16 @@ public class Exercises
      */
     public int doubleEvens(int[] numbers)
     {
-        return -1;
+        int sumOfEvens = 0;
+        int multiplier = 2;
+
+        for (int i = 0; i < numbers.length; i++) {
+            if(numbers[i] % 2 == 0){
+                sumOfEvens += numbers[i];
+            }
+        }
+
+        return sumOfEvens * multiplier;
     }
 
     /*
@@ -203,7 +269,13 @@ public class Exercises
      */
     public int sumEveryThird(int[] numbers)
     {
-        return -1;
+        int sumOfThirds = 0;
+
+        for (int i = 0; i < numbers.length; i+=3) {
+                sumOfThirds += numbers[i];
+        }
+
+        return sumOfThirds;
     }
 
     /*
@@ -216,7 +288,15 @@ public class Exercises
      */
     public double averagePrice(double[] prices)
     {
-        return -1;
+        double averageOfArray = 0;
+
+        for (int i = 0; i < prices.length; i++) {
+            averageOfArray += prices[i];
+        }
+
+        averageOfArray = averageOfArray / prices.length;
+
+        return averageOfArray;
     }
 
     /*
@@ -229,7 +309,15 @@ public class Exercises
      */
     public double highestValue(double[] prices)
     {
-        return -1;
+        double currentHighest = prices[0];
+
+        for (int i = 0; i < prices.length; i++) {
+            if(prices[i] > currentHighest){
+                currentHighest = prices[i];
+            }
+        }
+
+        return currentHighest;
     }
 
     /*
@@ -242,7 +330,15 @@ public class Exercises
      */
     public double lowestValue(double[] prices)
     {
-        return -1;
+        double currentLowest = prices[0];
+
+        for (int i = 0; i < prices.length; i++) {
+            if(prices[i] < currentLowest){
+                currentLowest = prices[i];
+            }
+        }
+
+        return currentLowest;
     }
 
 }
