@@ -21,7 +21,15 @@ public class ElliotsYardCare
      */
     public double  calculateCost(int width, int length, boolean  isTrimming)
     {
-        return 0;
+        double totalSqFoot = width * length;
+        //Gotta love JavaScript used a ternary condition to figure out rate if true 3 false 2.5
+        double currentRate = isTrimming ? 3 : 2.5;
+        //Calculate rate per foot based off currentRate / 1000
+        double ratePerSqFoot = currentRate / 1000;
+        //Used ratePerSqFoot and multiplied totalSqFoot
+        double priceTotal = totalSqFoot * ratePerSqFoot;
+
+        return priceTotal;
     }
 
     /*
@@ -41,7 +49,10 @@ public class ElliotsYardCare
      */
     public double  calculateProfit(int width, int length, boolean  isTrimming, int amountCharged)
     {
-        return 0;
+        double expenses = calculateCost(width, length, isTrimming);
+        double netProfit = amountCharged - expenses;
+
+        return netProfit;
     }
 
     /*
@@ -62,7 +73,12 @@ public class ElliotsYardCare
      */
     public double calculateTime(int width, int length, boolean  isTrimming)
     {
-        return 0;
+        double totalSqFt = width * length;
+        double timelyRate = isTrimming ? 45 : 30;
+        double totalTimeInMinutes = totalSqFt * timelyRate / 1000;
+        double totalTimeInHours = totalTimeInMinutes / 60;
+
+        return totalTimeInHours;
     }
 
     /*
@@ -93,6 +109,20 @@ public class ElliotsYardCare
      */
     public double  calculatePrice(int width, int length, boolean  isTrimming)
     {
-        return 0;
+        //Base Price 25
+        int amountCharged = 25;
+        //Calculates current Profit and Time to find Dollars made per hour ** GOAL: 10$/hr **
+        double currentProfit = calculateProfit(width, length, isTrimming, amountCharged);
+        double currentTimeInHours = calculateTime(width, length, isTrimming);
+        double dollarsPerHour = currentProfit / currentTimeInHours;
+
+        while(dollarsPerHour < 10){
+            amountCharged+=25;
+            currentProfit = calculateProfit(width, length, isTrimming, amountCharged);
+            currentTimeInHours = calculateTime(width, length, isTrimming);
+            dollarsPerHour = currentProfit / currentTimeInHours;
+        }
+
+        return amountCharged;
     }
 }
