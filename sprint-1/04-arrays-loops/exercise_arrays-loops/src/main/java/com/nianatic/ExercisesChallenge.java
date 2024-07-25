@@ -19,7 +19,13 @@ public class ExercisesChallenge
      */
     public int sumFirst2Numbers(int[] numbers)
     {
-        return -1;
+
+        if(numbers.length == 0){return 0;}
+        if(numbers.length == 1){return numbers[0];}
+        if(numbers.length == 2){return numbers[0] + numbers[1];}
+        if(numbers.length > 2){return numbers[0] + numbers[1];}
+
+        return 0;
     }
 
     /*
@@ -32,7 +38,18 @@ public class ExercisesChallenge
      */
     public String[] reverseNames(String[] names)
     {
-        return null;
+        String temp;
+
+        //I used names.length / 2 because it replaces two at a time
+        for (int i = 0; i < names.length / 2; i++) {
+            //Stored current index
+            temp = names[i];
+            //Reassigned current index with last index
+            names[i] = names[names.length - (i+1)];
+            //Reassigned last index with stored data
+            names[names.length - (i+1)] = temp;
+        }
+        return names;
     }
 
 
@@ -63,6 +80,22 @@ public class ExercisesChallenge
      */
     public int[] combineArrays(int[][] numbers)
     {
-        return null;
+        int lengthOfAllArrays = 0;
+        int currentIndex = 0;
+
+        for (int i = 0; i < numbers.length; i++) {
+            lengthOfAllArrays += numbers[i].length;
+        }
+
+        int[] combinedArrays = new int[lengthOfAllArrays];
+
+        for (int i = 0; i < numbers.length; i++) {
+
+            for (int j = 0; j < numbers[i].length; j++) {
+                combinedArrays[currentIndex] = numbers[i][j];
+                currentIndex++;
+            }
+        }
+        return combinedArrays;
     }
 }
