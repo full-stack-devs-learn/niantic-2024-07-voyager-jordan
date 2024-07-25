@@ -123,7 +123,8 @@ public class ElliotsYardCare
         while(dollarsPerHour < wageGoalPerHour){
             amountCharged+=25;
             currentProfit = calculateProfit(width, length, isTrimming, amountCharged);
-            currentTimeInHours = calculateTime(width, length, isTrimming);
+            //This line is unnecessary but i left it to show initial thought
+            // currentTimeInHours = calculateTime(width, length, isTrimming);
             dollarsPerHour = currentProfit / currentTimeInHours;
         }
         return amountCharged;
