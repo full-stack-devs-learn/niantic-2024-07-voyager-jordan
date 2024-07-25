@@ -93,12 +93,12 @@ public class ClairesCookies
 
         double grandTotal = 0;
         // Cookie * percentRate gives TAX AMOUNT + cookie price gives TAXED TOTAL of ONE order than multiplied for qty
-        double snickerDoodleTotal = (snickerDoodlePrice * percentRate + snickerDoodlePrice) * snickerDozen;
-        double chocolateChipTotal = (chocolateChipPrice * percentRate + chocolateChipPrice) * chocolateDozen;
-        double frostedChipTotal = (frostedChipPrice * percentRate + frostedChipPrice) * frostedDozen;
+        double snickerDoodleTotal = snickerDoodlePrice * snickerDozen;
+        double chocolateChipTotal = chocolateChipPrice * chocolateDozen;
+        double frostedChipTotal = frostedChipPrice * frostedDozen;
 
         // Adds all totals and returns
-        grandTotal = snickerDoodleTotal + chocolateChipTotal + frostedChipTotal;
+        grandTotal = (snickerDoodleTotal + chocolateChipTotal + frostedChipTotal) * percentRate;
 
         return grandTotal;
     }
