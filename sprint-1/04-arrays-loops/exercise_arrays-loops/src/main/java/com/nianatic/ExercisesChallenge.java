@@ -83,16 +83,24 @@ public class ExercisesChallenge
         int lengthOfAllArrays = 0;
         int currentIndex = 0;
 
+        //Used to find length of combined arrays
         for (int i = 0; i < numbers.length; i++) {
             lengthOfAllArrays += numbers[i].length;
         }
 
+        //Declared combinedArrays and made it the length of all Arrays
         int[] combinedArrays = new int[lengthOfAllArrays];
 
+        //Looped through arrays
         for (int i = 0; i < numbers.length; i++) {
 
+            //Looped through elements in arrays
             for (int j = 0; j < numbers[i].length; j++) {
+
+                //Added the value of arrays in to combined Arrays
                 combinedArrays[currentIndex] = numbers[i][j];
+
+                //This value is used to keep track on current index
                 currentIndex++;
             }
         }
