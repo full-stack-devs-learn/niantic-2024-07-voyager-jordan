@@ -1,5 +1,7 @@
 package com.niantic;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main
@@ -16,18 +18,18 @@ public class Main
             switch(choice)
             {
                 case 1:
-                    createNewTestScores();
+                    createNewTestScores(scores);
                     break;
                 case 2:
-                    calculateAverage();
+                    calculateAverage(scores);
                     break;
                 case 3:
-                    findHighestScore();
+                    findHighestScore(scores);
                     break;
                 case 4:
-                    findLowestScore();
+                    findLowestScore(scores);
                     break;
-                case 5:
+                case 0:
                     System.out.println("Thanks for playing!");
                     System.out.println("Good bye!");
                     System.exit(0);
@@ -41,7 +43,7 @@ public class Main
     public static int getHomeSelection()
     {
         System.out.println();
-        System.out.println("Welcome to <<Enter app name>>!");
+        System.out.println("Welcome to <<Test Calculator>>!");
         System.out.println("------------------------------");
         System.out.println();
         System.out.println("What would you like to do?");
@@ -55,23 +57,73 @@ public class Main
         return Integer.parseInt(userInput.nextLine());
     }
 
-    private static void createNewTestScores()
+    private static void createNewTestScores(int[] currentScores)
     {
-        System.out.println("Enter code to create a new array and ask for test scores");
+
+        Scanner testInput = new Scanner(System.in);
+        //Declare length Variable decided by current array length and adding ONE;
+        int length = currentScores.length + 1;
+        int[] newArray;
+        //Created a newArray that copies current scores and adds a extra spot;
+        newArray = Arrays.copyOf(currentScores, length);
+        //Collects user input
+        System.out.print("Enter your test score: ");
+        int userScore = testInput.nextInt();
+        System.out.println();
+
+        //Assigns data to the new arrays end position
+        newArray[length - 1] = userScore;
+        //Copies score back over to Global Score Variable
+        scores = Arrays.copyOf(newArray, newArray.length);
+
+        System.out.println("Your Score has been added!");
+
+
     }
 
-    private static void calculateAverage()
+    private static void calculateAverage(int[] usersScores)
     {
-        System.out.println("Add logic to calculate the average of all test scores, and display it");
+        if(usersScores.length == 0){
+            System.out.println();
+            System.out.println("No scores currently loaded");
+        } else {
+            int average = 0;
+            for (int score : usersScores){
+                average += score;
+            }
+            average = average / usersScores.length;
+            System.out.println();
+            System.out.println("Your average score is: " + average);
+        }
     }
 
-    private static void findHighestScore()
+    private static void findHighestScore(int[] usersScores)
     {
-        System.out.println("Find the highest score of all tests and display it");
+        if(usersScores.length == 0){
+            System.out.println();
+            System.out.println("No scores currently loaded");
+        } else {
+            int currentHighest = usersScores[0];
+            for (int score : usersScores){
+                currentHighest = Math.max(score, currentHighest);
+            }
+            System.out.println();
+            System.out.println("Your highest score is: " + currentHighest);
+        }
     }
 
-    private static void findLowestScore()
+    private static void findLowestScore(int[] usersScores)
     {
-        System.out.println("Find the lowest score of all tests and display it");
+        if(usersScores.length == 0){
+            System.out.println();
+            System.out.println("No scores currently loaded");
+        } else {
+            int currentLowest = usersScores[0];
+            for (int score : usersScores){
+                currentLowest = Math.min(score, currentLowest);
+            }
+            System.out.println();
+            System.out.println("Your lowest score is: " + currentLowest);
+        }
     }
 }
