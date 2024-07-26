@@ -38,18 +38,29 @@ public class ExercisesChallenge
      */
     public String[] reverseNames(String[] names)
     {
-        String temp;
 
-        //I used names.length / 2 because it replaces two at a time
-        for (int i = 0; i < names.length / 2; i++) {
-            //Stored current index
-            temp = names[i];
-            //Reassigned current index with last index
-            names[i] = names[names.length - (i+1)];
-            //Reassigned last index with stored data
-            names[names.length - (i+1)] = temp;
+        String[] reversedArr = new String[names.length];
+        int currIndex = 0;
+
+        for (int i = names.length - 1; i >= 0 ; i--) {
+            reversedArr[currIndex] = names[i];
+            currIndex++;
         }
-        return names;
+
+        return reversedArr;
+        //Solved for in place reversed
+        //String temp;
+
+                    //I used names.length / 2 because it replaces two at a time
+            //        for (int i = 0; i < names.length / 2; i++) {
+            //            //Stored current index
+            //            temp = names[i];
+            //            //Reassigned current index with last index
+            //            names[i] = names[names.length - (i+1)];
+            //            //Reassigned last index with stored data
+            //            names[names.length - (i+1)] = temp;
+            //        }
+            //return names
     }
 
 
@@ -82,6 +93,7 @@ public class ExercisesChallenge
     {
         int lengthOfAllArrays = 0;
         int currentIndex = 0;
+
 
         //Used to find length of combined arrays
         for (int i = 0; i < numbers.length; i++) {
