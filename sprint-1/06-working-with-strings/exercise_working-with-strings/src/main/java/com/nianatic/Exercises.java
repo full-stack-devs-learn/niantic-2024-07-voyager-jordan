@@ -1,5 +1,7 @@
 package com.nianatic;
 
+import java.util.Arrays;
+
 public class Exercises
 {
     /*
@@ -18,7 +20,11 @@ public class Exercises
      */
     public String changeCase(String word, boolean toUpperCase)
     {
-        return null;
+        String result;
+
+        result = toUpperCase ? word.toUpperCase() : word.toLowerCase();
+
+        return result;
     }
 
     /*
@@ -47,11 +53,15 @@ public class Exercises
      * createHtml("Bold text", "strong") => <strong>Bold text</strong>
      *
      */
-    public String createHtml(String content, String elementName)
-    {
-        return null;
-    }
+    public String createHtml(String content, String elementName) {
+        String result;
+        String openTag = "<%s>";
+        String closeTag = "</%s>";
 
+        result = String.format(openTag, elementName) + content + String.format(closeTag, elementName);
+
+        return result;
+    }
     /*
      * Sometimes Html elements do not have any content
      *
@@ -71,7 +81,17 @@ public class Exercises
      */
     public String moreHtml(String content, String elementName)
     {
-        return null;
+        String result;
+        String openTag = "<%s>";
+        String closeTag = "</%s>";
+
+        if(content.isEmpty()){
+            return String.format("<%s />",elementName);
+        }
+
+        result = String.format(openTag, elementName) + content + String.format(closeTag, elementName);
+
+        return result;
     }
 
     /*
@@ -94,7 +114,10 @@ public class Exercises
      */
     public String createXml(int id, String name)
     {
-        return  null;
+        String textFormat = "<customer><id>%d</id><name>%s</name></customer>";
+        String result = String.format(textFormat, id, name);
+
+        return result;
     }
 
     /*
@@ -131,7 +154,13 @@ public class Exercises
      */
     public String formattedXml(int id, String name)
     {
-        return null;
+        String result = """
+                <customer>
+                  <id>%d</id>
+                  <name>%s</name>
+                </customer>
+                """;
+        return String.format(result, id, name).strip();
     }
 
     /*
@@ -155,7 +184,15 @@ public class Exercises
      */
     public String formatFullName(String firstName, String middleName, String lastName, String suffix)
     {
-        return  null;
+
+        if(middleName.isEmpty() && suffix.isEmpty()){
+            return firstName + " " + lastName;
+        } else if (middleName.isEmpty()) {
+            return firstName + " " + lastName + ", " + suffix;
+        } else if (suffix.isEmpty()){
+            return firstName + " " + middleName + " " + lastName;
+        }
+        return  firstName + " " + middleName + " " + lastName + ", " + suffix;
     }
 
     /*
@@ -186,6 +223,25 @@ public class Exercises
      */
     public String createUserName(String fullName)
     {
-        return null;
+        String result;
+
+        if(fullName.contains(",")){
+            String newWord;
+            int stopAt = fullName.indexOf(",");
+            newWord = fullName.substring(0, stopAt);
+            result = newWord.replace(" ", ".");
+            return result.toLowerCase();
+
+        } else {
+            String[] nameSplit = fullName.split(" ");
+            if (nameSplit.length <= 2){
+                result = nameSplit[0] + "." + nameSplit[1];
+                return result.toLowerCase();
+            } else {
+                result = nameSplit[0] + "." + nameSplit[1].charAt(0) + "." + nameSplit[2];
+                return result.toLowerCase();
+            }
+
+        }
     }
 }

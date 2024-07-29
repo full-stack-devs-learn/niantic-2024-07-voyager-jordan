@@ -1,13 +1,15 @@
 package com.niantic;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Scanner;
 
+
 public class Main
 {
+
     private static Scanner userInput = new Scanner(System.in);
     private static int[] scores = new int[0];
+
 
     public static void main(String[] args)
     {
@@ -43,7 +45,7 @@ public class Main
     public static int getHomeSelection()
     {
         System.out.println();
-        System.out.println("Welcome to <<Test Calculator>>!");
+        System.out.println("Welcome to Test Score Calculator!");
         System.out.println("------------------------------");
         System.out.println();
         System.out.println("What would you like to do?");
@@ -59,16 +61,14 @@ public class Main
 
     private static void createNewTestScores(int[] currentScores)
     {
-
-        Scanner testInput = new Scanner(System.in);
         //Declare length Variable decided by current array length and adding ONE;
         int length = currentScores.length + 1;
         int[] newArray;
-        //Created a newArray that copies current scores and adds a extra spot;
+        //Created a newArray that copies current scores and adds an extra spot;
         newArray = Arrays.copyOf(currentScores, length);
         //Collects user input
         System.out.print("Enter your test score: ");
-        int userScore = testInput.nextInt();
+        int userScore = userInput.nextInt();
         System.out.println();
 
         //Assigns data to the new arrays end position
@@ -126,4 +126,5 @@ public class Main
             System.out.println("Your lowest score is: " + currentLowest);
         }
     }
+
 }
