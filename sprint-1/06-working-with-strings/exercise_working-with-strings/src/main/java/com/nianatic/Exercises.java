@@ -225,6 +225,7 @@ public class Exercises
     {
         String result;
 
+        //Used to find if name contains a suffix and trims
         if(fullName.contains(",")){
             String newWord;
             int stopAt = fullName.indexOf(",");
@@ -233,6 +234,7 @@ public class Exercises
             return result.toLowerCase();
 
         } else {
+            //Used to see if its just First and Last else trims middle name and adds it
             String[] nameSplit = fullName.split(" ");
             if (nameSplit.length <= 2){
                 result = nameSplit[0] + "." + nameSplit[1];
