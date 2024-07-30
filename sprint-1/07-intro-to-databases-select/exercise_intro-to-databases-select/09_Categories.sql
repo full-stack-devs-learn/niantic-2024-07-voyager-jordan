@@ -4,4 +4,9 @@ USE northwind;
 -- categories
 
 -- Expected: 8 rows
+-- SELECT * FROM categories;
+
+SELECT category_id
+	, category_name
+FROM categories;
 

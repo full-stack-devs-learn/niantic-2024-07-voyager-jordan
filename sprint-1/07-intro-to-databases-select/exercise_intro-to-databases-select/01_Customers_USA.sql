@@ -4,3 +4,11 @@ USE northwind;
 -- all customers in the USA
 -- Expected: 13 rows
 
+-- SELECT * FROM customers;
+
+SELECT company_name
+	, city
+    , country
+FROM customers
+WHERE country = 'USA';
+

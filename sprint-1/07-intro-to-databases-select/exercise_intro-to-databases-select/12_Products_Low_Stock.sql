@@ -6,3 +6,7 @@ USE northwind;
 
 -- Expected: 18 rows
 
+SELECT product_name
+    , units_in_stock
+FROM products p
+WHERE p.units_in_stock < p.reorder_level;

@@ -6,3 +6,11 @@ USE northwind;
 
 -- Expected: 17 rows
 
+-- SELECT * FROM customers;
+
+SELECT company_name
+	, contact_name
+    , contact_title
+    , phone
+FROM customers
+WHERE contact_title  LIKE '%Manager%';
