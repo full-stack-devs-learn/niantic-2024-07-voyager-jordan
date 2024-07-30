@@ -26,7 +26,29 @@ public class ExerciseChallenge
      */
     public String reformatName(String fullName)
     {
-        return null;
+        //Declared return value
+        String result = "";
+        //Split full name in to separate parts
+        String[] nameSplit = fullName.split(" ");
+        //These parts are standard and will not change based on input
+        String firstName = nameSplit[0];
+        //This handles if the input is only First and last and trims, else leaves it alone.
+        String lastName = nameSplit[1].contains(",") ? nameSplit[1].substring(0, nameSplit[1].indexOf(",")) : nameSplit[1];
+        //Auto Assigned to result
+        result = lastName + " " + firstName;
+        //Looped over remaining index that's why I started at 2 because I already processed up to index 1
+        for (int i = 2; i < nameSplit.length; i++){
+            //Trimmed suffix for more uniformed way of setting commas
+            if(nameSplit[i].contains(",")){
+                String trimmed = nameSplit[i].substring(0, nameSplit[i].indexOf(","));
+                result += " " + trimmed;
+                continue;
+            }
+            //Else added part to result
+            result += " " + nameSplit[i];
+        }
+        //After formatted String with spaces replaces spaces accordingly with commas
+        return result.replace(" ", ", ");
     }
 
     /*
@@ -45,12 +67,13 @@ public class ExerciseChallenge
      * You are required to return a formatted JSON String
      * like the pattern shown above.
      *
-     * createJSON(1, "Belinda Carter") => { "id": 1, "name": "Belinda Carter"}
+     * createJSON(1, "Belinda Carter") => { "id": 1, "name": "Belinda Carter" }
      *
      */
     public String createJSON(int id, String name)
     {
-        return  null;
+        String json = "{ \"id\": %d, \"name\": \"%s\" }";
+        return  String.format(json, id, name);
     }
 
 }
