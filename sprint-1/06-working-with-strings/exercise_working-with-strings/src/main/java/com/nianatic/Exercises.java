@@ -225,25 +225,24 @@ public class Exercises
     {
         String result;
 
-        //Used to find if name contains a suffix and trims
+        //Trims Suffix
         if(fullName.contains(",")){
-            String newWord;
             int stopAt = fullName.indexOf(",");
-            newWord = fullName.substring(0, stopAt);
-            result = newWord.replace(" ", ".");
-            return result.toLowerCase();
-
-        } else {
-            //Used to see if its just First and Last else trims middle name and adds it
-            String[] nameSplit = fullName.split(" ");
-            if (nameSplit.length <= 2){
-                result = nameSplit[0] + "." + nameSplit[1];
-                return result.toLowerCase();
-            } else {
-                result = nameSplit[0] + "." + nameSplit[1].charAt(0) + "." + nameSplit[2];
-                return result.toLowerCase();
-            }
-
+            fullName = fullName.substring(0, stopAt);
         }
+        //Splits trimmed full name into array of parts
+        String[] nameSplit = fullName.split(" ");
+        //Checks and handles for middle name and returns
+        if (nameSplit.length > 2){
+            System.out.println("length contains middle name");
+            result = nameSplit[0] + "." + nameSplit[1].charAt(0) + "." + nameSplit[2];
+            return result.toLowerCase();
+        //Else if its only two returns first and last
+        } else {
+            result = nameSplit[0] + "." + nameSplit[1];
+            return result.toLowerCase();
+        }
+
+
     }
 }

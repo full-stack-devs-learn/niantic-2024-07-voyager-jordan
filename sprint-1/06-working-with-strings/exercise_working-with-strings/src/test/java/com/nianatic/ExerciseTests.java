@@ -182,7 +182,8 @@ class ExerciseTests
             "Glen Williamson, glen.williamson",
             "Glen Carter Williamson, glen.c.williamson",
             "Glen Williamson| III, glen.williamson",
-            "Miguel Bennett| Jr.| MBA, miguel.bennett"
+            "Miguel Bennett| Jr.| MBA, miguel.bennett",
+            "Miguel Carter Bennett| Jr.| MBA, miguel.c.bennett"
     })
     @Order(7)
     public void test07_createUserName_ShouldReturn_ProperlyFormattedUserName(String fullName, String expected)
