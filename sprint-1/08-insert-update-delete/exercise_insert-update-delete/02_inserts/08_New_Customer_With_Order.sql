@@ -44,4 +44,114 @@ OrderDetails: (Create 5 line items)
     Quantity: you decide - between 1-10
     Discount: 0
 */
+-- CREATING USER ACCOUNT --
+
+-- USER INPUT --
+SET @customer_id = 'ABCDE' -- REQUIRED
+	, @companyName = 'Gregors Meebers' -- REQUIRED
+	, @contactName = 'Sophia Brown' -- OPTIONAL
+    , @address = '123 Niantic Way' -- OPTIONAL
+    , @city = 'Washington' -- OPTIONAL
+    , @region = 'WA' -- OPTIONAL
+    , @postalCode = 96734 -- OPTIONAL
+    , @country = 'USA'; -- OPTIONAL
+    
+-- INSERT USER ACCOUNT --
+
+INSERT customers (
+	customer_id
+	, company_name
+	, contact_name
+    , address
+    , city
+    , region
+    , postal_code
+    , country
+)
+VALUE (
+	@customer_id
+    , @companyName
+    , @contactName
+    , @address
+    , @city
+    , @region
+    , @postalCode
+    , @country
+);
+
+    
+-- PLACE ORDER --
+
+    
+-- PLACING ORDER --
+INSERT orders (
+	customer_id
+    , order_date
+    , ship_name -- CONTACT NAME
+    , ship_address
+)
+VALUE (
+	@customer_id
+    , NOW()
+    , @contactName
+    , @address
+);
+
+
+-- ORDERING THE 5 ITEMS -- 
+SELECT * FROM products;
+
+SET @orderId = (SELECT MAX(order_id) FROM orders)
+	, @product1 = 'Rogede sild'
+	, @product2 = 'Chocolade'
+    , @product3 = 'Adjustable Dumbbells Set'
+    , @product4 = 'Durable Tennis Racket'
+    , @product5 = 'Louisiana Fiery Hot Pepper Sauce';
+    
+INSERT order_details (
+	order_id
+    , product_id
+    , unit_price
+    , quantity
+    , discount
+) 
+VALUE 
+(
+    @orderId
+    , (SELECT product_id FROM products WHERE product_name = @product1)
+    , (SELECT unit_price FROM products WHERE product_name = @product1)
+    , FLOOR(RAND() * 10) + 1
+    , 0
+)
+,(
+    @orderId
+    , (SELECT product_id FROM products WHERE product_name = @product2)
+    , (SELECT unit_price FROM products WHERE product_name = @product2)
+    , FLOOR(RAND() * 10) + 1
+    , 0
+)
+,(
+    @orderId
+    , (SELECT product_id FROM products WHERE product_name = @product3)
+    , (SELECT unit_price FROM products WHERE product_name = @product3)
+    , FLOOR(RAND() * 10) + 1
+    , 0
+)
+,(
+    @orderId
+    , (SELECT product_id FROM products WHERE product_name = @product4)
+    , (SELECT unit_price FROM products WHERE product_name = @product4)
+    , FLOOR(RAND() * 10) + 1
+    , 0
+)
+,(
+    @orderId
+    , (SELECT product_id FROM products WHERE product_name = @product5)
+    , (SELECT unit_price FROM products WHERE product_name = @product5)
+    , FLOOR(RAND() * 10) + 1
+    , 0
+);
+
+SELECT * FROM order_details WHERE order_id = @orderId;
+
 

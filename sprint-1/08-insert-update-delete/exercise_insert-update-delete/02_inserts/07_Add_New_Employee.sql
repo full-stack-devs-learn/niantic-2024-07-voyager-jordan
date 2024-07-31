@@ -10,4 +10,29 @@ USE northwind;
     -- hire date: (today)
     -- home address
 -- leave all other fields null by default
+SELECT * FROM employees;
+
+INSERT employees (
+	first_name
+    , last_name
+    , title
+    , title_of_courtesy
+    , birth_date
+    , hire_date
+    , address
+    , notes
+) 
+VALUES (
+	'Jordan'
+    , 'Napoleon'
+    , 'Sales Associate'
+    , 'Mr.'
+    , '1997-01-24 00:00:00'
+    , NOW()
+    , '123 Niantic Lane'
+    , 'DOESNT HAVE NULL VALUE'
+);
+
+-- I couldn't leave me data not uniform i had to update
+-- UPDATE employees SET title_of_courtesy='Mr.' WHERE employee_id = 10;
 

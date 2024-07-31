@@ -12,4 +12,17 @@ USE northwind;
 -- should be 513 (not 684)
 
 -- Expected: 12 Rows
+SELECT * FROM customer_orders;
+
+SELECT o.company_name
+	, order_date
+    , order_id
+    , product_name
+    , sales_price
+    , quantity
+    , discount
+    , sales_price * quantity AS line_total
+FROM customer_orders o
+WHERE o.company_name = 'Alfreds Futterkiste';
+
 
