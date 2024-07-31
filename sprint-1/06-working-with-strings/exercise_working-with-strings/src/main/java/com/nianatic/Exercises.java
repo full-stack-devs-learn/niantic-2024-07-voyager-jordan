@@ -243,6 +243,5 @@ public class Exercises
             return result.toLowerCase();
         }
 
-
     }
 }
