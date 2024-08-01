@@ -54,7 +54,13 @@ SET @customer_id = 'ABCDE' -- REQUIRED
     , @city = 'Washington' -- OPTIONAL
     , @region = 'WA' -- OPTIONAL
     , @postalCode = 96734 -- OPTIONAL
-    , @country = 'USA'; -- OPTIONAL
+    , @country = 'USA' -- OPTIONAL
+    
+	, @product1 = 'Rogede sild' -- NAME OF PRODUCT
+	, @product2 = 'Chocolade' -- NAME OF PRODUCT
+    , @product3 = 'Adjustable Dumbbells Set' -- NAME OF PRODUCT
+    , @product4 = 'Durable Tennis Racket' -- NAME OF PRODUCT
+    , @product5 = 'Louisiana Fiery Hot Pepper Sauce'; -- NAME OF PRODUCT
     
 -- INSERT USER ACCOUNT --
 
@@ -100,13 +106,6 @@ VALUE (
 
 -- ORDERING THE 5 ITEMS -- 
 SELECT * FROM products;
-
-SET @orderId = (SELECT MAX(order_id) FROM orders)
-	, @product1 = 'Rogede sild'
-	, @product2 = 'Chocolade'
-    , @product3 = 'Adjustable Dumbbells Set'
-    , @product4 = 'Durable Tennis Racket'
-    , @product5 = 'Louisiana Fiery Hot Pepper Sauce';
     
 INSERT order_details (
 	order_id
@@ -117,7 +116,7 @@ INSERT order_details (
 ) 
 VALUE 
 (
-    @orderId
+	(SELECT last_insert_id() FROM orders)
     , (SELECT product_id FROM products WHERE product_name = @product1)
     , (SELECT unit_price FROM products WHERE product_name = @product1)
     , FLOOR(RAND() * 10) + 1
