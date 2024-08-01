@@ -107,7 +107,7 @@ VALUE (
 -- ORDERING THE 5 ITEMS -- 
 SELECT * FROM products;
 
-SET @orderId = (SELECT MAX(order_id) FROM orders);
+SET @orderId = last_insert_id();
     
 INSERT order_details (
 	order_id
@@ -153,6 +153,6 @@ VALUE
     , 0
 );
 
-SELECT o.*, p.product_name FROM order_details o LEFT JOIN products p ON o.product_id = p.product_id WHERE o.order_id = @orderId;
+SELECT o.*, p.product_name FROM order_details o JOIN products p ON o.product_id = p.product_id WHERE o.order_id = @orderId;
 
 
