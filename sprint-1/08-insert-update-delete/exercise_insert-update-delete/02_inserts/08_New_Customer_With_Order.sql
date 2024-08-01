@@ -123,28 +123,28 @@ VALUE
     , 0
 )
 ,(
-    @orderId
+    (SELECT last_insert_id() FROM orders)
     , (SELECT product_id FROM products WHERE product_name = @product2)
     , (SELECT unit_price FROM products WHERE product_name = @product2)
     , FLOOR(RAND() * 10) + 1
     , 0
 )
 ,(
-    @orderId
+    (SELECT last_insert_id() FROM orders)
     , (SELECT product_id FROM products WHERE product_name = @product3)
     , (SELECT unit_price FROM products WHERE product_name = @product3)
     , FLOOR(RAND() * 10) + 1
     , 0
 )
 ,(
-    @orderId
+    (SELECT last_insert_id() FROM orders)
     , (SELECT product_id FROM products WHERE product_name = @product4)
     , (SELECT unit_price FROM products WHERE product_name = @product4)
     , FLOOR(RAND() * 10) + 1
     , 0
 )
 ,(
-    @orderId
+    (SELECT last_insert_id() FROM orders)
     , (SELECT product_id FROM products WHERE product_name = @product5)
     , (SELECT unit_price FROM products WHERE product_name = @product5)
     , FLOOR(RAND() * 10) + 1
