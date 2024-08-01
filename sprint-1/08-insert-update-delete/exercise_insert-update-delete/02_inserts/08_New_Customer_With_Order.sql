@@ -106,6 +106,8 @@ VALUE (
 
 -- ORDERING THE 5 ITEMS -- 
 SELECT * FROM products;
+
+SET @orderId = (SELECT MAX(order_id) FROM orders);
     
 INSERT order_details (
 	order_id
@@ -116,35 +118,35 @@ INSERT order_details (
 ) 
 VALUE 
 (
-	(SELECT last_insert_id() FROM orders)
+	@orderId
     , (SELECT product_id FROM products WHERE product_name = @product1)
     , (SELECT unit_price FROM products WHERE product_name = @product1)
     , FLOOR(RAND() * 10) + 1
     , 0
 )
 ,(
-    (SELECT last_insert_id() FROM orders)
+    @orderId
     , (SELECT product_id FROM products WHERE product_name = @product2)
     , (SELECT unit_price FROM products WHERE product_name = @product2)
     , FLOOR(RAND() * 10) + 1
     , 0
 )
 ,(
-    (SELECT last_insert_id() FROM orders)
+    @orderId
     , (SELECT product_id FROM products WHERE product_name = @product3)
     , (SELECT unit_price FROM products WHERE product_name = @product3)
     , FLOOR(RAND() * 10) + 1
     , 0
 )
 ,(
-    (SELECT last_insert_id() FROM orders)
+    @orderId
     , (SELECT product_id FROM products WHERE product_name = @product4)
     , (SELECT unit_price FROM products WHERE product_name = @product4)
     , FLOOR(RAND() * 10) + 1
     , 0
 )
 ,(
-    (SELECT last_insert_id() FROM orders)
+    @orderId
     , (SELECT product_id FROM products WHERE product_name = @product5)
     , (SELECT unit_price FROM products WHERE product_name = @product5)
     , FLOOR(RAND() * 10) + 1
