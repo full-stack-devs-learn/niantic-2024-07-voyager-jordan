@@ -7,7 +7,7 @@ SET @category_id = 1; -- INSERT CATEGORY ID
 SET @percent_change = 50; -- INSERT PERCENT 50%
 
 UPDATE products
-SET unit_price = CONVERT(unit_price - (unit_price * (@percent_change / 100)), FLOAT)
+SET unit_price = ROUND(unit_price + (unit_price * (@percent_change / 100)), 2)
 WHERE category_id = @category_id;
 
 SELECT * FROM products;
