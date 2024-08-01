@@ -2,8 +2,9 @@ USE northwind;
 
 -- Write a script that updates the price of all products 
 -- within a category by a certain percent.
+SET @category_to_update = 'Beverages';
 
-SET @category_id = 1; -- INSERT CATEGORY ID
+SET @category_id = (SELECT category_id FROM categories WHERE category_name = @category_to_update);
 SET @percent_change = 50; -- INSERT PERCENT 50%
 
 UPDATE products
