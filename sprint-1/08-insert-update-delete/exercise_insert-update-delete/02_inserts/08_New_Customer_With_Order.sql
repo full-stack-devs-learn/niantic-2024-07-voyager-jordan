@@ -153,6 +153,6 @@ VALUE
     , 0
 );
 
-SELECT * FROM order_details WHERE order_id = @orderId;
+SELECT o.*, p.product_name FROM order_details o LEFT JOIN products p ON o.product_id = p.product_id WHERE o.order_id = @orderId;
 
 
