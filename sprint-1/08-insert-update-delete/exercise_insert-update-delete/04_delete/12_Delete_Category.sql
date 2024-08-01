@@ -12,9 +12,7 @@ USE northwind;
 -- The only user input should be a variable at the top of the 
 -- script that holds the Category Name.
 -- The sript should do the rest
-SELECT * FROM order_details;
-SELECT * FROM products;
-SELECT * FROM categories;
+SET @delete_me = 'Sporting Goods';
 
 -- DELETE ORDER-DETAILS
 DELETE FROM order_details
@@ -24,7 +22,7 @@ WHERE product_id IN (
     WHERE p.category_id IN (
 		SELECT category_id
         FROM categories
-        WHERE category_name = 'Sporting Goods'
+        WHERE category_name = @delete_me
     )
 );
 
@@ -32,10 +30,10 @@ DELETE FROM products p
     WHERE p.category_id IN (
 		SELECT category_id
         FROM categories
-        WHERE category_name = 'Sporting Goods'
+        WHERE category_name = @delete_me
 );
 
 DELETE FROM categories
-WHERE category_name = 'Sporting Goods';
+WHERE category_name = @delete_me;
 
 SELECT * FROM categories;
