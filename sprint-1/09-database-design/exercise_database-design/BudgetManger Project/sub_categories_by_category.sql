@@ -10,7 +10,7 @@ USE financial;
 
 SET @search_for_user = 'Sarah Smith', -- INSERT FULL NAME
 	@search_for_month = '08',      -- INSERT MONTH NUMBER ** ONLY AUGUST / SEPTEMBER SEEDED **
-    @search_for_category = 'Entertainment'; -- INSERT CATEGORY NAME
+    @search_for_category = 'Food'; -- INSERT CATEGORY NAME
     
     
 SELECT 
