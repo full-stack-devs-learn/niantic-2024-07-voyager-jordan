@@ -16,55 +16,71 @@ USE financial;
 
 CREATE TABLE users
 (
-	user_id INT NOT NULL AUTO_INCREMENT,
+	id INT NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     full_name VARCHAR(100) GENERATED ALWAYS AS (CONCAT(first_name, " ", last_name)) STORED,
-    PRIMARY KEY (user_id)
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE vendors 
 (
-	vendor_id INT NOT NULL AUTO_INCREMENT,
+	id INT NOT NULL AUTO_INCREMENT,
     vendor_name VARCHAR(50) NOT NULL,
-    PRIMARY KEY(vendor_id)
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE categories
 (
-	category_id INT NOT NULL AUTO_INCREMENT,
+	id INT NOT NULL AUTO_INCREMENT,
     category_name VARCHAR(50) NOT NULL,
-    PRIMARY KEY(category_id)
+    category_owner INT NULL,
+    PRIMARY KEY(id)
 );
 
-CREATE TABLE sub_categories
+CREATE TABLE subcategories
 (
-	sub_category_id INT NOT NULL AUTO_INCREMENT,
-    sub_category_name VARCHAR(50) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
+    subcategory_name VARCHAR(50) NOT NULL,
     parent_id INT NOT NULL,
-    PRIMARY KEY(sub_category_id),
-    FOREIGN KEY(parent_id) REFERENCES categories(category_id)
+    subcategory_owner INT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(parent_id) REFERENCES categories(id),
+    FOREIGN KEY (subcategory_owner) REFERENCES users(id)
 );
 
-CREATE TABLE expenses
+CREATE TABLE userbudgets
+(
+    id INT NOT NULL AUTO_INCREMENT,
+    owner INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    max_limit DECIMAL(10, 2) NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (owner) REFERENCES users(id)
+);
+
+CREATE TABLE transactions
 (	
-	expense_id INT NOT NULL AUTO_INCREMENT,
-    user_id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
+    owner INT NOT NULL,
+    budget_id INT NULL,
     vendor_id INT NOT NULL,
-    category_id INT NOT NULL,
+    subcategory_id INT NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
     date DATE NOT NULL,
     note TINYTEXT,
-    PRIMARY KEY (expense_id),
-    FOREIGN KEY (vendor_id) REFERENCES vendors(vendor_id),
-    FOREIGN KEY (category_id) REFERENCES sub_categories(sub_category_id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (vendor_id) REFERENCES vendors(id),
+    FOREIGN KEY (subcategory_id) REFERENCES subcategories(id),
+    FOREIGN KEY (owner) REFERENCES users(id),
+    FOREIGN KEY (budget_id) REFERENCES userbudgets(id)
 );
 # ---------------------------------------------------------------------- #
 # INSERT USERS DATA                                                      #
 # ---------------------------------------------------------------------- #
 INSERT users (first_name, last_name) VALUES
-('Sarah', 'Smith'),
-('John', 'Doe');
+('John', 'Doe'),
+('Sarah', 'Smith');
 # ---------------------------------------------------------------------- #
 # INSERT VENDORS DATA                                                    #
 # ---------------------------------------------------------------------- #
@@ -92,7 +108,7 @@ INSERT INTO categories (category_name) VALUES
 # ---------------------------------------------------------------------- #
 # INSERT SUB CATEGORIES DATA --- 5 x 6                                   #
 # ---------------------------------------------------------------------- #
-INSERT INTO sub_categories (sub_category_name, parent_id) VALUES
+INSERT INTO subcategories (subcategory_name, parent_id) VALUES
 -- Entertainment
 ('Movies', 1),
 ('Music', 1),
@@ -135,88 +151,104 @@ INSERT INTO sub_categories (sub_category_name, parent_id) VALUES
 ('Cruises', 6),
 ('Adventure Trips', 6);
 # ---------------------------------------------------------------------- #
-# INSERT EXPENSES DATA                                                   #
+# CREATE BUDGET FOR JOHN AND SARAH                                       #
 # ---------------------------------------------------------------------- #
-INSERT INTO expenses (user_id, vendor_id, category_id, amount, date, note) VALUES
--- SARAH SMITH
-(1, 1, 2, 60.00, '2024-08-01', 'Bought new gaming console'),
-(1, 2, 5, 850.00, '2024-08-02', 'Rent payment for August'),
-(1, 3, 8, 55.00, '2024-08-03', 'Eye check-up'),
-(1, 4, 10, 150.00, '2024-08-04', 'Dinner at a new cafe'),
-(1, 5, 12, 80.00, '2024-08-05', 'Weekly groceries'),
-(1, 6, 13, 300.00, '2024-08-06', 'Medical consultation'),
-(1, 7, 16, 220.00, '2024-08-07', 'Furniture for home office'),
-(1, 8, 19, 2500.00, '2024-08-08', 'Vacation at a mountain retreat'),
-(1, 9, 22, 100.00, '2024-08-09', 'Ride-sharing for a business trip'),
-(1, 10, 24, 200.00, '2024-08-10', 'Fitness classes subscription'),
-(1, 1, 3, 75.00, '2024-08-11', 'Tickets to a theater play'),
-(1, 2, 6, 300.00, '2024-08-12', 'Rent payment for August'),
-(1, 3, 7, 60.00, '2024-08-13', 'Dental visit'),
-(1, 4, 10, 100.00, '2024-08-14', 'Dinner at a new restaurant'),
-(1, 5, 12, 70.00, '2024-08-15', 'Grocery shopping'),
-(1, 6, 13, 320.00, '2024-08-16', 'Monthly health insurance'),
-(1, 7, 16, 180.00, '2024-08-17', 'Home decor purchase'),
-(1, 8, 19, 2000.00, '2024-08-18', 'Vacation at a city tour'),
-(1, 9, 22, 90.00, '2024-08-19', 'Ride-sharing expenses'),
-(1, 10, 24, 180.00, '2024-08-20', 'Fitness membership renewal'),
-(1, 1, 3, 85.00, '2024-08-21', 'Theater show tickets'),
-(1, 2, 6, 1250.00, '2024-08-22', 'Rent payment for August'),
-(1, 3, 11, 100.00, '2024-08-23', 'Optical care appointment'),
-(1, 4, 14, 275.00, '2024-08-24', 'Home repair supplies'),
-(1, 5, 17, 150.00, '2024-08-25', 'Bike accessories'),
-(1, 6, 13, 200.00, '2024-08-26', 'Medical consultation follow-up'),
-(1, 7, 16, 160.00, '2024-08-27', 'Home office equipment'),
-(1, 8, 15, 1500.00, '2024-08-28', 'Vacation at a city tour'),
-(1, 9, 22, 110.00, '2024-08-29', 'Airport shuttle service'),
-(1, 10, 24, 190.00, '2024-08-30', 'Extended gym membership'),
-(1, 1, 3, 80.00, '2024-09-01', 'Concert tickets'),
-(1, 2, 6, 310.00, '2024-09-02', 'Rent payment for September'),
-(1, 3, 7, 65.00, '2024-09-03', 'Dental visit'),
-(1, 4, 10, 120.00, '2024-09-04', 'Dinner at a fancy restaurant'),
-(1, 5, 12, 85.00, '2024-09-05', 'Grocery shopping'),
-(1, 6, 13, 330.00, '2024-09-06', 'Medical consultation'),
-(1, 7, 16, 190.00, '2024-09-07', 'Home decor purchase'),
-(1, 8, 19, 2100.00, '2024-09-08', 'Vacation at a beach resort'),
-(1, 9, 22, 95.00, '2024-09-09', 'Ride-sharing expenses'),
-(1, 10, 24, 170.00, '2024-09-10', 'Fitness membership renewal'),
+-- For John Doe (user_id = 1)
+INSERT INTO userbudgets (id, owner, name, max_limit) VALUES
+(1, 1, 'August Budget', 1000.00),
+(2, 1, 'September Budget', 1200.00);
+
+-- For Sarah Smith (user_id = 2)
+INSERT INTO userbudgets (id, owner, name, max_limit) VALUES
+(3, 2, 'August Budget', 1000.00),
+(4, 2, 'September Budget', 1200.00);
+# ---------------------------------------------------------------------- #
+# INSERT TRANSACTIONS DATA                                               #
+# ---------------------------------------------------------------------- #
+INSERT INTO transactions (vendor_id, subcategory_id, owner, budget_id, amount, date, note) VALUES
 -- JOHN DOE
-(2, 1, 2, 100.00, '2024-08-01', 'Bought a new phone'),
-(2, 2, 4, 1300.00, '2024-08-02', 'Rent payment for August'),
-(2, 3, 5, 40.00, '2024-08-03', 'Music concert'),
-(2, 4, 8, 150.00, '2024-08-04', 'Dinner at a fancy restaurant'),
-(2, 5, 9, 80.00, '2024-08-05', 'Weekly grocery shopping'),
-(2, 6, 12, 200.00, '2024-08-06', 'Health check-up'),
-(2, 7, 13, 350.00, '2024-08-07', 'Home repair services'),
-(2, 8, 15, 1500.00, '2024-08-08', 'Vacation at an adventure trip'),
-(2, 9, 18, 75.00, '2024-08-09', 'Taxi service for airport'),
-(2, 10, 20, 120.00, '2024-08-10', 'Gym membership renewal'),
-(2, 1, 1, 55.00, '2024-08-11', 'New gaming accessories'),
-(2, 2, 5, 1200.00, '2024-08-12', 'Rent payment for August'),
-(2, 3, 7, 60.00, '2024-08-13', 'Dental visit'),
-(2, 4, 10, 100.00, '2024-08-14', 'Dinner at a new restaurant'),
-(2, 5, 12, 70.00, '2024-08-15', 'Grocery shopping'),
-(2, 6, 13, 320.00, '2024-08-16', 'Monthly health insurance'),
-(2, 7, 16, 180.00, '2024-08-17', 'Home decor purchase'),
-(2, 8, 19, 2000.00, '2024-08-18', 'Vacation at a city tour'),
-(2, 9, 22, 90.00, '2024-08-19', 'Ride-sharing expenses'),
-(2, 10, 24, 180.00, '2024-08-20', 'Fitness membership renewal'),
-(2, 1, 3, 85.00, '2024-08-21', 'Theater show tickets'),
-(2, 2, 6, 1250.00, '2024-08-22', 'Rent payment for August'),
-(2, 3, 11, 100.00, '2024-08-23', 'Optical care appointment'),
-(2, 4, 14, 275.00, '2024-08-24', 'Home repair supplies'),
-(2, 5, 17, 150.00, '2024-08-25', 'Bike accessories'),
-(2, 6, 13, 200.00, '2024-08-26', 'Medical consultation follow-up'),
-(2, 7, 16, 160.00, '2024-08-27', 'Home office equipment'),
-(2, 8, 15, 1500.00, '2024-08-28', 'Vacation at a city tour'),
-(2, 9, 22, 110.00, '2024-08-29', 'Airport shuttle service'),
-(2, 10, 24, 190.00, '2024-08-30', 'Extended gym membership'),
-(2, 1, 3, 80.00, '2024-09-01', 'Concert tickets'),
-(2, 2, 6, 310.00, '2024-09-02', 'Rent payment for September'),
-(2, 3, 7, 65.00, '2024-09-03', 'Dental visit'),
-(2, 4, 10, 120.00, '2024-09-04', 'Dinner at a fancy restaurant'),
-(2, 5, 12, 85.00, '2024-09-05', 'Grocery shopping'),
-(2, 6, 13, 330.00, '2024-09-06', 'Medical consultation'),
-(2, 7, 16, 190.00, '2024-09-07', 'Home decor purchase'),
-(2, 8, 19, 2100.00, '2024-09-08', 'Vacation at a beach resort'),
-(2, 9, 22, 95.00, '2024-09-09', 'Ride-sharing expenses'),
-(2, 10, 24, 170.00, '2024-09-10', 'Fitness membership renewal');
+(1, 7, 1, 1, 85.00, '2024-08-01', 'Purchased new tech gadgets for home.'),
+(5, 15, 1, 1, 55.00, '2024-08-02', 'Lunch at a food truck.'),
+(3, 12, 1, 1, 90.00, '2024-08-03', 'Concert tickets for a local band.'),
+(8, 22, 1, 1, 220.00, '2024-08-04', 'Booked a beach resort vacation.'),
+(5, 5, 1, 1, 120.00, '2024-08-05', 'Dinner at a gourmet restaurant.'),
+(6, 18, 1, 1, 250.00, '2024-08-06', 'Medical expenses including consultation.'),
+(7, 8, 1, 1, 90.00, '2024-08-07', 'Home appliance repair service.'),
+(4, 20, 1, 1, 35.00, '2024-08-08', 'Travel booking fee for upcoming trip.'),
+(9, 3, 1, 1, 45.00, '2024-08-09', 'Grocery shopping at the local market.'),
+(6, 25, 1, 1, 85.00, '2024-08-10', 'Routine health check-up.'),
+(1, 1, 1, 1, 105.00, '2024-08-11', 'Latest tech gadget purchase.'),
+(2, 17, 1, 1, 70.00, '2024-08-12', 'New living room furniture.'),
+(3, 14, 1, 1, 80.00, '2024-08-13', 'Tickets for a jazz concert.'),
+(8, 26, 1, 1, 240.00, '2024-08-14', 'Mountain retreat vacation.'),
+(5, 30, 1, 1, 140.00, '2024-08-15', 'Fine dining experience at a top restaurant.'),
+(6, 11, 1, 1, 300.00, '2024-08-16', 'Healthcare services including check-up.'),
+(7, 21, 1, 1, 95.00, '2024-08-17', 'Appliance replacement for kitchen.'),
+(4, 4, 1, 1, 50.00, '2024-08-18', 'Flight booking for upcoming trip.'),
+(9, 2, 1, 1, 65.00, '2024-08-19', 'Monthly grocery shopping.'),
+(6, 27, 1, 1, 120.00, '2024-08-20', 'Eye exam and treatment.'),
+(1, 8, 1, 2, 115.00, '2024-09-01', 'New electronics purchase.'),
+(2, 23, 1, 2, 75.00, '2024-09-02', 'Living room furniture upgrade.'),
+(3, 4, 1, 2, 85.00, '2024-09-03', 'Tickets for a concert.'),
+(8, 19, 1, 2, 260.00, '2024-09-04', 'Vacation at a mountain retreat.'),
+(5, 14, 1, 2, 150.00, '2024-09-05', 'Fine dining at an upscale restaurant.'),
+(6, 30, 1, 2, 310.00, '2024-09-06', 'Healthcare expenses including follow-up.'),
+(7, 9, 1, 2, 100.00, '2024-09-07', 'Replaced kitchen appliance.'),
+(4, 16, 1, 2, 55.00, '2024-09-08', 'Flight reservation for travel.'),
+(9, 6, 1, 2, 68.00, '2024-09-09', 'Monthly groceries purchase.'),
+(6, 22, 1, 2, 130.00, '2024-09-10', 'Eye exam and vision treatment.'),
+(1, 24, 1, 2, 120.00, '2024-09-11', 'New tech gadget acquisition.'),
+(2, 28, 1, 2, 80.00, '2024-09-12', 'New living room furniture.'),
+(3, 13, 1, 2, 95.00, '2024-09-13', 'Music festival tickets purchased.'),
+(8, 25, 1, 2, 270.00, '2024-09-14', 'Travel and accommodation for vacation.'),
+(5, 5, 1, 2, 160.00, '2024-09-15', 'Dinner at a gourmet restaurant.'),
+(6, 7, 1, 2, 325.00, '2024-09-16', 'Healthcare follow-up and consultation.'),
+(7, 2, 1, 2, 110.00, '2024-09-17', 'Replaced home appliance.'),
+(4, 26, 1, 2, 60.00, '2024-09-18', 'Travel insurance for trip.'),
+(9, 12, 1, 2, 75.00, '2024-09-19', 'Grocery shopping and supplies.'),
+(10, 17, 1, 2, 130.00, '2024-09-20', 'Eye check-up and vision treatment.'),
+-- SARAH SMITH
+(1, 6, 2, 3, 95.00, '2024-08-01', 'New smartphone purchase.'),
+(5, 11, 2, 3, 60.00, '2024-08-02', 'Lunch at a food truck.'),
+(4, 15, 2, 3, 85.00, '2024-08-03', 'Theater tickets for a play.'),
+(8, 20, 2, 3, 230.00, '2024-08-04', 'Booking a beach resort.'),
+(5, 13, 2, 3, 130.00, '2024-08-05', 'Dinner at a gourmet restaurant.'),
+(6, 30, 2, 3, 270.00, '2024-08-06', 'Health check-up and consultation.'),
+(7, 24, 2, 3, 85.00, '2024-08-07', 'Repair service for home appliances.'),
+(4, 3, 2, 3, 45.00, '2024-08-08', 'Travel fee for booking a trip.'),
+(9, 18, 2, 3, 50.00, '2024-08-09', 'Grocery shopping at the market.'),
+(6, 28, 2, 3, 90.00, '2024-08-10', 'Routine health examination.'),
+(1, 7, 2, 3, 115.00, '2024-08-11', 'Latest electronics purchase.'),
+(2, 14, 2, 3, 75.00, '2024-08-12', 'New furniture for the home.'),
+(3, 8, 2, 3, 85.00, '2024-08-13', 'Tickets for a concert.'),
+(8, 27, 2, 3, 260.00, '2024-08-14', 'Vacation at a mountain retreat.'),
+(5, 5, 2, 3, 150.00, '2024-08-15', 'Fine dining at an upscale restaurant.'),
+(6, 12, 2, 3, 310.00, '2024-08-16', 'Healthcare expenses including follow-up.'),
+(7, 17, 2, 3, 100.00, '2024-08-17', 'Replaced kitchen appliance.'),
+(4, 16, 2, 3, 55.00, '2024-08-18', 'Flight reservation for travel.'),
+(9, 19, 2, 3, 75.00, '2024-08-19', 'Grocery shopping and supplies.'),
+(10, 23, 2, 3, 140.00, '2024-08-20', 'Eye exam and vision treatment.'),
+-- September
+(1, 10, 2, 4, 125.00, '2024-09-01', 'New electronics acquisition.'),
+(2, 22, 2, 4, 80.00, '2024-09-02', 'Upgraded living room furniture.'),
+(3, 6, 2, 4, 95.00, '2024-09-03', 'Concert tickets.'),
+(8, 26, 2, 4, 270.00, '2024-09-04', 'Mountain retreat vacation.'),
+(5, 19, 2, 4, 160.00, '2024-09-05', 'Dinner at a gourmet restaurant.'),
+(6, 9, 2, 4, 320.00, '2024-09-06', 'Healthcare expenses including follow-up.'),
+(7, 24, 2, 4, 110.00, '2024-09-07', 'Replaced home appliance.'),
+(4, 30, 2, 4, 60.00, '2024-09-08', 'Travel insurance for upcoming trip.'),
+(9, 12, 2, 4, 70.00, '2024-09-09', 'Monthly grocery shopping.'),
+(6, 14, 2, 4, 135.00, '2024-09-10', 'Eye exam and vision treatment.'),
+(1, 8, 2, 4, 130.00, '2024-09-11', 'Electronics purchase.'),
+(2, 23, 2, 4, 85.00, '2024-09-12', 'New furniture for home.'),
+(3, 11, 2, 4, 100.00, '2024-09-13', 'Tickets for a music festival.'),
+(8, 20, 2, 4, 280.00, '2024-09-14', 'Travel and accommodation for vacation.'),
+(5, 5, 2, 4, 170.00, '2024-09-15', 'Dinner at a gourmet restaurant.'),
+(6, 17, 2, 4, 330.00, '2024-09-16', 'Healthcare follow-up and consultation.'),
+(7, 2, 2, 4, 120.00, '2024-09-17', 'Replaced home appliance.'),
+(4, 25, 2, 4, 65.00, '2024-09-18', 'Travel insurance and booking fees.'),
+(9, 13, 2, 4, 80.00, '2024-09-19', 'Grocery shopping and supplies.'),
+(10, 24, 2, 4, 140.00, '2024-09-20', 'Eye check-up and vision treatment.');
+# ---------------------------------------------------------------------- #
+#                            CREATE VIEWS                                #
+# ---------------------------------------------------------------------- #
