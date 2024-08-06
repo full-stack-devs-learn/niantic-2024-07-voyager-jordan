@@ -44,16 +44,16 @@ public class Refrigerator
     }
 
     public boolean addItem(int numberOfItems){
-     
+
         if(isDoorOpen && available - numberOfItems >= 0){
-            this.changeAvailableCapacity(this.available - numberOfItems);
+            this.changeAvailableCapacity(available - numberOfItems);
             return true;
         }
         return false;
     }
     public boolean removeItem(int numberOfItems){
         if(isDoorOpen){
-            this.changeAvailableCapacity(this.available + numberOfItems);
+            this.changeAvailableCapacity(available + numberOfItems);
             return true;
         }
         return false;
