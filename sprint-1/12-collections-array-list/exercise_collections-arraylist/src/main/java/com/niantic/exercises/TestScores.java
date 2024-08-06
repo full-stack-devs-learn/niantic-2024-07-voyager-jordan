@@ -3,6 +3,7 @@ package com.niantic.exercises;
 import com.niantic.models.TestScore;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TestScores
 {
@@ -14,7 +15,14 @@ public class TestScores
      */
     public ArrayList<TestScore> getScoresByTest(ArrayList<TestScore> testScores, String testName)
     {
-        return null;
+        ArrayList<TestScore> groupByTest = new ArrayList<>();
+        for(var student : testScores){
+            if(Objects.equals(student.getTestName(), testName)){
+                groupByTest.add(student);
+            }
+        }
+
+        return groupByTest;
     }
 
     /*
@@ -24,7 +32,14 @@ public class TestScores
      */
     public ArrayList<TestScore> getScoresByStudent(ArrayList<TestScore> testScores, String student)
     {
-        return null;
+        ArrayList<TestScore> groupByStudent = new ArrayList<>();
+        for(var person : testScores){
+            if(Objects.equals(person.getStudentName(), student)){
+                groupByStudent.add(person);
+            }
+        }
+
+        return groupByStudent;
     }
 
     /*
@@ -33,7 +48,15 @@ public class TestScores
      */
     public int getHighestScore(ArrayList<TestScore> testScores)
     {
-        return 0;
+        int currentHighest = testScores.getFirst().getScore();
+
+        for(var student : testScores){
+            if(student.getScore() > currentHighest){
+                currentHighest = student.getScore();
+            }
+        }
+
+        return currentHighest;
     }
 
     /*
@@ -42,7 +65,15 @@ public class TestScores
      */
     public int getLowestScore(ArrayList<TestScore> testScores)
     {
-        return 0;
+        int currentLowest = testScores.getFirst().getScore();
+
+        for(var student : testScores){
+            if(student.getScore() < currentLowest){
+                currentLowest = student.getScore();
+            }
+        }
+
+        return currentLowest;
     }
 
     /*
@@ -51,7 +82,13 @@ public class TestScores
      */
     public int getAverageScore(ArrayList<TestScore> testScores)
     {
-        return 0;
+        int average = 0;
+
+        for(var student : testScores){
+                average += student.getScore();
+        }
+
+        return average / testScores.size();
     }
 
     /*
@@ -60,7 +97,17 @@ public class TestScores
      */
     public int getHighestScoreByTest(ArrayList<TestScore> testScores, String testName)
     {
-        return 0;
+
+        ArrayList<TestScore> specificTests = getScoresByTest(testScores, testName);
+        int currentHighest = specificTests.getFirst().getScore();
+
+        for(var student : specificTests){
+                if(student.getScore() > currentHighest){
+                    currentHighest = student.getScore();
+            }
+        }
+
+        return currentHighest;
     }
 
     /*
@@ -69,7 +116,16 @@ public class TestScores
      */
     public int getLowestScoreByTest(ArrayList<TestScore> testScores, String testName)
     {
-        return 0;
+        ArrayList<TestScore> specificTests = getScoresByTest(testScores, testName);
+        int currentLowest = specificTests.getFirst().getScore();
+
+        for(var student : specificTests){
+            if(student.getScore() < currentLowest){
+                currentLowest = student.getScore();
+            }
+        }
+
+        return currentLowest;
     }
 
     /*
@@ -78,7 +134,13 @@ public class TestScores
      */
     public int getAverageScoreByTest(ArrayList<TestScore> testScores, String testName)
     {
-        return 0;
+        ArrayList<TestScore> specificTests = getScoresByTest(testScores, testName);
+        int average = 0;
+
+        for(var student : specificTests){
+            average += student.getScore();
+        }
+        return average / specificTests.size();
     }
 
     /*
@@ -87,7 +149,15 @@ public class TestScores
      */
     public int getHighestScoreByStudent(ArrayList<TestScore> testScores, String student)
     {
-        return 0;
+        ArrayList<TestScore> specificStudent = getScoresByStudent(testScores, student);
+        int currentHighest = specificStudent.getFirst().getScore();
+
+        for(var test : specificStudent){
+            if(test.getScore() > currentHighest){
+                currentHighest = test.getScore();
+            }
+        }
+        return currentHighest;
     }
 
     /*
@@ -96,7 +166,15 @@ public class TestScores
      */
     public int getLowestScoreByStudent(ArrayList<TestScore> testScores, String student)
     {
-        return 0;
+        ArrayList<TestScore> specificStudent = getScoresByStudent(testScores, student);
+        int currentLowest = specificStudent.getFirst().getScore();
+
+        for(var test : specificStudent){
+            if(test.getScore() < currentLowest){
+                currentLowest = test.getScore();
+            }
+        }
+        return currentLowest;
     }
 
     /*
@@ -105,6 +183,12 @@ public class TestScores
      */
     public int getAverageScoreByStudent(ArrayList<TestScore> testScores, String student)
     {
-        return 0;
+        ArrayList<TestScore> specificStudent = getScoresByStudent(testScores, student);
+        int average = 0;
+
+        for(var test : specificStudent){
+            average += test.getScore();
+        }
+        return average / specificStudent.size();
     }
 }
