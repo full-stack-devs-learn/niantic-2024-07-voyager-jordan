@@ -68,7 +68,7 @@ public class Main
         newArray = Arrays.copyOf(currentScores, length);
         //Collects user input
         System.out.print("Enter your test score: ");
-        int userScore = userInput.nextInt();
+        int userScore = Integer.parseInt(userInput.nextLine());
         System.out.println();
 
         //Assigns data to the new arrays end position
