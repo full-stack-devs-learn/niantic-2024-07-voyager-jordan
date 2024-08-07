@@ -134,7 +134,6 @@ public class ArrayListIntro
         ArrayList<Integer> fibonacciList = new ArrayList<>();
         fibonacciList.add(0);
         fibonacciList.add(1);
-
         if(size == 2){
             return fibonacciList;
         }
@@ -142,7 +141,6 @@ public class ArrayListIntro
         for(int i = 1; i <= size - 2; i++){
             fibonacciList.add(fibonacciList.get(i) + fibonacciList.get(i-1));
         }
-
         return fibonacciList;
     }
 }
