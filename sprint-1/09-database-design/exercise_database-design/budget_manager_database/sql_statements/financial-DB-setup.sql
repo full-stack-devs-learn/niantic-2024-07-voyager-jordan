@@ -44,6 +44,9 @@ CREATE TABLE address (
 CREATE TABLE users
 (
 	user_id INT NOT NULL AUTO_INCREMENT,
+    username VARCHAR(25),
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     full_name VARCHAR(100) GENERATED ALWAYS AS (CONCAT(first_name, " ", last_name)) STORED,
@@ -60,7 +63,7 @@ CREATE TABLE accounts
     PRIMARY KEY (account_id)
 );
 
-CREATE TABLE userAccounts
+CREATE TABLE useraccounts
 (
 	account_id INT NOT NULL,
     user_id INT NOT NULL,
@@ -95,7 +98,7 @@ CREATE TABLE subcategories
     FOREIGN KEY (subcategory_owner) REFERENCES users(user_id)
 );
 
-CREATE TABLE userBudgets
+CREATE TABLE userbudgets
 (
     budget_id INT NOT NULL AUTO_INCREMENT,
     owner INT NOT NULL,
@@ -125,9 +128,9 @@ CREATE TABLE transactions
 # ---------------------------------------------------------------------- #
 # INSERT USERS DATA                                                      #
 # ---------------------------------------------------------------------- #
-INSERT users (first_name, last_name) VALUES
-('John', 'Doe'),
-('Sarah', 'Smith');
+INSERT users (first_name, last_name, email, password) VALUES
+('John', 'Doe', "JohnDoe@gmail.com", "123password"),
+('Sarah', 'Smith', "SarahSmith@gmail.com", "Password123");
 # ---------------------------------------------------------------------- #
 # INSERT VENDORS DATA                                                    #
 # ---------------------------------------------------------------------- #
@@ -201,12 +204,12 @@ INSERT INTO subcategories (subcategory_name, parent_id) VALUES
 # CREATE BUDGET FOR JOHN AND SARAH                                       #
 # ---------------------------------------------------------------------- #
 -- For John Doe (user_id = 1)
-INSERT INTO userBudgets (owner, name, budget_limit) VALUES
+INSERT INTO userbudgets (owner, name, budget_limit) VALUES
 (1, 'August Budget', 1000.00),
 (1, 'September Budget', 1200.00);
 
 -- For Sarah Smith (user_id = 2)
-INSERT INTO userBudgets (owner, name, budget_limit) VALUES
+INSERT INTO userbudgets (owner, name, budget_limit) VALUES
 (2, 'August Budget', 1000.00),
 (2, 'September Budget', 1200.00);
 # ---------------------------------------------------------------------- #
