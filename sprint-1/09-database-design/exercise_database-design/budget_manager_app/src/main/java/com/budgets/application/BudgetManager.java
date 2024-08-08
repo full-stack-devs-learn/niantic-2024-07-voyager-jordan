@@ -1,6 +1,6 @@
 package com.budgets.application;
 
-import com.budgets.services.UserDao;
+import com.budgets.data.UserDao;
 
 import java.util.Scanner;
 

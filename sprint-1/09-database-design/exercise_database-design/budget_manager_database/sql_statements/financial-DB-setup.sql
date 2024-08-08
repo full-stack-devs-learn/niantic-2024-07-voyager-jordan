@@ -13,55 +13,84 @@ USE financial;
 # ---------------------------------------------------------------------- #
 # CREATE TABLES                                                          #
 # ---------------------------------------------------------------------- #
+CREATE TABLE country (
+    country_id INT AUTO_INCREMENT PRIMARY KEY,
+    country_name VARCHAR(100) NOT NULL,
+    country_code CHAR(2) UNIQUE NOT NULL 
+);
+
+CREATE TABLE region (
+    region_id INT AUTO_INCREMENT PRIMARY KEY,
+    region_name VARCHAR(100) NOT NULL,
+    country_id INT NOT NULL,
+    FOREIGN KEY (country_id) REFERENCES country(country_id) ON DELETE CASCADE
+);
+
+CREATE TABLE city (
+    city_id INT AUTO_INCREMENT PRIMARY KEY,
+    city_name VARCHAR(100) NOT NULL,
+    region_id INT NOT NULL,
+    FOREIGN KEY (region_id) REFERENCES region(region_id) ON DELETE CASCADE
+);
+
+CREATE TABLE address (
+    address_id INT AUTO_INCREMENT PRIMARY KEY,
+    street_name VARCHAR(255) NOT NULL,
+    city_id INT NOT NULL,
+    postal_code VARCHAR(20),
+    FOREIGN KEY (city_id) REFERENCES city(city_id) ON DELETE CASCADE
+);
 
 CREATE TABLE users
 (
-	id INT NOT NULL AUTO_INCREMENT,
+	user_id INT NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     full_name VARCHAR(100) GENERATED ALWAYS AS (CONCAT(first_name, " ", last_name)) STORED,
-    PRIMARY KEY (id)
+    address_id INT NULL,
+    PRIMARY KEY (user_id),
+    FOREIGN KEY (address_id) REFERENCES address(address_id)
 );
 
 CREATE TABLE vendors 
 (
-	id INT NOT NULL AUTO_INCREMENT,
+	vendor_id INT NOT NULL AUTO_INCREMENT,
     vendor_name VARCHAR(50) NOT NULL,
-    PRIMARY KEY(id)
+    PRIMARY KEY(vendor_id)
 );
 
 CREATE TABLE categories
 (
-	id INT NOT NULL AUTO_INCREMENT,
+	category_id INT NOT NULL AUTO_INCREMENT,
     category_name VARCHAR(50) NOT NULL,
     category_owner INT NULL,
-    PRIMARY KEY(id)
+    PRIMARY KEY(category_id)
 );
 
 CREATE TABLE subcategories
 (
-	id INT NOT NULL AUTO_INCREMENT,
+	subcategory_id INT NOT NULL AUTO_INCREMENT,
     subcategory_name VARCHAR(50) NOT NULL,
     parent_id INT NOT NULL,
     subcategory_owner INT NULL,
-    PRIMARY KEY(id),
-    FOREIGN KEY(parent_id) REFERENCES categories(id),
-    FOREIGN KEY (subcategory_owner) REFERENCES users(id)
+    PRIMARY KEY(subcategory_id),
+    FOREIGN KEY(parent_id) REFERENCES categories(category_id),
+    FOREIGN KEY (subcategory_owner) REFERENCES users(user_id)
 );
 
 CREATE TABLE userbudgets
 (
-    id INT NOT NULL AUTO_INCREMENT,
+    budget_id INT NOT NULL AUTO_INCREMENT,
     owner INT NOT NULL,
     name VARCHAR(255) NOT NULL,
-    max_limit DECIMAL(10, 2) NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (owner) REFERENCES users(id)
+    budget_limit DECIMAL(10, 2) NULL,
+    PRIMARY KEY (budget_id),
+    FOREIGN KEY (owner) REFERENCES users(user_id)
 );
 
 CREATE TABLE transactions
 (	
-    id INT NOT NULL AUTO_INCREMENT,
+    transaction_id INT NOT NULL AUTO_INCREMENT,
     owner INT NOT NULL,
     budget_id INT NULL,
     vendor_id INT NOT NULL,
@@ -69,12 +98,13 @@ CREATE TABLE transactions
     amount DECIMAL(10,2) NOT NULL,
     date DATE NOT NULL,
     note TINYTEXT,
-    PRIMARY KEY (id),
-    FOREIGN KEY (vendor_id) REFERENCES vendors(id),
-    FOREIGN KEY (subcategory_id) REFERENCES subcategories(id),
-    FOREIGN KEY (owner) REFERENCES users(id),
-    FOREIGN KEY (budget_id) REFERENCES userbudgets(id)
+    PRIMARY KEY (transaction_id),
+    FOREIGN KEY (vendor_id) REFERENCES vendors(vendor_id),
+    FOREIGN KEY (subcategory_id) REFERENCES subcategories(subcategory_id),
+    FOREIGN KEY (owner) REFERENCES users(user_id),
+    FOREIGN KEY (budget_id) REFERENCES userbudgets(budget_id)
 );
+
 # ---------------------------------------------------------------------- #
 # INSERT USERS DATA                                                      #
 # ---------------------------------------------------------------------- #
@@ -154,14 +184,14 @@ INSERT INTO subcategories (subcategory_name, parent_id) VALUES
 # CREATE BUDGET FOR JOHN AND SARAH                                       #
 # ---------------------------------------------------------------------- #
 -- For John Doe (user_id = 1)
-INSERT INTO userbudgets (id, owner, name, max_limit) VALUES
-(1, 1, 'August Budget', 1000.00),
-(2, 1, 'September Budget', 1200.00);
+INSERT INTO userbudgets (owner, name, budget_limit) VALUES
+(1, 'August Budget', 1000.00),
+(1, 'September Budget', 1200.00);
 
 -- For Sarah Smith (user_id = 2)
-INSERT INTO userbudgets (id, owner, name, max_limit) VALUES
-(3, 2, 'August Budget', 1000.00),
-(4, 2, 'September Budget', 1200.00);
+INSERT INTO userbudgets (owner, name, budget_limit) VALUES
+(2, 'August Budget', 1000.00),
+(2, 'September Budget', 1200.00);
 # ---------------------------------------------------------------------- #
 # INSERT TRANSACTIONS DATA                                               #
 # ---------------------------------------------------------------------- #
