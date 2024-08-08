@@ -52,6 +52,23 @@ CREATE TABLE users
     FOREIGN KEY (address_id) REFERENCES address(address_id)
 );
 
+CREATE TABLE accounts
+(
+	account_id INT NOT NULL AUTO_INCREMENT,
+    account_name VARCHAR(50) DEFAULT "Unnamed",
+    account_balance DECIMAL(10, 2) DEFAULT 0.00,
+    PRIMARY KEY (account_id)
+);
+
+CREATE TABLE userAccounts
+(
+	account_id INT NOT NULL,
+    user_id INT NOT NULL,
+    PRIMARY KEY (account_id, user_id),
+    FOREIGN KEY (account_id) REFERENCES accounts(account_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
 CREATE TABLE vendors 
 (
 	vendor_id INT NOT NULL AUTO_INCREMENT,
@@ -78,7 +95,7 @@ CREATE TABLE subcategories
     FOREIGN KEY (subcategory_owner) REFERENCES users(user_id)
 );
 
-CREATE TABLE userbudgets
+CREATE TABLE userBudgets
 (
     budget_id INT NOT NULL AUTO_INCREMENT,
     owner INT NOT NULL,
@@ -102,7 +119,7 @@ CREATE TABLE transactions
     FOREIGN KEY (vendor_id) REFERENCES vendors(vendor_id),
     FOREIGN KEY (subcategory_id) REFERENCES subcategories(subcategory_id),
     FOREIGN KEY (owner) REFERENCES users(user_id),
-    FOREIGN KEY (budget_id) REFERENCES userbudgets(budget_id)
+    FOREIGN KEY (budget_id) REFERENCES userBudgets(budget_id)
 );
 
 # ---------------------------------------------------------------------- #
@@ -184,12 +201,12 @@ INSERT INTO subcategories (subcategory_name, parent_id) VALUES
 # CREATE BUDGET FOR JOHN AND SARAH                                       #
 # ---------------------------------------------------------------------- #
 -- For John Doe (user_id = 1)
-INSERT INTO userbudgets (owner, name, budget_limit) VALUES
+INSERT INTO userBudgets (owner, name, budget_limit) VALUES
 (1, 'August Budget', 1000.00),
 (1, 'September Budget', 1200.00);
 
 -- For Sarah Smith (user_id = 2)
-INSERT INTO userbudgets (owner, name, budget_limit) VALUES
+INSERT INTO userBudgets (owner, name, budget_limit) VALUES
 (2, 'August Budget', 1000.00),
 (2, 'September Budget', 1200.00);
 # ---------------------------------------------------------------------- #
