@@ -129,8 +129,8 @@ CREATE TABLE transactions
 # INSERT USERS DATA                                                      #
 # ---------------------------------------------------------------------- #
 INSERT users (first_name, last_name, email, password) VALUES
-('John', 'Doe', "JohnDoe@gmail.com", "123password"),
-('Sarah', 'Smith', "SarahSmith@gmail.com", "Password123");
+('John', 'Doe', "johndoe@gmail.com", "123password"),
+('Sarah', 'Smith', "sarahsmith@gmail.com", "Password123");
 # ---------------------------------------------------------------------- #
 # INSERT VENDORS DATA                                                    #
 # ---------------------------------------------------------------------- #

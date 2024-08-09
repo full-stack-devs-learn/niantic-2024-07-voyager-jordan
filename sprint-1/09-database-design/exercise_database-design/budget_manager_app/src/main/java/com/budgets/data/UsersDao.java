@@ -9,12 +9,12 @@ import javax.sql.DataSource;
 import java.util.ArrayList;
 
 
-public class UserDao {
+public class UsersDao {
     private final JdbcTemplate jdbcTemplate;
     ArrayList<User> users = new ArrayList<>();
 
     // <editor-fold desc="Database Connection">
-    public UserDao()
+    public UsersDao()
     {
         String databaseUrl = "jdbc:mysql://localhost:3306/financial";
         String userName = "root";
@@ -30,8 +30,6 @@ public class UserDao {
     // </editor-fold>
 
     public ArrayList<User> getUsers(){
-        // initialize the return Arraylist
-//        ArrayList<User> users = new ArrayList<>();
 
         String query = """
                     SELECT id
@@ -43,9 +41,10 @@ public class UserDao {
 
         while(row.next()){
             //          [row].[datatype][column name]
-            int userId = row.getInt("id");
+            int userId = row.getInt("user_id");
             String firstName = row.getString("first_name");
             String lastName = row.getString("last_name");
+
 
             User user = new User(userId, firstName, lastName);
 
@@ -53,4 +52,28 @@ public class UserDao {
         }
         return users;
     };
+
+    public User getUser(String email, String password){
+
+        String query = """
+                    SELECT *
+                    FROM users
+                    WHERE
+                    email = ? AND password = ?
+                    """;
+        SqlRowSet row = jdbcTemplate.queryForRowSet(query, email, password);
+
+        if(row.next()){
+            int userId = row.getInt("user_id");
+            String firstName = row.getString("first_name");
+            String lastName = row.getString("last_name");
+
+            return new User(userId, firstName, lastName);
+        } else {
+            return null;
+        }
+
+
+
+    }
 }

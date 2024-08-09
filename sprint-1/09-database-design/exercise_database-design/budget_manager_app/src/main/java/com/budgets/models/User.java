@@ -4,6 +4,8 @@ public class User {
     private int userId;
     private String first_name;
     private String last_name;
+    private String email;
+    private String username;
 
     public User(){};
     public User(int userId, String first_name, String last_name)
@@ -11,6 +13,7 @@ public class User {
         this.userId = userId;
         this.first_name = first_name;
         this.last_name = last_name;
+
     };
 
     //<editor-fold desc="Getters & Setters">

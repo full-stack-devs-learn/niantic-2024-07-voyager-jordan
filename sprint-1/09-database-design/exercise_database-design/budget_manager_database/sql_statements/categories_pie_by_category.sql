@@ -16,8 +16,8 @@ WITH Subcategories_Total AS (
         , c.category_name AS category
         ,SUM(t.amount) AS subcategory_total
     FROM transactions t
-    JOIN subcategories s ON t.subcategory_id = s.id
-    JOIN categories c ON s.parent_id = c.id
+    JOIN subcategories s ON t.subcategory_id = s.subcategory_id
+    JOIN categories c ON s.parent_id = c.category_id
     GROUP BY s.subcategory_name, c.category_name
 ),
 Subcategories_Group AS (

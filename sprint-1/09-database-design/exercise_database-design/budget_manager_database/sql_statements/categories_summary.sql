@@ -14,9 +14,9 @@ SELECT t.*, u.full_name
 , s.subcategory_name
 , c.category_name
 FROM transactions t
-JOIN users u ON t.owner = u.id
-JOIN subcategories s ON t.subcategory_id = s.id
-JOIN categories c ON s.parent_id = c.id
+JOIN users u ON t.owner = u.user_id
+JOIN subcategories s ON t.subcategory_id = s.subcategory_id
+JOIN categories c ON s.parent_id = c.category_id
 WHERE u.full_name = @search_for_user AND DATE_FORMAT(t.date, '%m') = @search_for_month
 ORDER BY c.category_name
 
