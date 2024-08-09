@@ -1,8 +1,8 @@
 package com.budgets.application;
 
-import com.budgets.data.TransactionsDao;
-import com.budgets.functions.monthConverter;
-import com.budgets.data.UsersDao;
+import com.budgets.services.TransactionsDao;
+import com.budgets.services.monthConverter;
+import com.budgets.services.UsersDao;
 import com.budgets.models.User;
 
 import java.util.Scanner;
@@ -25,7 +25,7 @@ public class BudgetManager
                     }
                     break;
                 case 2:
-                    //displayNewUserScreen();
+                    displayNewUserScreen();
                     break;
                 case 0:
                     System.out.println();
@@ -49,8 +49,52 @@ public class BudgetManager
 
         return getUserInt("Enter your selection: ");
     }
+    private void displayNewUserScreen()
+    {
+        boolean isSuccessful = false;
+        User account;
 
-    // <editor-fold desc="Login Section">
+        while (!isSuccessful) {
+            System.out.println("--------------------------------------");
+            System.out.println("             Create Account");
+            System.out.println("--------------------------------------");
+
+            String email = getUserString("Enter Email: ");
+            String password = getUserString("Enter Password: ");
+            String firstName = getUserString("Enter First Name: ");
+            String lastName = getUserString("Enter Last Name: ");
+
+
+            try {
+                var newUser = new User(){{
+                    setEmail(email);
+                    setPassword(password);
+                    setFirstName(firstName);
+                    setLastName(lastName);
+                }};
+
+                var insertUser = new UsersDao();
+                insertUser.addUser(newUser.getEmail()
+                                        , newUser.getPassword()
+                                        , newUser.getFirstName()
+                                        , newUser.getLastName()
+                );
+
+                account = new UsersDao().getUser(email, password);
+
+                if(account != null)
+                {
+                    System.out.println("Account Created");
+                    isSuccessful = true;
+                } else {
+                    System.out.println("Try Again");
+                }
+
+            } catch (Exception e) {
+                System.exit(0);
+            }
+        }
+    }
     private User displayLoginScreen()
     {
         int failCount = 0;
@@ -63,8 +107,8 @@ public class BudgetManager
 
             String email = getUserString("Enter Email: ");
             String password = getUserString("Enter Password: ");
-            email = "johndoe@gmail.com"; // For testing
-            password = "123password";    // For testing
+            // email = "johndoe@gmail.com"; // For testing
+            // password = "123password";    // For testing
 
             try {
                 account = userDao.getUser(email.toLowerCase(), password.toLowerCase());
@@ -89,8 +133,7 @@ public class BudgetManager
         }
         return account;
     }
-    // </editor-fold>
-    // <editor-fold desc="Login Section">
+
     private void displayWelcomeScreen(User account)
     {
         boolean isViewing = true;
@@ -142,9 +185,6 @@ public class BudgetManager
         System.out.println();
         return getUserInt("Enter your selection: ");
     }
-    // </editor-fold>
-
-    // </editor-fold desc="Transaction Section">
 
     private void displayTransactions(User account){
         boolean isViewing = true;
@@ -176,8 +216,6 @@ public class BudgetManager
             }
         }
     };
-
-
     private int transactionSelection()
     {
         System.out.println("--------------------------------------");
@@ -193,8 +231,6 @@ public class BudgetManager
         System.out.println();
         return getUserInt("Enter your selection: ");
     }
-
-
     private void displayAllUsersTransactions(User account)
     {
         TransactionsDao transactionsDao = new TransactionsDao();
@@ -264,8 +300,6 @@ public class BudgetManager
         System.out.println("--------------------------------------");
     }
 
-
-    // </editor-fold>
 
 
     //<editor-fold desc="Helper Functions">

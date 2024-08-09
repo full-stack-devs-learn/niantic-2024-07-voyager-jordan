@@ -1,4 +1,4 @@
-package com.budgets.data;
+package com.budgets.services;
 
 import com.budgets.models.User;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -40,11 +40,9 @@ public class UsersDao {
         SqlRowSet row = jdbcTemplate.queryForRowSet(query);
 
         while(row.next()){
-            //          [row].[datatype][column name]
             int userId = row.getInt("user_id");
             String firstName = row.getString("first_name");
             String lastName = row.getString("last_name");
-
 
             User user = new User(userId, firstName, lastName);
 
@@ -68,14 +66,28 @@ public class UsersDao {
             String firstName = row.getString("first_name");
             String lastName = row.getString("last_name");
 
-
             return new User(userId, firstName, lastName);
         } else {
             return null;
         }
-
-
-
-
     }
+    public void addUser(String email, String password, String firstName, String lastName)
+    {
+        String firstNameLetter = firstName.toUpperCase().substring(0,1);
+        String remainingFirst = firstName.substring(1);
+        String formatFirstName = firstNameLetter + remainingFirst;
+
+        String lastNameLetter = lastName.toUpperCase().substring(0,1);
+        String remainingLast = lastName.substring(1);
+        String formatLastName = lastNameLetter + remainingLast;
+
+        String query = """
+                    INSERT
+                    users (email, password, first_name, last_name)
+                    VALUES (?,?,?,?)
+                    """;
+
+        jdbcTemplate.update(query, email, password, formatFirstName, formatLastName);
+    }
+
 }

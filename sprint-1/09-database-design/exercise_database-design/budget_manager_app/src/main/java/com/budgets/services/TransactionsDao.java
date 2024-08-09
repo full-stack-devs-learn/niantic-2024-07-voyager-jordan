@@ -1,4 +1,4 @@
-package com.budgets.data;
+package com.budgets.services;
 
 import com.budgets.models.Transaction;
 import org.apache.commons.dbcp2.BasicDataSource;
