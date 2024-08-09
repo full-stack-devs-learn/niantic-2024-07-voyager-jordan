@@ -148,4 +148,52 @@ public class TransactionsDao {
         }
         return usersTransactions;
     };
+    public ArrayList<Transaction> getUsersTransactionSubCategory(int userId, String nameOfCategory)
+    {
+        ArrayList<Transaction> usersTransactions = new ArrayList<>();
+
+
+        String query = """
+                        SELECT c.category_name
+                        , s.subcategory_name
+                        , t.*
+                        FROM transactions t
+                        JOIN users u ON t.owner = u.user_id
+                        JOIN subcategories s ON t.subcategory_id = s.subcategory_id
+                        JOIN categories c ON s.parent_id = c.category_id
+                        WHERE user_id = ? AND subcategory_name = ?
+                        ORDER BY t.date desc
+                       """;
+
+        SqlRowSet row = jdbcTemplate.queryForRowSet(query, userId, nameOfCategory);
+
+        while(row.next()){
+            int transaction_id = row.getInt("transaction_id");
+            int owner_id = row.getInt("owner");
+            int budget_id = row.getInt("budget_id");
+            int vendor_id = row.getInt("vendor_id");
+            int subcategory_id = row.getInt("subcategory_id");
+            double amount = row.getDouble("amount");
+            Date timestamp = row.getDate("date");
+            String note = row.getString("note");
+            //Optionals
+            String subcategory_name = row.getString("subcategory_name");
+            String parentCategory_name = row.getString("category_name");
+
+            Transaction transaction = new Transaction(
+                    transaction_id
+                    , owner_id
+                    , budget_id
+                    , vendor_id
+                    , subcategory_id
+                    , amount
+                    , timestamp
+                    , note
+                    , subcategory_name
+                    , parentCategory_name
+            );
+            usersTransactions.add(transaction);
+        }
+        return usersTransactions;
+    };
 }

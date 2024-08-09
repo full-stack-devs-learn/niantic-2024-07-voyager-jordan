@@ -50,4 +50,8 @@ public class Transaction {
     {
         return String.format("%-10s| %-15s| %-12s|  $%-10.2f|  %5s", parentCategory_name, subcategory_name, timestamp, amount, note);
     }
+    public String toStringSubCategories()
+    {
+        return String.format("%-15s| %-12s|  $%-10.2f|  %5s", subcategory_name, timestamp, amount, note);
+    }
 }

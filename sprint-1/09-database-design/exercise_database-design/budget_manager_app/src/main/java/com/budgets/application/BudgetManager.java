@@ -15,12 +15,14 @@ public class BudgetManager
     public void start(){
         while(true)
         {
-
             int choice = displayLandingScreen();
             switch(choice)
             {
                 case 1:
-                    displayLoginScreen();
+                    User user = displayLoginScreen();
+                    if(user != null){
+                        displayWelcomeScreen(user);
+                    }
                     break;
                 case 2:
                     //displayNewUserScreen();
@@ -49,32 +51,51 @@ public class BudgetManager
     }
 
     // <editor-fold desc="Login Section">
-    private void displayLoginScreen()
+    private User displayLoginScreen()
     {
-        System.out.println("--------------------------------------");
-        System.out.println("             Login Screen");
-        System.out.println("--------------------------------------");
-        String email = getUserString("Enter Email: ");
-        String password = getUserString("Enter Password: ");
-        email = "johndoe@gmail.com";
-        password = "123password";
+        int failCount = 0;
+        User account = null;
 
-        try{
-            System.out.println("Logged In");
-            User account = userDao.getUser(email.toLowerCase(), password.toLowerCase());
-            displayWelcomeScreen(account);
-        } catch (Exception Ex){
+        while (failCount < 3) {
+            System.out.println("--------------------------------------");
+            System.out.println("             Login Screen");
+            System.out.println("--------------------------------------");
 
-        } finally {
-            displayLoginScreen();
+            String email = getUserString("Enter Email: ");
+            String password = getUserString("Enter Password: ");
+            email = "johndoe@gmail.com"; // For testing
+            password = "123password";    // For testing
+
+            try {
+                account = userDao.getUser(email.toLowerCase(), password.toLowerCase());
+
+                if(account != null)
+                {
+                    System.out.println("Login Successful!");
+                    break;
+                } else {
+                    failCount++;
+                    System.out.println("Invalid email or password. Please try again.");
+                    if(failCount >= 3){
+                        System.out.println("Failed to many times returning home");
+                    } else {
+                        System.out.println(STR."Attempts remaining: \{3 - failCount}");
+                    }
+                }
+
+            } catch (Exception e) {
+                System.exit(0);
+            }
         }
-
+        return account;
     }
     // </editor-fold>
     // <editor-fold desc="Login Section">
     private void displayWelcomeScreen(User account)
     {
-        while(true)
+        boolean isViewing = true;
+
+        while(isViewing)
         {
 
             int choice = welcomeSelection(account);
@@ -97,11 +118,11 @@ public class BudgetManager
 //                    displayProfileSettings();
 //                    break;
                 case 0:
-                    displayLoginScreen();
-                    account = null;
+                    isViewing = false;
                     break;
                 default:
-                    welcomeSelection(account);
+                    isViewing = false;
+                    break;
             }
         }
     }
@@ -126,7 +147,9 @@ public class BudgetManager
     // </editor-fold desc="Transaction Section">
 
     private void displayTransactions(User account){
-        while(true)
+        boolean isViewing = true;
+
+        while(isViewing)
         {
             int choice = transactionSelection();
             switch(choice)
@@ -142,13 +165,13 @@ public class BudgetManager
                     displayTransactionsByCategories(account);
                     break;
                 case 4:
-                    //displayTransactionsBySubCategories();
+                    displayTransactionsBySubCategories(account);
                     break;
                 case 0:
-                    displayWelcomeScreen(account);
+                    isViewing = false;
                     break;
                 default:
-                    welcomeSelection(account);
+                    isViewing = false;
                     break;
             }
         }
@@ -228,7 +251,17 @@ public class BudgetManager
     }
     private void displayTransactionsBySubCategories(User account)
     {
+        String categoryName = getUserString("Enter name of Category: ");
+        TransactionsDao transactionsDao = new TransactionsDao();
+        var categoryTransactions = transactionsDao.getUsersTransactionSubCategory(account.getUserId(), categoryName);
 
+        System.out.println("--------------------------------------");
+        System.out.println(STR."\{categoryName} Transactions");
+        System.out.println("--------------------------------------");
+        for(var transaction : categoryTransactions){
+            System.out.println(transaction.toStringSubCategories());
+        }
+        System.out.println("--------------------------------------");
     }
 
 

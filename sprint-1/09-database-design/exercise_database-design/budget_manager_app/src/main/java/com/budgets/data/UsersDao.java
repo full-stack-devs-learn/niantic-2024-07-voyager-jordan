@@ -68,10 +68,12 @@ public class UsersDao {
             String firstName = row.getString("first_name");
             String lastName = row.getString("last_name");
 
+
             return new User(userId, firstName, lastName);
         } else {
             return null;
         }
+
 
 
 
