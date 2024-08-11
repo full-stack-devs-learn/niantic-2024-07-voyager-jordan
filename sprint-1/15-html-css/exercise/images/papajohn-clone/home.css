@@ -133,3 +133,42 @@ body {
 .header-bottom-right ul {
     font-size: 3vh;
 }
+/* FEATURED SECTION*/
+
+.featured-section{
+    display: flex;
+    flex-direction: row;
+    height: 70vh;
+    padding: 10vh 9vh 0 9vh;
+    justify-content: center;
+
+
+}
+.featured-section :last-child{
+    margin-right: 0;
+}
+.featured-card{
+    height: 53vh;
+    width: 25vw;
+    background-color: #2D5E2B;
+    margin-right: 6vh;
+    border-radius: 3vh;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    color: white;
+}
+.featured-card label {
+    margin-left: 5vh;
+    margin-bottom: 5vh;
+    font-size: 3.2vh;
+    text-transform: uppercase;
+}
+.featured-card :last-child{
+    width: fit-content;
+    color: black;
+    background-color: rgb(255, 255, 255);
+    padding: 1.2vh;
+    border-radius: 5vh;
+    font-size: 2.3vh;
+}
