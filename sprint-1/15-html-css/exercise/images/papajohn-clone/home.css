@@ -1,0 +1,135 @@
+@font-face {
+    font-family: "Aachen";
+    src: url(./assets/font/Aachen\ Medium\ Plain.ttf);
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+* {
+    box-sizing: border-box;
+    font-family: "Aachen", sans-serif;
+}
+body {
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* <<<<<<<<<< HEADER TOP SECTION >>>>>>>>>> */
+.header-top-container{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 9vh;
+    align-items: center;
+    border-bottom: 1.5px solid rgb(225, 225, 225);
+    padding-left: 4%;
+    padding-right: 2%;
+}
+.header-top-container > img{
+    height: 3.4vh;
+}
+.header-top-nav-container {
+    flex: .7;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1vw;
+    margin: 0 0 0 auto;
+    padding: 0;
+    text-transform: uppercase;
+    align-items: center;
+    height: 100%;
+}
+.header-top-nav-container li{
+    display: inline-block;
+    padding: 1vh;
+    font-size: 2.5vh;
+    letter-spacing: 0vh;
+    cursor: pointer;
+}
+.header-top-nav-container li,
+.header-top-nav-container label,
+.header-top-nav-container svg {
+    cursor: pointer;
+}
+.header-top-nav-container li:hover:not(:last-child){
+    background-color: rgb(224, 224, 224);
+    border-radius: 1vh 1vh 1vh 1vh;
+}
+.header-top-nav-container > :last-child{
+    color: white;
+    background-color: #2D5E2B;
+    border-radius: 2.5vh;
+    padding: 1.4vh;
+}
+.header-top-nav-container > :last-child:hover{
+    color: white;
+    background-color: rgb(54, 54, 54);
+}
+#header-nav-track, #header-nav-lang{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: .3rem;
+}
+#hero-image{
+    width: 100vw;
+}
+/* HEADER BOTTOM SECTION */
+.header-bottom-container{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+    width: 100vw;
+    height: 10vh;
+    padding-left: 4%;
+    padding-right: 2%;
+   
+}
+.header-bottom-left,
+.header-bottom-right{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.header-bottom-left{
+    font-size: 4vh;
+}
+.header-bottom-left ul {
+    display: flex;
+    text-transform: uppercase;
+    margin: 0;
+    height: 100%;
+    padding-top: 1.3rem;
+    padding-left: 0;
+    
+}
+.header-bottom-left li {
+    margin-right: 2rem ;
+    height: 100%;
+    cursor: pointer;
+}
+.header-bottom-left li:hover {
+    border-bottom: 5px solid #2D5E2B;
+}
+.header-bottom-left li,
+.header-bottom-right li{
+    display: inline-block;
+}
+.header-bottom-left
+.header-bottom-right{
+    margin: 0 1.5vw 0 auto;
+    padding-left: 1.5vw;
+
+}
+.header-bottom-right section{
+    border-right: 1.5px solid rgb(225, 225, 225);
+}
+.header-bottom-right span {
+    align-items: center;
+}
+.header-bottom-right ul {
+    font-size: 3vh;
+}
