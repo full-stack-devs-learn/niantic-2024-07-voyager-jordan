@@ -176,11 +176,11 @@ public class BudgetManager
         System.out.println("--------------------------------------");
         System.out.println("Select from the following options:");
         System.out.println();
-        System.out.println("  1) View Budgets");
-        System.out.println("  2) Create Budget");
+        System.out.println("  1) View Budgets *Unavailable*");
+        System.out.println("  2) Create Budget *Unavailable*");
         System.out.println("  3) Transactions");
-        System.out.println("  4) Bank Management");
-        System.out.println("  1) Profile Settings");
+        System.out.println("  4) Bank Management *Unavailable*");
+        System.out.println("  1) Profile Settings *Unavailable*");
         System.out.println("  0) Logout");
         System.out.println();
         return getUserInt("Enter your selection: ");
