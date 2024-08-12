@@ -88,50 +88,87 @@ body {
     padding-right: 2%;
    
 }
-.header-bottom-left,
-.header-bottom-right{
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
 .header-bottom-left{
-    font-size: 4vh;
+    flex: 1;
+    font-size: 3vh;
 }
 .header-bottom-left ul {
     display: flex;
     text-transform: uppercase;
     margin: 0;
     height: 100%;
-    padding-top: 1.3rem;
     padding-left: 0;
+    justify-content: flex-start;
     
 }
 .header-bottom-left li {
-    margin-right: 2rem ;
+    display: flex;
+    align-items: center;
     height: 100%;
     cursor: pointer;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    margin-right: 2vw;
+    
 }
 .header-bottom-left li:hover {
-    border-bottom: 5px solid #2D5E2B;
+    border-bottom: 4px solid #2D5E2B;
 }
-.header-bottom-left li,
-.header-bottom-right li{
-    display: inline-block;
-}
-.header-bottom-left
 .header-bottom-right{
-    margin: 0 1.5vw 0 auto;
-    padding-left: 1.5vw;
-
-}
-.header-bottom-right section{
-    border-right: 1.5px solid rgb(225, 225, 225);
-}
-.header-bottom-right span {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
     align-items: center;
 }
-.header-bottom-right ul {
-    font-size: 3vh;
+.promo-section{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.promo-section input,
+.promo-section button {
+    height: 5vh;
+}
+.promo-section input {
+    width: 18vw;
+    border-radius: 1vh 0 0 1vh;
+    border: 1px solid gray;
+    padding-left: 1vw;
+}
+.promo-section input:focus {
+    border-color: green;
+    outline: none;
+}
+.promo-section button {
+    background-color: #2D5E2B;
+    color: white;
+    border: 0;
+    border-radius: 0 1vh 1vh 0;
+    font-size: 1em;
+    padding: 1vh;
+}
+.promo-section button:hover {
+    background-color: rgb(58, 58, 58);
+}
+.total-price-section{
+    display: flex;
+    margin-left: 3vw;
+    padding-left: 4%;
+    height: 100%;
+    align-items: center;
+    font-size: 1.5em;
+    border-left: 1.5px solid rgb(225, 225, 225);
+}
+.total-price-section .material-symbols-outlined{
+    font-size: 1.3em;
+
+}
+.price{
+    display: flex;
+}
+.price :first-child {
+    font-size: .5em;
+    color: red;
 }
 /* FEATURED SECTION*/
 
@@ -140,9 +177,7 @@ body {
     flex-direction: row;
     height: 70vh;
     padding: 10vh 9vh 0 9vh;
-    justify-content: center;
-
-
+    justify-content: space-between;
 }
 .featured-section :last-child{
     margin-right: 0;
@@ -151,18 +186,37 @@ body {
     height: 53vh;
     width: 25vw;
     background-color: #2D5E2B;
-    margin-right: 6vh;
+    padding: 5vh 5vh 5vh 5vh;
     border-radius: 3vh;
     display: flex;
     justify-content: flex-end;
     flex-direction: column;
     color: white;
+    position: relative;
+    overflow: hidden;
+    gap: 3vh;
+}
+.featured-card img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    bottom:0;
+    left: 0;
+    transition: width 0.7s ease-in-out, height 0.7s ease-in-out;
+}
+.featured-card:hover  img{
+    height: 110%;
+    width: 110%;
+
 }
 .featured-card label {
-    margin-left: 5vh;
-    margin-bottom: 5vh;
     font-size: 3.2vh;
     text-transform: uppercase;
+    z-index: 1;
+}
+.featured-card :last-child:hover{
+    background-color: #dedede
 }
 .featured-card :last-child{
     width: fit-content;
@@ -171,4 +225,159 @@ body {
     padding: 1.2vh;
     border-radius: 5vh;
     font-size: 2.3vh;
+}
+
+/* <<<<<<<<< FOOTER SECTION >>>>>>>>> */
+footer section{
+    padding-left: 6vw;
+    padding-right: 6vw;
+    padding-top: 4vh;
+}
+.footer-upper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 4vh;
+    border-top: 1.5px solid rgb(225, 225, 225);
+    cursor: default;
+}
+.footer-upper ul {
+    list-style: none;
+    padding: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.footer-upper li {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-top: 1.6vh;
+    font-size: .7em;
+    opacity: 60%;
+    cursor: pointer;
+}
+.footer-upper li:hover {
+    text-decoration: underline;
+}
+.franchise-button {
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+
+    height: 125px;
+    width: 370px;
+    border-radius: 1vh;
+    padding: 2vh;
+    font-size: x-large;
+    border: 1.5px solid rgb(225, 225, 225);
+}
+.franchise-button:hover{
+    box-shadow: 0 0 8px rgb(225, 225, 225);
+}
+.franchise-button img{
+    flex: .25;
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+    padding: 1.5vh;
+}
+.franchise-button label {
+    flex: .75;
+    display: flex;
+    align-items: center;
+    padding: 1vh;
+}
+.footer-lower{
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5vh;
+}
+.footer-section-1{
+    display: flex;
+    justify-content: space-between;
+    cursor: default;
+    margin-bottom: 3vh;
+    padding-top: 5vh;
+    border-top: 1.5px solid rgb(225, 225, 225);
+    
+}
+.footer-section-1 button,
+.footer-section-1 ul,
+.footer-section-1 li {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.footer-section-1 button{
+    width: 13vw;
+    height: 5vh;
+    background-color: white;
+    border: 1.5px solid rgb(156, 156, 156);
+    word-spacing: normal;
+}
+.footer-section-1 button:hover{
+    cursor: pointer;
+    box-shadow: 0 0 5px rgb(156, 156, 156);;
+}
+.footer-section-1 ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    margin-left: 1vw;
+}
+.footer-section-1 li {
+    list-style: none;
+    display: inline-block;
+    opacity: 60%;
+    font-size: small;
+    font-weight: 100;
+    margin-right: 3vh;
+}
+.footer-section-1 li:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.socials{
+    width: 12vw;
+    display: flex;
+}
+.socials ul {
+    padding: 0;
+}
+.socials ul svg {
+    opacity: 50%;
+}
+.socials ul svg:hover{
+    opacity: 100%;
+}
+.Stores ul,
+.Stores li{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.Stores ul{
+    padding: 0;
+    font-weight: 800;
+    font-size: .9em;
+}
+.Stores li{
+    list-style: none;
+    display: inline-block;
+    opacity: 60%;
+    font-weight: 100;
+    line-height: 20px;
+}
+.Stores li:hover{
+    text-decoration: underline;
+}
+.Stores li:not(:last-child)::after {
+    content: "|";
+    margin-left: 5px;
+}
+
+.details{
+    opacity: 60%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-bottom: 2.5vh;
+    font-size: .9em;
+}
+
+.footer-lower p {
+    line-height: 2.5vh;
 }
