@@ -24,9 +24,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>1</td>
-        <td>First Category</td>
+    <tr th:each="category:${categories}">
+        <td th:text="${category.categoryId}"></td>
+        <td th:text="${category.categoryName}"></td>
     </tr>
     </tbody>
 </table>
