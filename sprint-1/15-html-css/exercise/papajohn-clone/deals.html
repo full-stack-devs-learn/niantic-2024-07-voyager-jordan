@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./deals.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="./home.css"/>
     <title>Document</title>
 </head>
 <body>
     <header>
         <span class="header-top-container">
-            <img src="./assets/images/smallLogo.svg" alt="">
+            <a href="./home.html"><img src="./assets/images/smallLogo.svg" alt=""></a>
             <ul class="header-top-nav-container">
                 <li id="header-nav-track">
                     <svg viewBox="0 0 24 24" width="23" height="23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" xml:space="preserve">
@@ -52,7 +52,7 @@
         <span class="header-bottom-container">
             <div class="header-bottom-left">
                 <ul>
-                    <li>Menu</li>
+                    <a href="./deals.html"><li>Menu</li></a>
                     <li>Deals</li>
                     <li>Papa Rewards</li>
                 </ul>
@@ -72,25 +72,29 @@
             </div>
         </span>
     </header>
-    <section>
-        <img src="./assets/images/heroImage.png" id="hero-image"/>
-    </section>
-    <section class="featured-section">
-        <div class="featured-card">
-            <img src="./assets/images/pizza-1.jpg">
-            <label>Papa Pairings</label>
-            <label>Order Now</label>
+    <section class="main-content">
+        <label>Start Your Order</label>
+        <div class="chose-section">
+            <div class="delivery-button">
+                <img src="./assets/images/delivery_pic.png">
+                <label>Delivery</label>
+            </div>
+            <div class="delivery-button" id="takeout">
+                <img src="./assets/images/takeout_pic.png">
+                <label>CarryOut</label>
+            </div>
         </div>
-        <div class="featured-card">
-            <img src="./assets/images/pizza-2.jpeg">
-            <label>Cheesy Burger Pizza</label>
-            <label>Order Now</label>
-        </div>
-        <div class="featured-card">
-            <img src="./assets/images/pizza-3.jpeg">
-            <label>Explore our full menu</label>
-            <label>Order Now</label>
-        </div>
+            <form class="deals-form">
+                <label for="address">Address Type:</label><br>
+                <input type="text" id="address" name="Residence"><br>
+                <label for="country">Country:</label><br>
+                <input type="text" id="country" name="Country">
+                <label for="street-address">Street Address:</label><br>
+                <input type="text" id="s-address" name="Street Address">
+                <label for="zipcode">Zip Code:</label><br>
+                <input type="text" id="zipcode" name="Zip Code">
+            </form>
+            <button>Submit</button>
     </section>
     <footer>
         <section class="footer-upper">
@@ -230,5 +234,6 @@
             <label class="details">Support ID: 4800-2651-8530</label>
         </section>
     </footer>
+    
 </body>
 </html>

@@ -1,0 +1,388 @@
+@font-face {
+    font-family: "Aachen";
+    src: url(./assets/font/Aachen\ Medium\ Plain.ttf);
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+* {
+    box-sizing: border-box;
+    font-family: "Aachen", sans-serif;
+}
+body {
+    margin: 0;
+    overflow-x: hidden;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* <<<<<<<<<< HEADER TOP SECTION >>>>>>>>>> */
+.header-top-container{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 9vh;
+    align-items: center;
+    border-bottom: 1.5px solid rgb(225, 225, 225);
+    padding-left: 4%;
+    padding-right: 2%;
+}
+.header-top-container > img{
+    height: 3.4vh;
+}
+.header-top-nav-container {
+    flex: .7;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1vw;
+    margin: 0 0 0 auto;
+    padding: 0;
+    text-transform: uppercase;
+    align-items: center;
+    height: 100%;
+}
+.header-top-nav-container li{
+    display: inline-block;
+    padding: 1vh;
+    font-size: 2.5vh;
+    letter-spacing: 0vh;
+    cursor: pointer;
+}
+.header-top-nav-container li,
+.header-top-nav-container label,
+.header-top-nav-container svg {
+    cursor: pointer;
+}
+.header-top-nav-container li:hover:not(:last-child){
+    background-color: rgb(224, 224, 224);
+    border-radius: 1vh 1vh 1vh 1vh;
+}
+.header-top-nav-container > :last-child{
+    color: white;
+    background-color: #2D5E2B;
+    border-radius: 2.5vh;
+    padding: 1.4vh;
+}
+.header-top-nav-container > :last-child:hover{
+    color: white;
+    background-color: rgb(54, 54, 54);
+}
+#header-nav-track, #header-nav-lang{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: .3rem;
+}
+#hero-image{
+    width: 100vw;
+}
+/* HEADER BOTTOM SECTION */
+.header-bottom-container{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+    width: 100vw;
+    height: 10vh;
+    padding-left: 4%;
+    padding-right: 2%;
+   
+}
+.header-bottom-left{
+    flex: 1;
+    font-size: 3vh;
+}
+.header-bottom-left ul {
+    display: flex;
+    text-transform: uppercase;
+    margin: 0;
+    height: 100%;
+    padding-left: 0;
+    justify-content: flex-start;
+    
+}
+.header-bottom-left li {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    margin-right: 2vw;
+    
+}
+.header-bottom-left li:hover {
+    border-bottom: 4px solid #2D5E2B;
+}
+.header-bottom-right{
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.promo-section{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.promo-section input,
+.promo-section button {
+    height: 5vh;
+}
+.promo-section input {
+    width: 18vw;
+    border-radius: 1vh 0 0 1vh;
+    border: 1px solid gray;
+    padding-left: 1vw;
+}
+.promo-section input:focus {
+    border-color: green;
+    outline: none;
+}
+.promo-section button {
+    background-color: #2D5E2B;
+    color: white;
+    border: 0;
+    border-radius: 0 1vh 1vh 0;
+    font-size: 1em;
+    padding: 1vh;
+}
+.promo-section button:hover {
+    background-color: rgb(58, 58, 58);
+}
+.total-price-section{
+    display: flex;
+    margin-left: 3vw;
+    padding-left: 4%;
+    height: 100%;
+    align-items: center;
+    font-size: 1.5em;
+    border-left: 1.5px solid rgb(225, 225, 225);
+}
+.total-price-section .material-symbols-outlined{
+    font-size: 1.3em;
+
+}
+.price{
+    display: flex;
+}
+.price :first-child {
+    font-size: .5em;
+    color: red;
+}
+/* FEATURED SECTION*/
+
+.featured-section{
+    display: flex;
+    flex-direction: row;
+    height: 70vh;
+    padding: 10vh 9vh 0 9vh;
+    justify-content: space-between;
+}
+.featured-section :last-child{
+    margin-right: 0;
+}
+.featured-card{
+    height: 53vh;
+    width: 25vw;
+    background-color: #2D5E2B;
+    padding: 5vh 5vh 5vh 5vh;
+    border-radius: 3vh;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    gap: 3vh;
+}
+.featured-card img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    bottom:0;
+    left: 0;
+    transition: width 0.7s ease-in-out, height 0.7s ease-in-out;
+}
+.featured-card:hover  img{
+    height: 110%;
+    width: 110%;
+
+}
+.featured-card label {
+    font-size: 3.2vh;
+    text-transform: uppercase;
+    z-index: 1;
+}
+.featured-card :last-child:hover{
+    background-color: #dedede
+}
+.featured-card :last-child{
+    width: fit-content;
+    color: black;
+    background-color: rgb(255, 255, 255);
+    padding: 1.2vh;
+    border-radius: 5vh;
+    font-size: 2.3vh;
+}
+
+/* <<<<<<<<< FOOTER SECTION >>>>>>>>> */
+footer section{
+    padding-left: 6vw;
+    padding-right: 6vw;
+    padding-top: 4vh;
+}
+.footer-upper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 4vh;
+    border-top: 1.5px solid rgb(225, 225, 225);
+    cursor: default;
+}
+.footer-upper ul {
+    list-style: none;
+    padding: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.footer-upper li {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-top: 1.6vh;
+    font-size: .7em;
+    opacity: 60%;
+    cursor: pointer;
+}
+.footer-upper li:hover {
+    text-decoration: underline;
+}
+.franchise-button {
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+
+    height: 125px;
+    width: 370px;
+    border-radius: 1vh;
+    padding: 2vh;
+    font-size: x-large;
+    border: 1.5px solid rgb(225, 225, 225);
+}
+.franchise-button:hover{
+    box-shadow: 0 0 8px rgb(225, 225, 225);
+}
+.franchise-button img{
+    flex: .25;
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+    padding: 1.5vh;
+}
+.franchise-button label {
+    flex: .75;
+    display: flex;
+    align-items: center;
+    padding: 1vh;
+}
+.footer-lower{
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5vh;
+}
+.footer-section-1{
+    display: flex;
+    justify-content: space-between;
+    cursor: default;
+    margin-bottom: 3vh;
+    padding-top: 5vh;
+    border-top: 1.5px solid rgb(225, 225, 225);
+    
+}
+.footer-section-1 button,
+.footer-section-1 ul,
+.footer-section-1 li {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.footer-section-1 button{
+    width: 13vw;
+    height: 5vh;
+    background-color: white;
+    border: 1.5px solid rgb(156, 156, 156);
+    word-spacing: normal;
+}
+.footer-section-1 button:hover{
+    cursor: pointer;
+    box-shadow: 0 0 5px rgb(156, 156, 156);;
+}
+.footer-section-1 ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    margin-left: 1vw;
+}
+.footer-section-1 li {
+    list-style: none;
+    display: inline-block;
+    opacity: 60%;
+    font-size: small;
+    font-weight: 100;
+    margin-right: 3vh;
+}
+.footer-section-1 li:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.socials{
+    width: 12vw;
+    display: flex;
+}
+.socials ul {
+    padding: 0;
+}
+.socials ul svg {
+    opacity: 50%;
+}
+.socials ul svg:hover{
+    opacity: 100%;
+}
+.Stores ul,
+.Stores li{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.Stores ul{
+    padding: 0;
+    font-weight: 800;
+    font-size: .9em;
+}
+.Stores li{
+    list-style: none;
+    display: inline-block;
+    opacity: 60%;
+    font-weight: 100;
+    line-height: 20px;
+}
+.Stores li:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.Stores li:not(:last-child)::after {
+    content: "|";
+    margin-left: 5px;
+}
+
+.details{
+    opacity: 60%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-bottom: 2.5vh;
+    font-size: .9em;
+}
+
+.footer-lower p {
+    line-height: 2.5vh;
+}
