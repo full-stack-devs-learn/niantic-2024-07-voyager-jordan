@@ -52,7 +52,7 @@
         <span class="header-bottom-container">
             <div class="header-bottom-left">
                 <ul>
-                    <a href="./deals.html"><li>Menu</li></a>
+                    <li>Menu</li>
                     <li>Deals</li>
                     <li>Papa Rewards</li>
                 </ul>
@@ -84,25 +84,36 @@
                 <label>CarryOut</label>
             </div>
         </div>
+        <label id="form-disclaimer">All fields marked with an astrisk (*) are required.</label>
             <form class="deals-form">
-                <label for="address" id="address-label">Address Type:</label>
-                <input type="text" id="address" name="Residence">
-
-                <label for="country" id="country-label">Country:</label>
-                <input type="text" id="country" name="Country">
-
-                <label for="street-address" id="street-label">Street Address:</label>
-                <input type="text" id="s-address" name="Street Address">
-
-                <select id="select-type" name="select-type">
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
+                <label for="address" id="address-label">Address Type</label>
+                <select id="address-type"name="address-type" name="None">
+                    <option value="option1">USA</option>
+                    <option value="option2">Canada</option>
                 </select>
 
-                <label for="zipcode">Zip Code:</label>
-                <input type="text" id="zipcode" name="Zip Code">
+                <label for="country" id="country-label">Country</label>
+                <select id="country-type" name="country-type" name="None">
+                    <option value="option1">USA</option>
+                    <option value="option2">Canada</option>
+                </select>
+
+                <label for="street-address" id="street-label">Street Address *</label>
+                <input type="text" id="s-address" name="Street Address" value="Street Address">
+                
+                <label for="unit-type" id="unit-type">APT/UNIT/FLOOR</label>
+                <select id="select-type" name="select-type" name="None">
+                    <option value="option1">Apt</option>
+                    <option value="option2">Suite</option>
+                    <option value="option2">Flor</option>
+                </select>
+                <input for="select-type" type="text" id="unit-field" name="Unit Field">
+
+                <label for="zipcode" id="zipcodeLabel">Zip Code *</label>
+                <input type="text" id="zipcode" name="Zip Code" value="Zip Code">
+                <a id="zipcodeHelp" href="">Don't know your zip code?</a>
             </form>
-            <button>Submit</button>
+            <button id="form-submit">Submit</button>
     </section>
     <footer>
         <section class="footer-upper">
