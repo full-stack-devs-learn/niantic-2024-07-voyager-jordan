@@ -5,8 +5,8 @@ import com.niantic.services.CategoryDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @Controller
@@ -30,11 +30,11 @@ public class CategoriesController
     }
 
     @GetMapping("/categories/{id}")
-    public String getCategory(Model model, int id)
+    public String getCategory(Model model, @PathVariable("id") int id)
     {
         Category category = categoryDao.getCategoryById(id);
-        model.addAttribute("category", category);
+        model.addAttribute("categories", category);
 
-        return "/categories/${id}";
+        return "categories/index";
     }
 }

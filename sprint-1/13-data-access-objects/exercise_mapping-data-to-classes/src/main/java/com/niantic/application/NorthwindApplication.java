@@ -425,7 +425,8 @@ public class NorthwindApplication
 
         try
         {
-            productDao.updateProduct(updatedProduct);
+            productDao.updateProduct(
+                    updatedProduct);
 
             System.out.println(STR."\{newProductName} has been successfully updated.");
             System.out.println("-".repeat(100));

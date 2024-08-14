@@ -120,11 +120,13 @@ public class CategoryDao
                     UPDATE categories
                     SET category_name = ?
                     ,description = ?
+                    WHERE category_id = ?
                     """;
 
         jdbcTemplate.update(sql
                 , category.getCategoryName()
-                , category.getDescription());
+                , category.getDescription()
+                , category.getCategoryId());
 
     }
 
