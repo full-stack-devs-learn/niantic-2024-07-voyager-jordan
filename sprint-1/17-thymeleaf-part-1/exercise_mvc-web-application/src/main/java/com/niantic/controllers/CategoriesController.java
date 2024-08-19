@@ -34,7 +34,7 @@ public class CategoriesController
         Category category = categoryDao.getCategoryById(id);
         model.addAttribute("categories", category);
 
-        return "categories/index";
+        return "categories/details_category";
     }
 
     @GetMapping("/categories/{id}/edit")
