@@ -5,34 +5,30 @@ Class: Rectangle
     Bug 1:
 
         Describe the bug/error:
+         - .getArea() function returns value lower than 0
 
         Where was the bug? (function, line number)
+        - getArea(), Line 40
 
         What test helped you find the bug?
+         - getArea_negativeValues_expectedZero()
 
         What did you do to fix the bug?
+        - Added condition checking for values 0 and below
 
     Bug 2:
 
         Describe the bug/error:
+        - .getPerimeter() function returned incorrect perimeter
 
         Where was the bug? (function, line number)
+        - Within getPerimeter method, Line 52: return height + width
 
         What test helped you find the bug?
+         - default_getPerimeter_ReturnPerimeter_ExpectedHeightPlusWidthTimesTwo()
 
         What did you do to fix the bug?
-
-    Bug 3:
-
-        Describe the bug/error:
-
-        Where was the bug? (function, line number)
-
-        What test helped you find the bug?
-
-        What did you do to fix the bug?
-
-
+        - Multiplied the sum of the width and height by two to calculate for the other sides;
 
 
 Class: Quiz
@@ -40,22 +36,35 @@ Class: Quiz
     Bug 1:
 
         Describe the bug/error:
+        - getPercent() function returned 0 but expected "50" based off possiblePoints = 100, score = 50;
+        - the division portion resulted in zero because they were both integers when divided,
+         which then resulted in the multiplication portion to result also to zero.
 
         Where was the bug? (function, line number)
+        - .getPercent(), Line 37
 
         What test helped you find the bug?
+        - getPercent_returnPercentScoreOfStudent_expectPositiveValue()
 
         What did you do to fix the bug?
+        - casted double to the division to result in 0.5 and multiplied that with 100 and casted int on the result
 
     Bug 2:
 
         Describe the bug/error:
+        - If statement didn't correctly assign the letter grade within its percent span etc 90-100 was actually 91-100.
+        - Additionally "D" case was set at 51-70 instead of 60-69.
 
         Where was the bug? (function, line number)
+        - .getLetterGrade(), line: 46-50
 
         What test helped you find the bug?
+        - getLetterGrade_returnGradeOfStudent_expectA() - Found the incorrect grade span 90-100
+        - getLetterGrade_returnGradeOfStudent_expectD() - Found the incorrect D span of 51-70 instead of 60-69
 
         What did you do to fix the bug?
+        - I added greater than and equals to operators
+        - I change the lower value from 50 -> 60 to correctly change the grading system according to README
 
 
 *** Optional / Challenge ***
@@ -67,24 +76,58 @@ Class: GameCharacter
     Bug 1:
 
         Describe the bug/error:
+        - Energy level depleted lower than 0
 
         Where was the bug? (function, line number)
+        - takeHit(), line: 32;
 
         What test helped you find the bug?
+        - TakeHit(10) resulted in character's energy level being -10;
 
         What did you do to fix the bug?
+        - Added a IF statement to check if the result of the takeHit() function resulted in a value lower than
+        if so resulted in setting the energy level to 0;
 
     Bug 2:
 
-        Describe the bug/error:
+        Describe the bug/error: Character healed when knocked
 
         Where was the bug? (function, line number)
+        - heal(), line: 41
 
         What test helped you find the bug?
+         - heal_healCharacterIfKnocked_expectNoEnergyIncrease()
 
         What did you do to fix the bug?
+        - Added a IF statement checking characters knocked status and applying heal if not knocked
 
+    Bug 3:
 
+        Describe the bug/error:
+        - Character heals passed max energy level
+
+        Where was the bug? (function, line number)
+        - heal(), line: 41
+
+        What test helped you find the bug?
+         - heal_healCharacter_expectEnergyIncrease()
+
+        What did you do to fix the bug?
+        - After checking if character is not knocked checked outcome of heal and sets it to max if outcome is above max limit
+
+    Bug 4:
+
+        Describe the bug/error:
+        - Character Initialized at energy level 0 unable to heal
+
+        Where was the bug? (function, line number)
+        - gameCharacter(), line: 29
+
+        What test helped you find the bug?
+         - heal_healCharacter_expectEnergyIncrease()
+
+        What did you do to fix the bug?
+        - Initialized new characters starting at max energy level
 
 
 Class: Printer
