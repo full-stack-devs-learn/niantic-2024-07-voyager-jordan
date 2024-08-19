@@ -3,7 +3,7 @@ package com.niantic.part_2_challenge;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GameCharacterTests
 {
@@ -98,4 +98,23 @@ class GameCharacterTests
         assertEquals(expectedEnergyLevel, actualEnergyLevel, "Expect a character health to be set to max");
     }
 
+    @Test
+    public void isKnocked_energyGreaterthan0_expectFalse()
+    {
+        // Arrange
+        // Act
+        boolean actualValue = newCharacter.isKnockedOut();
+        //Arrange
+        assertFalse(actualValue, "Should return false if not 0");
+    }
+    @Test
+    public void isKnocked_energyEqualsZero_expectTrue()
+    {
+        // Arrange
+        newCharacter.takeHit(newCharacter.getEnergyLevel());
+        // Act
+        boolean actualValue = newCharacter.isKnockedOut();
+        //Arrange
+        assertTrue(actualValue, "Should return true health is zero");
+    }
 }
