@@ -9,8 +9,8 @@ public class HomeController
 
     // home page
     @GetMapping("/")
-    public String categories()
+    public String goHome()
     {
-        return "index";
+        return "home/index";
     }
 }

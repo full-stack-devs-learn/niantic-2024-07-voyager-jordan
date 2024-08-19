@@ -4,8 +4,7 @@ import com.niantic.models.Category;
 import com.niantic.services.CategoryDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -36,5 +35,74 @@ public class CategoriesController
         model.addAttribute("categories", category);
 
         return "categories/index";
+    }
+
+    @GetMapping("/categories/{id}/edit")
+    public String editCategory(Model model, @PathVariable("id") int id)
+    {
+        Category category = categoryDao.getCategoryById(id);
+        model.addAttribute("categories", category);
+
+        return "categories/edit_category";
+    }
+
+    @GetMapping("/categories/add")
+    public String addCategory(){
+        return "/categories/add_category";
+    }
+
+    @PostMapping ("/categories/add")
+    public String postCategory(@ModelAttribute Category category){
+
+        if(category.getCategoryName().isEmpty() || category.getDescription().isEmpty() ){
+            return "redirect:/categories/error_category";
+        }
+        categoryDao.addCategory(category);
+        return "redirect:/categories";
+    }
+
+
+//UPDATE
+    @PostMapping("/categories/{id}/edit")
+    public String postEditCategory(@ModelAttribute Category category, @PathVariable("id") int id)
+    {
+        Category current = categoryDao.getCategoryById(id);
+
+        category.setCategoryId(id);
+
+        category.setCategoryName((category.getCategoryName().isEmpty()
+                ? current.getCategoryName()
+                : category.getCategoryName()));
+        category.setDescription((category.getDescription().isEmpty()
+                ? current.getDescription()
+                : category.getDescription()));
+
+        categoryDao.updateCategory(category);
+
+        return "redirect:/categories";
+    }
+//DELETE
+    @GetMapping("/categories/{id}/delete")
+    public String getDeleteCategory(Model model, @PathVariable("id") int id)
+    {
+        Category category = categoryDao.getCategoryById(id);
+        model.addAttribute("categories", category);
+        return "/categories/delete_category";
+    }
+    @PostMapping("/categories/{id}/delete")
+    public String deleteCategory(@PathVariable("id") int id)
+    {
+        try {
+            categoryDao.deleteCategory(id);
+        } catch (Exception e){
+            return "redirect:/categories/error_category";
+        }
+        return "redirect:/categories";
+    }
+//ERRORS
+    @GetMapping("/categories/error_category")
+    public String errorCategory()
+    {
+        return "categories/error_category";
     }
 }

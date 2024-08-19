@@ -1,3 +1,58 @@
-body{
+html,
+body {
+    height: 100%
+}
+body {
     font-family: Arial, sans-serif;
+    display:flex;
+    flex-direction: column;
+}
+main{
+    flex: 1;
+}
+main > h4 > a{
+    text-decoration:none;
+    color: black;
+}
+.screen{
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content center;
+    padding-left: 40%;
+    padding-right: 40%;
+}
+.confirm-modal{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    background-color: #d5d5d5;
+    width: 25vw;
+    padding: 2vh;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3vh 3vh 3vh 3vh;
+    border: 2px solid gray;
+}
+.confirm-bottom{
+    width: 100%;
+}
+.confirm-bottom > form {
+    display: flex;
+}
+
+.confirm-bottom button {
+    flex: 1;
+    border: 1px solid gray;
+    margin: 1vh 0 0 0;
+}
+.delete-btn > a{
+    text-decoration: none;
+    color: black
 }

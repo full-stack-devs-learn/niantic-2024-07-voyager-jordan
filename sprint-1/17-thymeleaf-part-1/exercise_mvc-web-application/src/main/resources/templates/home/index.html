@@ -11,9 +11,10 @@
 
 </head>
 <body>
-    <div th:replace="fragments/header.html :: nav"></div>
+    <header th:replace="~{fragments/header.html :: nav}"></header>
     <main class="container mt-4">
         <h4>Welcome to Northwind Traders</h4>
     </main>
+    <footer th:replace="~{fragments/footer.html :: footer}"></footer>
 </body>
 </html>
