@@ -29,6 +29,11 @@ public class Printer
         int maxCapacity = Math.min(sheets, toner);
         int pagesPrinted = Math.min(pages, maxCapacity);
 
+        if(pages <= 0)
+        {
+            return 0;
+        }
+
         toner -= pagesPrinted;
         sheets -= pagesPrinted;
 
@@ -41,14 +46,15 @@ public class Printer
         {
             sheets = MAX_SHEET_CAPACITY;
         }
-        else
+        else if (paper > 0)
         {
             sheets += paper;
         }
+
     }
 
     public void replaceToner()
     {
-        this.toner += MAX_TONER;
+        this.toner = MAX_TONER;
     }
 }

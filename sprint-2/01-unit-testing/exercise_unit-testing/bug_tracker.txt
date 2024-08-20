@@ -135,19 +135,43 @@ Class: Printer
     Bug 1:
 
         Describe the bug/error:
+        - Printer prints negative pages
 
         Where was the bug? (function, line number)
+        - print(), line: 27
 
         What test helped you find the bug?
+        - print_givenNegativePages_calculatesTotalPagesPrinted()
 
         What did you do to fix the bug?
+        - I added a check to see if input pages is a less than or equals
+        to zero
 
     Bug 2:
 
         Describe the bug/error:
+        - Printer adds negative pages
 
         Where was the bug? (function, line number)
+        - addPaper(), line: 43
 
         What test helped you find the bug?
+        - addPaper_givenNegativePaper_doesNotAddPaperToPrinter()
 
         What did you do to fix the bug?
+        - Added a check to see if input value of addPaper is
+        greater than 0
+
+    Bug 3:
+
+        Describe the bug/error:
+        - Printer adds more than max toner
+
+        Where was the bug? (function, line number)
+        - replaceToner(), line: 56
+
+        What test helped you find the bug?
+        - replaceToner_tonerCalledWithinTonerBoundries_resetTonerToMaxValue()
+
+        What did you do to fix the bug?
+        - removed += and instead just equals MAX_TONER
