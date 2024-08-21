@@ -18,7 +18,12 @@ public class Maps
      */
     public List<String> mapCompanyNames(List<LineItem> lineItems)
     {
-        return new ArrayList<>();
+        var mapByCompanyNames = lineItems.stream()
+                                         .map(LineItem::getCompanyName)
+                                         .sorted()
+                                         .distinct()
+                                         .toList();
+        return mapByCompanyNames;
     }
 
     /*
@@ -31,7 +36,12 @@ public class Maps
      */
     public List<String> mapCategories(List<LineItem> lineItems)
     {
-        return new ArrayList<>();
+        var mapByCategories = lineItems.stream()
+                .map(LineItem::getCategoryName)
+                .sorted()
+                .distinct()
+                .toList();
+        return mapByCategories;
     }
 
     /*
@@ -44,7 +54,13 @@ public class Maps
      */
     public List<String> mapProducts(List<LineItem> lineItems)
     {
-        return new ArrayList<>();
+        var mapByProductNames = lineItems.stream()
+                                         .map(LineItem::getProductName)
+                                         .sorted()
+                                         .distinct()
+                                         .toList();
+
+        return mapByProductNames;
     }
 
     /*
@@ -57,7 +73,15 @@ public class Maps
      */
     public List<String> mapYears(List<LineItem> lineItems)
     {
-        return new ArrayList<>();
+        var mapByYear = lineItems.stream()
+                                 .map(lineItem -> lineItem.getOrderDate().getYear())
+                                 .map(year -> year.toString())
+                                 .sorted()
+                                 .distinct()
+                                 .toList();
+
+        return mapByYear;
+
     }
 
     /*
@@ -70,6 +94,13 @@ public class Maps
      */
     public List<String> mapOrderIds(List<LineItem> lineItems)
     {
-        return new ArrayList<>();
+        var mapByOrderId = lineItems.stream()
+                .map(LineItem::getOrderId)
+                .map(orderId -> orderId.toString())
+                .sorted()
+                .distinct()
+                .toList();
+
+        return mapByOrderId;
     }
 }

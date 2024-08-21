@@ -2,7 +2,6 @@ package com.niantic.exercises;
 
 import com.niantic.models.LineItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Filters
@@ -15,7 +14,14 @@ public class Filters
      */
     public List<LineItem> filterByCompanyName(List<LineItem> lineItems, String companyName)
     {
-        return new ArrayList<>();
+
+        var filteredByCompany = lineItems.stream()
+                              .filter(lineItem -> lineItem.getCompanyName()
+                                                          .toLowerCase()
+                                                          .contains(companyName.toLowerCase()))
+                              .toList();
+
+        return filteredByCompany;
     }
 
     /*
@@ -25,7 +31,13 @@ public class Filters
      */
     public List<LineItem> filterByCategory(List<LineItem> lineItems, String categoryName)
     {
-        return new ArrayList<>();
+        var filteredByCategory = lineItems.stream()
+                                          .filter(lineItem -> lineItem.getCategoryName()
+                                                                      .toLowerCase()
+                                                                      .contains(categoryName.toLowerCase()))
+                                          .toList();
+
+        return filteredByCategory;
     }
 
     /*
@@ -35,7 +47,14 @@ public class Filters
      */
     public List<LineItem> filterByProduct(List<LineItem> lineItems, String productName)
     {
-        return new ArrayList<>();
+
+        var filteredByProductName = lineItems.stream()
+                                             .filter(lineItem -> lineItem.getProductName()
+                                                                         .toLowerCase()
+                                                                         .contains(productName.toLowerCase()))
+                                             .toList();
+
+        return filteredByProductName;
     }
 
     /*
@@ -44,7 +63,12 @@ public class Filters
      */
     public List<LineItem> filterByYear(List<LineItem> lineItems, int year)
     {
-        return new ArrayList<>();
+
+        var filteredByYear = lineItems.stream()
+                .filter(lineItem -> lineItem.getOrderDate().getYear() == year)
+                .toList();
+
+        return filteredByYear;
     }
 
 
@@ -54,6 +78,11 @@ public class Filters
      */
     public List<LineItem> filterByOrderId(List<LineItem> lineItems, int orderId)
     {
-        return new ArrayList<>();
+
+        var filteredByOrderId = lineItems.stream()
+                .filter(lineItem -> lineItem.getOrderId() == orderId)
+                .toList();
+
+        return filteredByOrderId;
     }
 }

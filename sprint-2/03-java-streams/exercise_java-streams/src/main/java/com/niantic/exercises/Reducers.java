@@ -2,6 +2,7 @@ package com.niantic.exercises;
 
 import com.niantic.models.LineItem;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Reducers
@@ -16,7 +17,11 @@ public class Reducers
      */
     public double totalSales(List<LineItem> lineItems)
     {
-        return 0;
+        var totalSales = lineItems.stream()
+                .map(LineItem::getLineTotal)
+                .reduce(0.0, (sum, add)-> sum + add);
+
+        return totalSales;
     }
 
     /*
@@ -26,7 +31,11 @@ public class Reducers
      */
     public double averageSalesPerLineItem(List<LineItem> lineItems)
     {
-        return 0;
+        var averageSalesPer = lineItems.stream()
+                .map(LineItem::getLineTotal)
+                .reduce(0.0, (sum, add) -> sum + add);
+
+        return averageSalesPer / lineItems.size();
     }
 
     /*
@@ -40,7 +49,17 @@ public class Reducers
      */
     public double averageSalesPerItem(List<LineItem> lineItems)
     {
-        return 0;
+        var itemCount = lineItems.stream()
+                .map(LineItem::getQuantity)
+                .reduce(0, (sum, qty) -> sum + qty);
+
+        var totalPrice = lineItems.stream()
+                        .map(LineItem::getLineTotal)
+                        .reduce(0.0, (sum, qty) -> sum + qty);
+        
+        var average = totalPrice / itemCount;
+
+        return average;
     }
 
     /*
@@ -52,7 +71,11 @@ public class Reducers
      */
     public int totalItemCount(List<LineItem> lineItems)
     {
-        return 0;
+        var totalItemCount = lineItems.stream()
+                .map(LineItem::getQuantity)
+                .reduce(0, (total, add) -> total + add);
+
+        return totalItemCount;
     }
 
     /*
@@ -62,7 +85,14 @@ public class Reducers
      */
     public double averageItemCount(List<LineItem> lineItems)
     {
-        return 0;
+
+        var itemCount = lineItems.stream()
+                .map(LineItem::getQuantity)
+                .reduce(0, (sum, qty) -> sum + qty);
+
+        var average = (double) itemCount / lineItems.size();
+
+        return average;
     }
 
     /*
@@ -71,7 +101,13 @@ public class Reducers
      */
     public double maxLineItem(List<LineItem> lineItems)
     {
-        return 0;
+        var listOfTotals = lineItems.stream()
+                .map(LineItem::getLineTotal)
+                .toList();
+
+        double biggestValue = Collections.max(listOfTotals);
+
+        return biggestValue;
     }
 
     /*
@@ -82,7 +118,13 @@ public class Reducers
      */
     public double minLineItem(List<LineItem> lineItems)
     {
-        return 0;
+        var listOfTotals = lineItems.stream()
+                .map(LineItem::getLineTotal)
+                .toList();
+
+        double smallestValue = Collections.min(listOfTotals);
+
+        return smallestValue;
     }
 
 }
