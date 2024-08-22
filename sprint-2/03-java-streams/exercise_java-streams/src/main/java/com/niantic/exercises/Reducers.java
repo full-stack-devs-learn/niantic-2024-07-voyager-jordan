@@ -4,6 +4,7 @@ import com.niantic.models.LineItem;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class Reducers
 {
@@ -56,7 +57,7 @@ public class Reducers
         var totalPrice = lineItems.stream()
                         .map(LineItem::getLineTotal)
                         .reduce(0.0, (sum, qty) -> sum + qty);
-        
+
         var average = totalPrice / itemCount;
 
         return average;
@@ -101,13 +102,12 @@ public class Reducers
      */
     public double maxLineItem(List<LineItem> lineItems)
     {
-        var listOfTotals = lineItems.stream()
+        Optional<Double> listOfTotals = lineItems.stream()
                 .map(LineItem::getLineTotal)
-                .toList();
+                .max(Double::compareTo);
 
-        double biggestValue = Collections.max(listOfTotals);
 
-        return biggestValue;
+        return listOfTotals.orElse(0.0);
     }
 
     /*
