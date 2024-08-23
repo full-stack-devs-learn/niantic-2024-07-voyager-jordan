@@ -106,8 +106,8 @@ public class Reducers
                 .map(LineItem::getLineTotal)
                 .max(Double::compareTo);
 
-
         return listOfTotals.orElse(0.0);
+
     }
 
     /*

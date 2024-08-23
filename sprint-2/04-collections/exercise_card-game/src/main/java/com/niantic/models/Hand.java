@@ -1,10 +1,11 @@
 package com.niantic.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Hand
 {
-    private final ArrayList<Card> cards = new ArrayList<>();
+    private ArrayList<Card> cards = new ArrayList<>();
 
     public ArrayList<Card> getCards()
     {
@@ -18,7 +19,7 @@ public class Hand
 
         for(Card card : cards)
         {
-            sum += card.getValue();
+            sum += card.getNumberValue();
         }
         return sum;
     }
@@ -32,4 +33,22 @@ public class Hand
     {
         cards.add(card);
     }
+
+    public void removeCard(String cardToRemove){
+        for (int i = 0; i < cards.size(); i++) {
+            if (cards.get(i).getValue().equals(cardToRemove)) {
+                cards.remove(i);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public String toString(){
+        String inHand = "";
+        for(Card card : cards){
+            inHand += card.getValue() + " ";
+        }
+        return inHand;
+    };
 }

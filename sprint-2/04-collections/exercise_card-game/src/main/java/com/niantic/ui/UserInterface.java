@@ -16,9 +16,17 @@ public class UserInterface
             System.out.println(player.getName() + ": " + player.getHandValue());
             for (Card card : player.getHand().getCards())
             {
-                System.out.println("  " + card.getColor() + " " + card.getValue());
+                System.out.println(card.getNumberValue());
             }
             System.out.println();
         }
+    }
+
+
+    public static void displayAddPlayers(int playerCount){
+        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=");
+        System.out.println("=      Player " + playerCount + "       =");
+        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=");
+        System.out.print("Enter your name:");
     }
 }

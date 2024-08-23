@@ -7,19 +7,20 @@ public class Deck
 {
     private ArrayList<Card> cards;
 
+    public Deck(boolean isEmpty) { cards = new ArrayList<>(); }
+
     public Deck()
     {
         // build the deck of cards
         cards = new ArrayList<>();
 
-        int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        String[] colors = {"Red", "Blue", "Green", "Yellow"};
+        //Refactored original code to use suits and also added face cards.
+        String[] values = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
 
-        for(String color : colors)
-        {
-            for(int number : numbers)
+        for(int i = 0; i < 4; i++){
+            for(String value : values)
             {
-                Card card = new Card(color,number);
+                Card card = new Card(value);
                 cards.add(card);
             }
         }
@@ -29,15 +30,32 @@ public class Deck
     {
         return cards.size();
     }
-
     public Card takeCard()
     {
         Card card = cards.removeFirst();
         return card;
     }
-
+    public void playCard(Card card)
+    {
+        cards.add(card);
+    }
     public void shuffle()
     {
         Collections.shuffle(cards);
+    }
+    public void giveDeck(Player targetPlayer)
+    {
+        //Give deck to target player
+        while(!cards.isEmpty()){
+            targetPlayer.dealTo(cards.removeFirst());
+        }
+
+    }
+
+    public Card cardOnTop()
+    {
+        if(cards.isEmpty()){ return null; }
+
+        return cards.getLast();
     }
 }
