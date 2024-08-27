@@ -4,6 +4,10 @@
 
 -- (1 row) - $60616.51
 
+USE northwind;
 
+SELECT SUM(sales_price * quantity) AS SumOfAllSalesUK
+FROM customer_orders
+WHERE country = "UK";
 
 

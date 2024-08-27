@@ -9,25 +9,32 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-import static com.niantic.ui.UserInterface.displayAddPlayers;
+import static com.niantic.ui.ColorCodes.CYAN;
+import static com.niantic.ui.UserInterface.*;
 
 public class CardGameApplication
 {
+    Scanner userInput = new Scanner(System.in);
+
+    //Game Variables
     Deck deck = new Deck();
     Deck gamePile = new Deck(true);
     ArrayList<Player> players = new ArrayList<>();
-    Scanner userInput = new Scanner(System.in);
-    boolean gameActive = false;
+    Player winner = null;
 
-    
+
+    //Game Start
+    boolean gameActive = false;
     public void run()
     {
         addPlayers();
         dealCards();
 
+        //SET TO FALSE TO SEE WINNER SCREEN
         gameActive = true;
         Queue<Player> playOrder = new LinkedList<>(players);
 
+        //WHILE GAME IS ACTIVE
         while(gameActive){
 
             //Check if there is players
@@ -35,43 +42,70 @@ public class CardGameApplication
             takeTurn(playOrder);
 
         }
+        //INITIATE WINNER SCREEN
+        displayWinner(winner);
     }
 
-    private Queue<Player> takeTurn(Queue<Player> playersQueue)
-    {
+    private Queue<Player> takeTurn(Queue<Player> playersQueue){       //GETS FIRST PERSON IN QUEUE
             Player currentPlayer = playersQueue.peek();
 
-            System.out.println("  WAR!");
-            System.out.println("=-=-=-=");
-            System.out.println("=     =");
-            System.out.println("=  " + (gamePile.cardOnTop() == null ? 0 : gamePile.cardOnTop().getValue())  +"  =");
-            System.out.println("=     =");
-            System.out.println("=-=-=-=");
-            System.out.println("Current Player: " + currentPlayer.getName());
-            System.out.print("Current hand: ");
-            System.out.print(currentPlayer.getHand().toString());
-            System.out.println();
-            System.out.print("Play Card:");
+            //VARIBLES FOR VALIDATION
+            boolean isValid = false;
+            Card validatedCard = null;
+            String validatedText = null;
 
-            String cardChoice = userInput.next().toUpperCase();
-            Card cardToCompare = new Card(cardChoice);
+            while(!isValid){
+                displayPlayerTurn(gamePile, currentPlayer);
+                String cardChoice = userInput.next().toUpperCase();
+                Card cardToCompare = cardChoice.isEmpty() ? null : new Card(cardChoice);
+
+                 var cardFound = currentPlayer.getHand().getCards().stream()
+                                                  .filter(card -> getValue(card).equals(cardToCompare.getValue()))
+                                                  .findFirst();
+
+                 if(cardFound.isPresent()){
+                     validatedCard = cardToCompare;
+                     validatedText = cardChoice;
+                     isValid = true;
+                 }
+            }
+
             int currentHighest = gamePile.cardOnTop() == null ? 0 : gamePile.cardOnTop().getNumberValue();
 
-            if(cardToCompare.getNumberValue() < currentHighest){
-                gamePile.giveDeck(currentPlayer);
-            } else {
-                //Remove card from active player
-                currentPlayer.getHand().removeCard(cardChoice.toUpperCase());
-                //Win Condition
+            //CHECKS IF CHOICE BEATS CURRENT HIGHEST
+            if(validatedCard.getNumberValue() >= currentHighest){
+                //Remove card from current player's hand
+                currentPlayer.getHand().removeCardofValue(validatedText.toUpperCase());
+
+                //Adds card to the game pile
+                gamePile.playCard(new Card(validatedText.toUpperCase()));
+
+                //Win Condition -- After placing check to see if hand is empty
                 if(currentPlayer.getHand().getCards().isEmpty()){
                     gameActive = false;
+                    winner = currentPlayer;
                 }
-                //Add To Deck
-                gamePile.playCard(new Card(cardChoice.toUpperCase()));
+
+            } else {
+                System.out.println(CYAN + "You lost the battle but not the war");
+                try {
+                    Thread.sleep(1500);
+                    gamePile.giveDeck(currentPlayer);// Sleep for 2000 milliseconds (2 seconds)
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
             }
+
+        //MOVES PLAYER TO THE BACK
         currentPlayer = playersQueue.poll();
         playersQueue.offer(currentPlayer);
+        //RETURNS A NEW QUEUE
         return playersQueue;
+    }
+
+    private static String getValue(Card card) {
+        return card.getValue();
     }
 
     private void dealCards()

@@ -1,7 +1,6 @@
 package com.niantic.models;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Hand
 {
@@ -12,37 +11,32 @@ public class Hand
         return cards;
     }
 
-    public int getPointValue()
-    {
-        // return sum of all card points
-        int sum = 0;
-
-        for(Card card : cards)
-        {
-            sum += card.getNumberValue();
-        }
-        return sum;
-    }
-
+    // HAND SIZE
     public int getCardCount()
     {
         return cards.size();
     }
 
+    // PERSON --> HAND
     public void dealTo(Card card)
     {
-        cards.add(card);
+        if(!card.getValue().isEmpty()){
+            cards.add(card);
+        }
     }
 
-    public void removeCard(String cardToRemove){
+    // DISCARD A CARD
+    public void removeCardofValue(String cardToRemove){
         for (int i = 0; i < cards.size(); i++) {
             if (cards.get(i).getValue().equals(cardToRemove)) {
                 cards.remove(i);
                 break;
             }
         }
+
     }
 
+    // DISPLAY CARDS IN HAND
     @Override
     public String toString(){
         String inHand = "";

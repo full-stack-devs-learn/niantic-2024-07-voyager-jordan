@@ -13,7 +13,15 @@
 -- Confections		7906				295
 
 -- (3 rows)
+USE northwind;
 
+SELECT category_name
+, SUM(quantity) AS QuantityPurchased
+, COUNT(DISTINCT order_id) AS OrdersPlaced
+FROM customer_orders
+GROUP by category_name
+ORDER by QuantityPurchased DESC, OrdersPlaced DESC
+LIMIT 3;
 
 
 

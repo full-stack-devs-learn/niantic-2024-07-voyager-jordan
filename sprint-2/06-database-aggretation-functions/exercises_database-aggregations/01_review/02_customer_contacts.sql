@@ -9,6 +9,16 @@
 -- the city_state_zip column should not display any NULL
 
 -- (78 Rows)
+USE northwind;
+
+SELECT * FROM customers;
+
+SELECT company_name
+	, contact_name
+    , contact_title
+	, COALESCE (CONCAT(city,", ", region,", ", postal_code), "") AS city_state_zip
+FROM customers
+WHERE NOT country = "USA"
 
 
 

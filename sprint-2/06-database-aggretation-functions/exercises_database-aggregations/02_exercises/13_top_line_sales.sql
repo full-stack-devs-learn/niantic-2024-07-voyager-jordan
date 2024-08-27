@@ -11,6 +11,18 @@
 
 
 -- (1 row)
+USE northwind;
+
+SELECT company_name
+		, order_id
+        , country
+        , sales_price * quantity AS TotalSalesAmount
+FROM customer_orders
+GROUP BY company_name, order_id, country, TotalSalesAmount
+ORDER BY TotalSalesAmount DESC
+LIMIT 5;
+
+-- I Believe this is correct but im not getting the
 
 
 
