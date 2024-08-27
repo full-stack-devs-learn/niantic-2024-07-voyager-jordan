@@ -11,5 +11,10 @@
 
 USE northwind;
 
+SELECT CONCAT(e.first_name, " ", e.last_name) AS Employee
+	, CONCAT(m.first_name, " ", m.last_name) AS Manager
+FROM employees e
+INNER JOIN employees m ON e.reports_to = m.employee_id
+
 
 
