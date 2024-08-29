@@ -187,22 +187,22 @@ function createOrder(customerName){
 	for(let i = 0 ; i < pizzaChoices.length; i++){
 		switch(i){
 			case 0:
-				if(pizzaChoices[i] === true){
+				if(pizzaChoices[i]){
 					receiptObj.pizzas.push(makePizza("Hawaiian"))
 					break;
 				}
 			case 1:
-				if(pizzaChoices[i] === true){
+				if(pizzaChoices[i]){
 					receiptObj.pizzas.push(makePizza("Cowboy"))
 					break;
 				}
 			case 2:
-				if(pizzaChoices[i] === true){
+				if(pizzaChoices[i]){
 					receiptObj.pizzas.push(makePizza("Supreme"))
 					break;
 				}
 			case 3:
-				if(pizzaChoices[i] === true){
+				if(pizzaChoices[i]){
 					receiptObj.pizzas.push(makePizza("Vegetarian"))
 					break;
 				}
