@@ -23,4 +23,24 @@
 
 USE northwind;
 
+SELECT sub.category_name
+	, product_name
+    , sub.most_expensive
+FROM products p
+INNER JOIN (
+	SELECT c.category_name AS category_name
+		, c.category_id
+		, MAX(unit_price) AS most_expensive
+	FROM products p
+	INNER JOIN categories c WHERE p.category_id = c.category_id
+	GROUP BY category_name, category_id
+) AS sub
+WHERE p.unit_price = sub.most_expensive AND p.category_id = sub.category_id
+ORDER BY category_name;
+
+
+
+
+
+
 

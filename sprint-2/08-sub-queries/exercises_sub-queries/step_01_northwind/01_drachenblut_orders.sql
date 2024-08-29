@@ -16,4 +16,17 @@
 
 USE northwind;
 
+SET @search_for_user = "Drachenblut Delikatessen";
+
+SELECT order_id
+	, order_date
+    , shipped_date
+FROM orders
+WHERE customer_id = (
+	SELECT customer_id
+    FROM customers
+    WHERE company_name = @search_for_user
+)
+ORDER BY shipped_date desc
+
 
