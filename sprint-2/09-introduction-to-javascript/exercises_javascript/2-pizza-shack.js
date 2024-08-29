@@ -12,8 +12,26 @@
 	getToppings("Cheese") => ["Cheese"]
 
 */
+function getToppings(pizzaString){
 
+	const loweredPizzaType = pizzaString.toLowerCase();
+	
 
+	switch(loweredPizzaType){
+		case "hawaiian":
+			return ["Ham","Pineapple","Mushroom"]
+		case "cowboy":
+			return ["Pepperoni", "Sausage", "Beef"]
+		case "supreme":
+			return ["Pepperoni", "Sausage", "Pepper", "Onion", "Black Olives"]
+		case "vegetarian":
+			return ["Spinach", "Zucchini", "Mushroom", "Artichoke", "Tomato", "Onion"]
+		case "cheese":
+			return ["Cheese"]
+		default:
+			return []
+	}
+}
 
 
 /*
@@ -29,7 +47,23 @@
 							}
 
 */
+function makePizza(pizzaString){
 
+
+	let formattedPizza = pizzaString.charAt(0).toUpperCase() + pizzaString.toLowerCase().slice(1)
+
+	const pizzaObj = {
+		name: formattedPizza,
+		toppings: getToppings(pizzaString)
+	}
+
+	//Check for invalid pizza
+	if(pizzaObj.toppings.length == 0){
+		return {}
+	}
+
+	return pizzaObj
+}
 
 
 
@@ -63,8 +97,24 @@
 	makeCustom() => {}
 
 */
+function makeCustom(){
+	
+	let toppingsArr = [];
 
+	for(let key in arguments){
+		toppingsArr.push(arguments[key])
+	}
 
+	//Check for empty pizza toppings
+	if(toppingsArr.length === 0){return {}}
+
+	let pizzaObj = {
+		name: "Custom",
+		toppings: toppingsArr
+	}
+
+	return pizzaObj;
+}
 
 
 /*
@@ -113,4 +163,57 @@
 
 
 */
+function createOrder(customerName){
 
+	//Return Value
+	let receiptObj = {
+		customer: customerName,
+		pizzas: []
+	}
+	
+	//Isolates Pizza Selections
+	let pizzaChoices = [];
+	for(let key in arguments){
+		if(key == 0){
+			continue;
+		}
+		pizzaChoices.push(arguments[key])
+	}
+
+	//EDGECASE -> IF NO TRUE VALUE EXISTS RETURN EMPTY OBJ
+	if(pizzaChoices.indexOf(true) === -1){ return {} }
+
+	//Construct pizza
+	for(let i = 0 ; i < pizzaChoices.length; i++){
+		switch(i){
+			case 0:
+				if(pizzaChoices[i] === true){
+					receiptObj.pizzas.push(makePizza("Hawaiian"))
+					break;
+				}
+			case 1:
+				if(pizzaChoices[i] === true){
+					receiptObj.pizzas.push(makePizza("Cowboy"))
+					break;
+				}
+			case 2:
+				if(pizzaChoices[i] === true){
+					receiptObj.pizzas.push(makePizza("Supreme"))
+					break;
+				}
+			case 3:
+				if(pizzaChoices[i] === true){
+					receiptObj.pizzas.push(makePizza("Vegetarian"))
+					break;
+				}
+			case 4:
+				if(pizzaChoices[i] === true){
+					receiptObj.pizzas.push(makePizza("Cheese"))
+					break;
+				}
+		}
+	}
+	
+	return receiptObj
+
+}
