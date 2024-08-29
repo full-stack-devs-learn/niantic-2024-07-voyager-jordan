@@ -170,9 +170,10 @@ function createOrder(customerName){
 		customer: customerName,
 		pizzas: []
 	}
+	const availablePizza = ["Hawaiian", "Cowboy", "Supreme", "Vegetarian", "Cheese"]
+	let pizzaChoices = [];
 	
 	//Isolates Pizza Selections
-	let pizzaChoices = [];
 	for(let key in arguments){
 		if(key == 0){
 			continue;
@@ -184,35 +185,11 @@ function createOrder(customerName){
 	if(pizzaChoices.indexOf(true) === -1){ return {} }
 
 	//Construct pizza
-	for(let i = 0 ; i < pizzaChoices.length; i++){
-		switch(i){
-			case 0:
-				if(pizzaChoices[i]){
-					receiptObj.pizzas.push(makePizza("Hawaiian"))
-					break;
-				}
-			case 1:
-				if(pizzaChoices[i]){
-					receiptObj.pizzas.push(makePizza("Cowboy"))
-					break;
-				}
-			case 2:
-				if(pizzaChoices[i]){
-					receiptObj.pizzas.push(makePizza("Supreme"))
-					break;
-				}
-			case 3:
-				if(pizzaChoices[i]){
-					receiptObj.pizzas.push(makePizza("Vegetarian"))
-					break;
-				}
-			case 4:
-				if(pizzaChoices[i] === true){
-					receiptObj.pizzas.push(makePizza("Cheese"))
-					break;
-				}
-		}
-	}
+	pizzaChoices.map((isChosen, index) => {
+		 if(isChosen){
+			receiptObj.pizzas.push(makePizza(availablePizza[index]))
+		 }
+		})
 	
 	return receiptObj
 
