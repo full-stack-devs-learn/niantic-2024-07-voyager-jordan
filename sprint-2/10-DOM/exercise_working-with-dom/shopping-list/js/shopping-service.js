@@ -77,54 +77,54 @@ class ShoppingService {
                 quantity: 4,
                 isComplete: true
             },
-            {
-                id: 13,
-                title: 'Cereal',
-                quantity: 1,
-                isComplete: false
-            },
-            {
-                id: 14,
-                title: 'Ground Beef',
-                quantity: 2,
-                isComplete: true
-            },
-            {
-                id: 15,
-                title: 'Butter',
-                quantity: 1,
-                isComplete: false
-            },
-            {
-                id: 16,
-                title: 'Garlic',
-                quantity: 1,
-                isComplete: false
-            },
-            {
-                id: 17,
-                title: 'Onions',
-                quantity: 3,
-                isComplete: false
-            },
-            {
-                id: 18,
-                title: 'Carrots',
-                quantity: 5,
-                isComplete: true
-            },
-            {
-                id: 19,
-                title: 'Lettuce',
-                quantity: 2,
-                isComplete: false
-            },
-            {
-                id: 20,
-                title: 'Pineapple',
-                quantity: 1,
-                isComplete: false
-            }
+            // {
+            //     id: 13,
+            //     title: 'Cereal',
+            //     quantity: 1,
+            //     isComplete: false
+            // },
+            // {
+            //     id: 14,
+            //     title: 'Ground Beef',
+            //     quantity: 2,
+            //     isComplete: true
+            // },
+            // {
+            //     id: 15,
+            //     title: 'Butter',
+            //     quantity: 1,
+            //     isComplete: false
+            // },
+            // {
+            //     id: 16,
+            //     title: 'Garlic',
+            //     quantity: 1,
+            //     isComplete: false
+            // },
+            // {
+            //     id: 17,
+            //     title: 'Onions',
+            //     quantity: 3,
+            //     isComplete: false
+            // },
+            // {
+            //     id: 18,
+            //     title: 'Carrots',
+            //     quantity: 5,
+            //     isComplete: true
+            // },
+            // {
+            //     id: 19,
+            //     title: 'Lettuce',
+            //     quantity: 2,
+            //     isComplete: false
+            // },
+            // {
+            //     id: 20,
+            //     title: 'Pineapple',
+            //     quantity: 1,
+            //     isComplete: false
+            // }
         ];
     }
 }

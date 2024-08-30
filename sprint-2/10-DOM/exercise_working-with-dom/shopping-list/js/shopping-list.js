@@ -12,7 +12,7 @@ const groceriesData = new ShoppingService().getShoppingList();
 function displayListTitle(parentDiv) {
 
     const title = document.getElementById("title");
-    title.textContent = `${pageTitle}`
+    title.textContent = `${pageTitle.toUpperCase()}`
 
     parentDiv.appendChild(title)
 
@@ -31,12 +31,10 @@ function displayGroceries(parentDiv) {
     
     //shopping-list
     const shoppingList = document.getElementById("shopping-list");
-
     listContainer = document.getElementById('list-container')
     listContainer.appendChild(shoppingList)
 
-
-    const ulContainer = document.getElementById("groceries")
+    //list-Items
     groceriesData.forEach(grocery => {
     
         const listItem = document.createElement("div");
@@ -56,9 +54,8 @@ function displayGroceries(parentDiv) {
 
     });
 
-    //button
+    //Complete All Button
     const button = document.getElementById("btn:1");
-
     listContainer.appendChild(button)
 }
 
@@ -123,13 +120,14 @@ function markCompleted() {
 }
 
 function toggleStatus(e){
+    //Get the current Div & Status
     const currentItem = document.getElementById(e.target.id);
     const currentStatus = [...e.target.classList];
 
-    console.log(currentStatus)
+    //Assign newStatus to opposite of current Status based off class size
     let newStatus = currentStatus.length % 2 ? `list-item complete` : `list-item`
     
-    console.log(newStatus)
+    //Reassign with new value
     currentItem.classList = `${newStatus}`;
 }
 
