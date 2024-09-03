@@ -30,22 +30,22 @@ function setNextPlayer()
 
 function chooseTile(e){
 
-    console.log(e.currentTarget)
-
+    //Adds Value & Color
     if(e.currentTarget.textContent == ""){
         e.currentTarget.textContent = currentPlayer.value
         e.currentTarget.style.backgroundColor = currentPlayer.color
-
         currentPlayer.choices.push(e.currentTarget.id)
     }
 
+    //Checks if person won
     if(winCondition(currentPlayer.choices)){
         setTimeout(()=>{
             alert(`${currentPlayer.name} is the winner!`)
         }, "500")
+    } else {
+        setNextPlayer();
     }
 
-    setNextPlayer();
 }
 
 function init()
