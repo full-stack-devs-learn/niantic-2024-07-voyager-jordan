@@ -22,6 +22,10 @@ function addListItem(item, parent)
 {
     const div = document.createElement("div")
     div.classList.add("list-item");
+
+    div.addEventListener("click", listItemToggleStatus)
+
+    //Adds current list item status
     if(item.isComplete)
     {
         div.classList.add("complete")
@@ -58,16 +62,78 @@ function addQuantity(item, parent)
     parent.appendChild(div);
 }
 
+//EVENT LISTENERS
 
-function markCompleted() {
-    const listItems = document.querySelectorAll(".list-item");
+//List-items
+function listItemToggleStatus(e){
+    const currentTarget = e.currentTarget
 
-    listItems.forEach(item => {
-        item.classList.add("complete");
-    })
+    currentTarget.classList.toggle("complete")
+    
+    currentTarget.classList.contains("complete") ?
+        currentTarget.style.textDecoration = "line-through" :
+        currentTarget.style.textDecoration = "none";
+      
 }
 
+//Mark All Button
+function markCompleteInterface(){
+    const completeButton = document.getElementById("allCompleteButton")
+        completeButton.addEventListener("click", markAllStatus)   
+}
 
+function markAllStatus() {
+    const listItems = document.querySelectorAll(".list-item");
+    const completeButton = document.getElementById("allCompleteButton")
+
+    let currentStatus = completeButton.textContent.trim();
+
+    if(currentStatus === "Mark All Completed"){
+        listItems.forEach(item => {
+            item.classList.add("complete");
+            item.style.textDecoration = "line-through";
+        })
+        completeButton.textContent = "Mark All Incomplete"
+    } else {
+        listItems.forEach(item => {
+            item.classList.remove("complete");
+            item.style.textDecoration = "none";
+        })
+        completeButton.textContent = "Mark All Completed"
+    }
+}
+
+//Add Item
+function addListItemInit(){
+    //Gets Buttons Parent
+    let form = document.querySelector("form")
+    form.id = "addItemForm"
+
+    const formById = document.getElementById("addItemForm");
+    formById.addEventListener('submit', addListItemFormHandler)
+    
+}
+function addListItemFormHandler(e){
+    e.preventDefault();
+    let itemName = e.target.itemName.value;
+    let quantity = e.target.quantity.value;
+
+
+    const listItemObj = {
+        id: list.length+1,
+        title: itemName,
+        quantity: quantity,
+        isComplete: false
+    }
+
+    const parent = document.getElementById("shopping-list")
+    addListItem(listItemObj, parent)
+
+    //clear
+    e.target.itemName.value = "";
+    e.target.quantity.value = "";
+
+}
 // create the page load event here
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -76,5 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     displayListTitle();
     displayShoppingList();
+    markCompleteInterface();
+    addListItemInit();
 });
 
