@@ -95,6 +95,7 @@ function winCondition(playerChoices){
         6: ["a1", "b2", "c3"],
         7: ["a3", "b2", "c1"],
     }
+    let result;
 
     for(let key in winConditionsObj){
 
@@ -108,10 +109,11 @@ function winCondition(playerChoices){
                 winningDiv.style.backgroundColor= "#ffc400";
             })
 
-            return true;
+            result = true;
         }
     }
 
+    return result;
 }
 
 
