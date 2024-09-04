@@ -23,7 +23,8 @@ function addListItem(item, parent)
     const div = document.createElement("div")
     div.classList.add("list-item");
 
-    div.addEventListener("click", listItemToggleStatus)
+    div.addEventListener("click", listItemCompleteStatus)
+    div.addEventListener("dblclick", listItemIncompleteStatus)
 
     //Adds current list item status
     if(item.isComplete)
@@ -65,15 +66,24 @@ function addQuantity(item, parent)
 //EVENT LISTENERS
 
 //List-items
-function listItemToggleStatus(e){
+function listItemCompleteStatus(e){
     const currentTarget = e.currentTarget
 
-    currentTarget.classList.toggle("complete")
+    currentTarget.classList.add("complete")
     
     currentTarget.classList.contains("complete") ?
         currentTarget.style.textDecoration = "line-through" :
         currentTarget.style.textDecoration = "none";
       
+}
+function listItemIncompleteStatus(e){
+    const currentTarget = e.currentTarget
+
+    currentTarget.classList.remove("complete")
+    
+    currentTarget.classList.contains("complete") ?
+        currentTarget.style.textDecoration = "line-through" :
+        currentTarget.style.textDecoration = "none";
 }
 
 //Mark All Button
