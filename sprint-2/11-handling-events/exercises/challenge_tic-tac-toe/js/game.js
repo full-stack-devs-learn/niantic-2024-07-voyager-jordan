@@ -35,15 +35,15 @@ function chooseTile(e){
         e.currentTarget.textContent = currentPlayer.value
         e.currentTarget.style.backgroundColor = currentPlayer.color
         currentPlayer.choices.push(e.currentTarget.id)
-    }
+        //Checks if person won
+        if(winCondition(currentPlayer.choices)){
+            setTimeout(()=>{
+                alert(`${currentPlayer.name} is the winner!`)
+            }, "500")
+        } else {
+            setNextPlayer();
+        }
 
-    //Checks if person won
-    if(winCondition(currentPlayer.choices)){
-        setTimeout(()=>{
-            alert(`${currentPlayer.name} is the winner!`)
-        }, "500")
-    } else {
-        setNextPlayer();
     }
 
 }
