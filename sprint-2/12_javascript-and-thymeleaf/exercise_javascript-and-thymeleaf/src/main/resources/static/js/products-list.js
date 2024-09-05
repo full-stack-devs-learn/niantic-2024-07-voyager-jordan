@@ -50,7 +50,7 @@ function fetchData(e){
 
 //On Page Load
 document.addEventListener('DOMContentLoaded', function () {
-    
+
     const categorySelect = document.getElementById('category');
     categorySelect.addEventListener('change', fetchData)
 });

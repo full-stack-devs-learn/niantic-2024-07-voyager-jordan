@@ -2,6 +2,7 @@ package com.niantic.models;
 
 public class Product
 {
+
     private int productId;
     private int categoryId;
     private String productName;
