@@ -24,10 +24,12 @@ public class ProductsController
         var category = categoryDao.getCategoryById(catId);
         var categories = categoryDao.getCategories();
 
+
         model.addAttribute("categories", categories);
         model.addAttribute("currentCategory", category);
         model.addAttribute("products", products);
         return "products/index";
+
     }
 
     // details page
@@ -121,5 +123,15 @@ public class ProductsController
         productDao.deleteProduct(id);
 
         return "redirect:/products?catId=" + product.getCategoryId();
+    }
+
+    @GetMapping("/products/category/{catId}")
+    public String displayProductsInCategory(Model model, @PathVariable int catId){
+
+        var products = productDao.getProductsByCategory(catId);
+
+        model.addAttribute("products", products);
+
+        return "/fragments/products/table-content.html";
     }
 }

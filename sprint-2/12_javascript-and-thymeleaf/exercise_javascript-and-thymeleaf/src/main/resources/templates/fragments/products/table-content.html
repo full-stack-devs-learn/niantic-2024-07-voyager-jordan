@@ -1,0 +1,24 @@
+<a th:href="@{/products/new}">New</a>
+<table class="table table-striped" id="table-container">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Product</th>
+        <th>Price</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="product:${products}">
+            <td th:text="${product.productId}"></td>
+            <td>
+                <a  th:href="@{|/products/${product.productId}|}" th:text="${product.productName}"></a>
+            </td>
+            <td th:text="${#numbers.formatCurrency(product.unitPrice)}"></td>
+            <td>
+                <a  th:href="@{|/products/${product.productId}/edit|}" class="btn btn-success">Edit</a>
+                <a  th:href="@{|/products/${product.productId}/delete|}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
