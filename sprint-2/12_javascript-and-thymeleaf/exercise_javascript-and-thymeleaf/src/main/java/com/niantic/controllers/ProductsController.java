@@ -68,6 +68,7 @@ public class ProductsController
     {
         if(form.hasErrors())
         {
+            var categories = categoryDao.getCategories();
             model.addAttribute("isInvalid", true);
             // redirect back to the add page
             return "actors/add_edit";
