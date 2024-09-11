@@ -72,4 +72,72 @@ public class DaggerTest {
         //Assert
         assertEquals(expectedCount, actual, "Your dagger count is  " + actual + " you expected to have " + expectedCount);
     }
+    @ParameterizedTest
+    @CsvSource({
+            "0, 0",
+            "50, 50",
+            "75, 75",
+            "100, 0"
+    })
+    public void daggerPowerAttack_whenFullyCharged_chargeDecreaseZero(int chargeStartIn, int expectedChargeIn)
+    {
+        //Arrange
+        dagger.setPercentCharged(chargeStartIn);
+        //Act
+        dagger.powerAttack();
+        int actual = dagger.getPercentCharged();
+        //Assert
+        assertEquals(expectedChargeIn, actual, "You are at " + actual + "% charge, you expected to have " + expectedChargeIn +"% charges");
+    }
+    @ParameterizedTest
+    @CsvSource({
+            "0, 0",
+            "50, 50",
+            "75, 75",
+            "99, 99"
+    })
+    public void daggerPowerAttack_whenNotEnoughCharges_chargeNeverChanges(int chargeStartIn, int expectedChargeIn)
+    {
+        //Arrange
+        dagger.setPercentCharged(chargeStartIn);
+        //Act
+        dagger.powerAttack();
+        int actual = dagger.getPercentCharged();
+        //Assert
+        assertEquals(expectedChargeIn, actual, "You are at " + actual + "% charge, you expected to have " + expectedChargeIn +"% charges");
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "1, 0",
+            "2, 1",
+            "10, 9",
+            "0, 0",
+
+    })
+    public void daggerPowerAttack_whenCalled_countDecreaseByOne(int daggerStartIn, int expectedCount)
+    {
+        //Arrange
+        int chargeNeeded = 100;
+        dagger.setPercentCharged(chargeNeeded);
+        for (int i = 1; i < daggerStartIn; i++){
+            dagger.addDagger();
+        }
+        //Act
+        dagger.powerAttack();
+        int actual = dagger.getDaggerCount();
+        //Assert
+        assertEquals(expectedCount, actual, "Your dagger count is  " + actual + " you expected to have " + expectedCount);
+    }
+
+    @Test
+    public void getRange_whenCalled_return10()
+    {
+        //Arrange
+        int expected = 10;
+        //Act
+        int actual = dagger.getRange();
+        //Assert
+        assertEquals(expected, actual, "Your range is " + actual + " you expected to have " + expected);
+    }
 }

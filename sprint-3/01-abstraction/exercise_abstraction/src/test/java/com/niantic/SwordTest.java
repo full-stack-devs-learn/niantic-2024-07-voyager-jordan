@@ -53,15 +53,15 @@ public class SwordTest {
     }
     @ParameterizedTest
     @CsvSource({
-        "0, 0",
-        "49, 49",
+        "0, 10",
+        "49, 59",
         "50, 0",
         "90, 40",
         "99, 49",
         "100, 0"
 
     })
-    public void swordPowerAttack_whenPowerAttack_chargeDecrease(int inputCharge, int expectedIn)
+    public void swordPowerAttack_whenPowerAttack_ifChargesGoodDecreaseElseIncrease(int inputCharge, int expectedIn)
     {
         //arrange
         sword.setPercentCharged(inputCharge);

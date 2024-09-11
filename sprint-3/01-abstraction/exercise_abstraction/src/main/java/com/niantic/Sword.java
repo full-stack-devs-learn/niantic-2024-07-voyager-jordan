@@ -18,21 +18,21 @@ public class Sword extends Weapon
     @Override
     public int powerAttack() {
         int currentCharge = this.getPercentCharged();
+        int abilityCost = 50;
 
         if(currentCharge == 100)
         {
-            this.setPercentCharged(-100);
+            this.setPercentCharged(-abilityCost*2);
             return this.getDamage() * 4;
         }
         if(currentCharge >= 50)
         {
-            this.setPercentCharged(-50);
+            this.setPercentCharged(-abilityCost);
             return this.getDamage() * 2;
         }
         else
         {
-            this.setPercentCharged(0);
-            return this.getDamage();
+            return this.attack();
         }
     }
 
