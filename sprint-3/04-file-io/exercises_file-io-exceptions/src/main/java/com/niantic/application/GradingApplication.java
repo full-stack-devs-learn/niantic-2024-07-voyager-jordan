@@ -130,11 +130,13 @@ public class GradingApplication implements Runnable
 
         Optional<Assignment> highestScore = allAssignments.stream()
                 .max(Comparator.comparingInt(Assignment::getScore));
+
         Optional<Assignment> lowestScore = allAssignments.stream()
                 .min(Comparator.comparingInt(Assignment::getScore));
 
-//        Optional<Assignment> highestScore = allAssignments.stream()
-//                .(Comparator.comparingInt(Assignment::getScore));
+        OptionalDouble averageScore = allAssignments.stream()
+                .mapToInt(Assignment::getScore)
+                .average();
 
         if(!allAssignments.isEmpty())
         {
@@ -142,12 +144,19 @@ public class GradingApplication implements Runnable
             System.out.printf("Viewing %s", fileChoice);
             System.out.println();
             System.out.println("-".repeat(30));
-            System.out.println("Highest Score:" + highestScore.get());
+            System.out.println("Highest Score: " + highestScore.get());
+            System.out.println("Lowest Score: " + lowestScore.get());
+            System.out.println("Average Score: " + Math.round(averageScore.getAsDouble() * 10.0) / 10.0);
+            System.out.println();
+            System.out.println("Press Enter to continue...");
+            userInput.nextLine();
         }
         else
         {
             System.out.println("Not Found");
         }
+        isViewing = false;
+
 
 
 

@@ -3,6 +3,7 @@ package com.niantic.services;
 import com.niantic.models.Assignment;
 
 import java.io.File;
+import java.rmi.server.ExportException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,9 +16,19 @@ public class GradesFileService implements GradesService
     @Override
     public String[] getFileNames()
     {
-        File directory = new File("files");
+        String[] result = new String[0];
 
-        return directory.list();
+        try
+        {
+            File directory = new File("files");
+            result = directory.list();
+            return result;
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
 
     @Override
