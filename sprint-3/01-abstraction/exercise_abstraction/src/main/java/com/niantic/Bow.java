@@ -8,23 +8,31 @@ public class Bow extends Weapon
 {
     private static final Set<String> ARROW_TYPES = new HashSet<>();
     static {
-        ARROW_TYPES.add("Standard");
-        ARROW_TYPES.add("Poison");
-        ARROW_TYPES.add("Explosive");
+        ARROW_TYPES.add("standard");
+        ARROW_TYPES.add("poison");
+        ARROW_TYPES.add("explosive");
     }
 
     private String arrowType;
     private final int QUIVER_SIZE;
     private int arrowCount;
+    private int damage;
 
     public Bow(String name, int damage, int quiverSize)
     {
         super(name, damage);
-        if(!ARROW_TYPES.contains(name)){
+        if(!ARROW_TYPES.contains(name.toLowerCase())){
             throw new IllegalArgumentException("Invalid name must be one of "+ ARROW_TYPES);
         }
+        this.arrowType = name;
         this.QUIVER_SIZE = quiverSize;
         this.arrowCount = quiverSize;
+        this.damage = arrowType.equalsIgnoreCase("poison")
+                ? damage * 2
+                : arrowType.equalsIgnoreCase("explosion")
+                    ? damage * 3
+                    : damage;
+
     }
 
     public String getArrowType() {
@@ -51,6 +59,7 @@ public class Bow extends Weapon
 
     @Override
     public int getRange() {
-        return 0;
+        int maximumRange = 20;
+        return maximumRange;
     }
 }

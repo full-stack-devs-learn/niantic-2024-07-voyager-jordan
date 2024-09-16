@@ -63,6 +63,21 @@ public class Card implements Comparable<Card>
     public int compareTo(Card o)
     {
         // todo: Exercise 1: implement Comparable<Card>
-        return 0;
+
+        //Compare Suit
+        if(o.getSuit().equals(this.getSuit()))
+        {
+            //Compare Value
+            if(o.getPointValue() == this.getPointValue())
+            {
+                //Compare Face
+                if(o.getFaceValue().equals(this.getFaceValue()))
+                {
+                    return 0;
+                }
+            }
+        }
+
+        return -1;
     }
 }

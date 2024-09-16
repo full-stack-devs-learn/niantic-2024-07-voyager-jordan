@@ -5,9 +5,13 @@ import com.niantic.services.GradesFileService;
 import com.niantic.services.GradesService;
 import com.niantic.ui.UserInput;
 
+import java.io.File;
+import java.util.*;
+
 public class GradingApplication implements Runnable
 {
     private GradesService gradesService = new GradesFileService();
+    private Scanner userInput = new Scanner(System.in);
 
     public void run()
     {
@@ -23,7 +27,7 @@ public class GradingApplication implements Runnable
                     displayFileScores();
                     break;
                 case 3:
-                    displayStudentAverages();
+                    displayStudentSummaries();
                     break;
                 case 4:
                     displayAllStudentStatistics();
@@ -43,18 +47,109 @@ public class GradingApplication implements Runnable
     private void displayAllFiles()
     {
         // todo: 1 - get and display all student file names
+        String[] allFiles = gradesService.getFileNames();
+        boolean isViewing = true;
+
+        System.out.println();
+        System.out.println("Viewing All Files");
+        System.out.println("-".repeat(30));
+        System.out.println();
+        for(String file : allFiles)
+        {
+            System.out.println(file);
+        }
+
+        while(isViewing)
+        {
+            System.out.println();
+            System.out.println("Press Enter to continue...");
+            userInput.nextLine();
+            isViewing = false;
+        }
+
     }
 
     private void displayFileScores()
     {
+        boolean isViewing = true;
         // todo: 2 - allow the user to select a file name
         // load all student assignment scores from the file - display all files
+
+        File directory = new File("files");
+        String[] allFiles = directory.list();
+        HashMap<Integer, String> mappedChoices = new HashMap<>();
+
+        int index = 1;
+        for(String file: allFiles)
+        {
+            mappedChoices.put(index, file);
+            index++;
+        }
+
+        int choice = UserInput.displayFileChoice(allFiles);
+        while(isViewing)
+        {
+
+            if(choice == 0){ isViewing = false; }
+            String chosenFile = mappedChoices.get(choice);
+            List<Assignment> allAssignment = gradesService.getAssignments(chosenFile);
+
+            if(chosenFile != null)
+            {
+                System.out.println();
+                System.out.printf("Viewing %s", chosenFile);
+                System.out.println();
+                System.out.println("-".repeat(30));
+                System.out.println();
+                for(Assignment assignment : allAssignment)
+                {
+                    System.out.println(assignment);
+                }
+                System.out.println();
+                System.out.println("Press Enter to continue...");
+                userInput.nextLine();
+            }
+            isViewing = false;
+        }
     }
 
-    private void displayStudentAverages()
+    private void displayStudentSummaries()
     {
         // todo: 3 - allow the user to select a file name
         // load all student assignment scores from the file - display student statistics (low score, high score, average score)
+        boolean isViewing = true;
+
+        File directory = new File("files");
+        String[] allFiles = directory.list();
+        String fileChoice;
+
+        int choice = UserInput.displayFileChoice(allFiles);
+        fileChoice = allFiles[choice-1];
+
+        List<Assignment> allAssignments = gradesService.getAssignments(fileChoice);
+
+        Optional<Assignment> highestScore = allAssignments.stream()
+                .max(Comparator.comparingInt(Assignment::getScore));
+        Optional<Assignment> lowestScore = allAssignments.stream()
+                .min(Comparator.comparingInt(Assignment::getScore));
+
+//        Optional<Assignment> highestScore = allAssignments.stream()
+//                .(Comparator.comparingInt(Assignment::getScore));
+
+        if(!allAssignments.isEmpty())
+        {
+            System.out.println();
+            System.out.printf("Viewing %s", fileChoice);
+            System.out.println();
+            System.out.println("-".repeat(30));
+            System.out.println("Highest Score:" + highestScore.get());
+        }
+        else
+        {
+            System.out.println("Not Found");
+        }
+
+
 
     }
 

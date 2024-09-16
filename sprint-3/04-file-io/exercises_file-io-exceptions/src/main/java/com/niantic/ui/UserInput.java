@@ -1,6 +1,9 @@
 package com.niantic.ui;
 
+import java.util.HashMap;
 import java.util.Scanner;
+
+import static java.util.stream.Collectors.toList;
 
 public class UserInput
 {
@@ -35,4 +38,28 @@ public class UserInput
         System.out.println();
         System.out.println(message);
     }
+
+    public static int displayFileChoice(String[] availableFiles)
+    {
+        System.out.println();
+        System.out.println("Viewing available files");
+        System.out.println("-".repeat(30));
+        System.out.println();
+        //Dynamically Add Files Here
+        int index = 1;
+        for(String file : availableFiles)
+        {
+            System.out.printf("  %d) %s", index, file);
+            System.out.println();
+            index++;
+        }
+        System.out.println();
+        System.out.println("  0) Back");
+
+        System.out.println();
+        System.out.print("Choose File: ");
+
+        return Integer.parseInt(in.nextLine());
+    }
+
 }
