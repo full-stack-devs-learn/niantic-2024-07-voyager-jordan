@@ -7,6 +7,7 @@ import com.niantic.ui.UserInput;
 
 import java.io.File;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GradingApplication implements Runnable
 {
@@ -165,13 +166,13 @@ public class GradingApplication implements Runnable
 
         if(!contentsOfDirectory.isEmpty())
         {
-            Optional<Assignment> highestScore = contentsOfDirectory.stream()
+            var highestScore = contentsOfDirectory.stream()
                     .max(Comparator.comparingInt(Assignment::getScore));
 
-            Optional<Assignment> lowestScore = contentsOfDirectory.stream()
+            var lowestScore = contentsOfDirectory.stream()
                     .min(Comparator.comparingInt(Assignment::getScore));
 
-            OptionalDouble averageScore = contentsOfDirectory.stream()
+            var averageScore = contentsOfDirectory.stream()
                     .mapToInt(Assignment::getScore)
                     .average();
 
@@ -201,12 +202,47 @@ public class GradingApplication implements Runnable
         // this one could take some time
         String[] allFiles = gradesService.getFileNames();
         List<Assignment> contentsOfDirectory = gradesService.getAllAssignments(allFiles);
+        Map<String, List<Integer>> allScores = new HashMap<>();
+
         for (String file : allFiles)
         {
             List<Assignment> contentsOfFile = gradesService.getAssignments(file);
+
+            contentsOfFile.stream()
+                    .forEach(assignment -> {
+
+                        List<Integer> currentScores = allScores.get(assignment.getAssignmentName());
+
+                        if(currentScores == null)
+                        {
+                            allScores.put(assignment.getAssignmentName(), new ArrayList<>());
+                        }
+
+                        currentScores = allScores.get(assignment.getAssignmentName());
+                        currentScores.add(assignment.getScore());
+                        allScores.put(assignment.getAssignmentName(), currentScores);
+                    });
+
+
+
         }
+        allScores.forEach((key, value) -> {
+
+            var highestScore = value.stream().max(Integer::compareTo);
+            var lowestScore = value.stream().min(Integer::compareTo);
+            var averageScore = value.stream().mapToInt(Integer::intValue).average();
 
 
+            System.out.println();
+            System.out.println(key);
+            System.out.println("-".repeat(30));
+            System.out.println("Highest Score: " + highestScore.get());
+            System.out.println("Lowest Score: " + lowestScore.get());
+            System.out.println("Average Score: " + Math.round(averageScore.getAsDouble() * 100.0) / 100.0);
+        });
+        System.out.println();
+        System.out.println("Press Enter to continue...");
+        userInput.nextLine();
 
     }
 
