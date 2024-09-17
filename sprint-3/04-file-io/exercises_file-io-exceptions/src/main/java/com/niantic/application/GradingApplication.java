@@ -207,7 +207,6 @@ public class GradingApplication implements Runnable
         for (String file : allFiles)
         {
             List<Assignment> contentsOfFile = gradesService.getAssignments(file);
-
             contentsOfFile.stream()
                     .forEach(assignment -> {
 
@@ -222,16 +221,12 @@ public class GradingApplication implements Runnable
                         currentScores.add(assignment.getScore());
                         allScores.put(assignment.getAssignmentName(), currentScores);
                     });
-
-
-
         }
         allScores.forEach((key, value) -> {
 
             var highestScore = value.stream().max(Integer::compareTo);
             var lowestScore = value.stream().min(Integer::compareTo);
             var averageScore = value.stream().mapToInt(Integer::intValue).average();
-
 
             System.out.println();
             System.out.println(key);
@@ -243,7 +238,6 @@ public class GradingApplication implements Runnable
         System.out.println();
         System.out.println("Press Enter to continue...");
         userInput.nextLine();
-
     }
 
     private String parseStudentName(String fileName)
