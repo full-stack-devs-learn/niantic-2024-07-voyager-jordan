@@ -27,7 +27,7 @@ public class GradingApplication implements Runnable
                     displayFileScores();
                     break;
                 case 3:
-                    displayStudentSummaries();
+                    displayStudentSummary();
                     break;
                 case 4:
                     displayAllStudentStatistics();
@@ -113,11 +113,10 @@ public class GradingApplication implements Runnable
         }
     }
 
-    private void displayStudentSummaries()
+    private void displayStudentSummary()
     {
         // todo: 3 - allow the user to select a file name
         // load all student assignment scores from the file - display student statistics (low score, high score, average score)
-        boolean isViewing = true;
 
         File directory = new File("files");
         String[] allFiles = directory.list();
@@ -128,18 +127,18 @@ public class GradingApplication implements Runnable
 
         List<Assignment> allAssignments = gradesService.getAssignments(fileChoice);
 
-        Optional<Assignment> highestScore = allAssignments.stream()
-                .max(Comparator.comparingInt(Assignment::getScore));
-
-        Optional<Assignment> lowestScore = allAssignments.stream()
-                .min(Comparator.comparingInt(Assignment::getScore));
-
-        OptionalDouble averageScore = allAssignments.stream()
-                .mapToInt(Assignment::getScore)
-                .average();
-
         if(!allAssignments.isEmpty())
         {
+            Optional<Assignment> highestScore = allAssignments.stream()
+                    .max(Comparator.comparingInt(Assignment::getScore));
+
+            Optional<Assignment> lowestScore = allAssignments.stream()
+                    .min(Comparator.comparingInt(Assignment::getScore));
+
+            OptionalDouble averageScore = allAssignments.stream()
+                    .mapToInt(Assignment::getScore)
+                    .average();
+
             System.out.println();
             System.out.printf("Viewing %s", fileChoice);
             System.out.println();
@@ -155,17 +154,44 @@ public class GradingApplication implements Runnable
         {
             System.out.println("Not Found");
         }
-        isViewing = false;
-
-
-
-
     }
 
     private void displayAllStudentStatistics()
     {
         // todo: 4 - Optional / Challenge - load all scores from all student and all assignments
         // display the statistics for all scores (low score, high score, average score, number of students, number of assignments)
+        String[] allFiles = gradesService.getFileNames();
+        List<Assignment> contentsOfDirectory = gradesService.getAllAssignments(allFiles);
+
+        if(!contentsOfDirectory.isEmpty())
+        {
+            Optional<Assignment> highestScore = contentsOfDirectory.stream()
+                    .max(Comparator.comparingInt(Assignment::getScore));
+
+            Optional<Assignment> lowestScore = contentsOfDirectory.stream()
+                    .min(Comparator.comparingInt(Assignment::getScore));
+
+            OptionalDouble averageScore = contentsOfDirectory.stream()
+                    .mapToInt(Assignment::getScore)
+                    .average();
+
+            System.out.println();
+            System.out.println("Viewing All Students Summary");
+            System.out.println("-".repeat(30));
+            System.out.printf("Students: %d  Assignments: %d", allFiles.length, contentsOfDirectory.size());
+            System.out.println();
+            System.out.println("-".repeat(30));
+            System.out.println("Highest Score: " + highestScore.get().getScore());
+            System.out.println("Lowest Score: " + lowestScore.get().getScore());
+            System.out.println("Average Score: " + Math.round(averageScore.getAsDouble() * 10.0) / 10.0);
+            System.out.println();
+            System.out.println("Press Enter to continue...");
+            userInput.nextLine();
+        }
+        else
+        {
+            System.out.println("Not Found");
+        }
     }
 
     private void displayAssignmentStatistics()
@@ -173,6 +199,15 @@ public class GradingApplication implements Runnable
         // todo: 5 - Optional / Challenge - load all scores from all student and all assignments
         // display the statistics for each assignment (assignment name, low score, high score, average score)
         // this one could take some time
+        String[] allFiles = gradesService.getFileNames();
+        List<Assignment> contentsOfDirectory = gradesService.getAllAssignments(allFiles);
+        for (String file : allFiles)
+        {
+            List<Assignment> contentsOfFile = gradesService.getAssignments(file);
+        }
+
+
+
     }
 
     private String parseStudentName(String fileName)
