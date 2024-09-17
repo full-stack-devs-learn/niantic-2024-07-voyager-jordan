@@ -109,8 +109,12 @@ public class GradingApplication implements Runnable
                 System.out.println();
                 System.out.println("Press Enter to continue...");
                 userInput.nextLine();
+                isViewing = false;
             }
-            isViewing = false;
+            else
+            {
+                choice = UserInput.displayFileChoice(allFiles);
+            }
         }
     }
 
@@ -126,27 +130,23 @@ public class GradingApplication implements Runnable
         int choice = UserInput.displayFileChoice(allFiles);
         fileChoice = allFiles[choice-1];
 
+
         List<Assignment> allAssignments = gradesService.getAssignments(fileChoice);
 
         if(!allAssignments.isEmpty())
         {
-            Optional<Assignment> highestScore = allAssignments.stream()
-                    .max(Comparator.comparingInt(Assignment::getScore));
+            var highestScore = allAssignments.stream().mapToInt(Assignment::getScore).max().getAsInt();
+            var lowestScore = allAssignments.stream().mapToInt(Assignment::getScore).min().getAsInt();
+            var averageScore = allAssignments.stream().mapToInt(Assignment::getScore).average().getAsDouble();
 
-            Optional<Assignment> lowestScore = allAssignments.stream()
-                    .min(Comparator.comparingInt(Assignment::getScore));
-
-            OptionalDouble averageScore = allAssignments.stream()
-                    .mapToInt(Assignment::getScore)
-                    .average();
 
             System.out.println();
             System.out.printf("Viewing %s", fileChoice);
             System.out.println();
             System.out.println("-".repeat(30));
-            System.out.println("Highest Score: " + highestScore.get());
-            System.out.println("Lowest Score: " + lowestScore.get());
-            System.out.println("Average Score: " + Math.round(averageScore.getAsDouble() * 10.0) / 10.0);
+            System.out.printf("Highest Score:    %d\n", highestScore);
+            System.out.printf("Lowest Score:     %d\n", lowestScore);
+            System.out.printf("Average Score:     %.2f", averageScore);
             System.out.println();
             System.out.println("Press Enter to continue...");
             userInput.nextLine();
