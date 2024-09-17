@@ -144,8 +144,8 @@ public class GradingApplication implements Runnable
             System.out.printf("Viewing %s", fileChoice);
             System.out.println();
             System.out.println("-".repeat(30));
-            System.out.printf("Highest Score:    %d\n", highestScore);
-            System.out.printf("Lowest Score:     %d\n", lowestScore);
+            System.out.printf("Highest Score:     %d\n", highestScore);
+            System.out.printf("Lowest Score:      %d\n", lowestScore);
             System.out.printf("Average Score:     %.2f", averageScore);
             System.out.println();
             System.out.println("Press Enter to continue...");
