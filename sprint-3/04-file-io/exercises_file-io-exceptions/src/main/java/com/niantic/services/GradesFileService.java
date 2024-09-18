@@ -5,14 +5,11 @@ import com.niantic.models.Assignment;
 import java.io.File;
 import java.rmi.server.ExportException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class GradesFileService implements GradesService
 {
-
-
     @Override
     public String[] getFileNames()
     {

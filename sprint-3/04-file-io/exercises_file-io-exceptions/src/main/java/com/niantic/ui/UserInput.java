@@ -15,15 +15,16 @@ public class UserInput
         System.out.println("What do you want to do?");
         System.out.println("-".repeat(30));
         System.out.println();
-        System.out.println("  1) Display files");
+        System.out.println("  1) display files");
         System.out.println();
         System.out.println("  ------------ Individual File ------------");
         System.out.println("  2) Student: display all scores");
         System.out.println("  3) Student: display average score");
+        System.out.println("  4) Student: generate & view report");
         System.out.println();
         System.out.println("  ---------- Challenge All Files ----------");
-        System.out.println("  4) All Students: display average score");
-        System.out.println("  5) All Assignments: display average score");
+        System.out.println("  5) All Students: display average score");
+        System.out.println("  6) All Assignments: display average score");
         System.out.println();
         System.out.println("  0) Exit");
 
@@ -60,6 +61,35 @@ public class UserInput
         System.out.print("Choose File: ");
 
         return Integer.parseInt(in.nextLine());
+    }
+
+    public static int displayReportChoices()
+    {
+        System.out.println();
+        System.out.println("  ------------ Report Type ------------");
+        System.out.println("  1) Minimal Report");
+        System.out.println("  2) Detailed Report");
+        System.out.println();
+        System.out.println("  0) Exit");
+        System.out.println();
+        System.out.print("Choose Report Type: ");
+
+        return Integer.parseInt(in.nextLine());
+
+    }
+    public static void displayHeaderWithTitle(String title)
+    {
+        System.out.println();
+        System.out.println(title);
+        System.out.println("-".repeat(30));
+        System.out.println();
+    }
+
+    public static void enterToContinue()
+    {
+        System.out.println();
+        System.out.println("Press Enter to continue...");
+        in.nextLine().isEmpty();
     }
 
 }

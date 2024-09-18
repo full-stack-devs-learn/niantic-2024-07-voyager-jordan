@@ -1,18 +1,22 @@
 package com.niantic.application;
 
 import com.niantic.models.Assignment;
+import com.niantic.models.StudentData;
 import com.niantic.services.GradesFileService;
 import com.niantic.services.GradesService;
+import com.niantic.services.LoggingService;
+import com.niantic.services.ReportsService;
 import com.niantic.ui.UserInput;
 
 import java.io.File;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class GradingApplication implements Runnable
 {
     private GradesService gradesService = new GradesFileService();
     private Scanner userInput = new Scanner(System.in);
+    private LoggingService errorLog = new LoggingService("error");
+    private LoggingService appLog = new LoggingService("application");
 
     public void run()
     {
@@ -30,10 +34,13 @@ public class GradingApplication implements Runnable
                 case 3:
                     displayStudentSummary();
                     break;
-                case 4:
-                    displayAllStudentStatistics();
+                case 4 :
+                    studentReportInterface();
                     break;
                 case 5:
+                    displayAllStudentStatistics();
+                    break;
+                case 6:
                     displayAssignmentStatistics();
                     break;
                 case 0:
@@ -49,71 +56,54 @@ public class GradingApplication implements Runnable
     {
         // todo: 1 - get and display all student file names
         String[] allFiles = gradesService.getFileNames();
-        boolean isViewing = true;
+        String title = "Viewing All Files";
 
-        System.out.println();
-        System.out.println("Viewing All Files");
-        System.out.println("-".repeat(30));
-        System.out.println();
-        for(String file : allFiles)
-        {
-            System.out.println(file);
-        }
+        UserInput.displayHeaderWithTitle(title);
 
-        while(isViewing)
-        {
-            System.out.println();
-            System.out.println("Press Enter to continue...");
-            userInput.nextLine();
-            isViewing = false;
-        }
+        Arrays.stream(allFiles).sorted().forEach(System.out::println);
 
+        UserInput.enterToContinue();
     }
 
     private void displayFileScores()
     {
-        boolean isViewing = true;
         // todo: 2 - allow the user to select a file name
         // load all student assignment scores from the file - display all files
-
-        File directory = new File("files");
-        String[] allFiles = directory.list();
+        File getDirectory = new File("files");
+        String[] choices = getDirectory.list();
         HashMap<Integer, String> mappedChoices = new HashMap<>();
 
         int index = 1;
-        for(String file: allFiles)
+        for(String file: choices)
         {
             mappedChoices.put(index, file);
             index++;
         }
 
-        int choice = UserInput.displayFileChoice(allFiles);
-        while(isViewing)
+        int choice = UserInput.displayFileChoice(choices);
+        String chosenFile = mappedChoices.get(choice);
+        List<Assignment> allAssignment = gradesService.getAssignments(chosenFile);
+        Boolean valid = false;
+
+        while(!valid)
         {
-
-            if(choice == 0){ isViewing = false; }
-            String chosenFile = mappedChoices.get(choice);
-            List<Assignment> allAssignment = gradesService.getAssignments(chosenFile);
-
-            if(chosenFile != null)
+            try
             {
-                System.out.println();
-                System.out.printf("Viewing %s", chosenFile);
-                System.out.println();
-                System.out.println("-".repeat(30));
-                System.out.println();
-                for(Assignment assignment : allAssignment)
+                if(chosenFile != null)
                 {
-                    System.out.println(assignment);
+                    UserInput.displayHeaderWithTitle(String.format("Viewing %s", chosenFile));
+                    allAssignment.forEach(System.out::println);
+                    UserInput.enterToContinue();
+                    valid = true;
                 }
-                System.out.println();
-                System.out.println("Press Enter to continue...");
-                userInput.nextLine();
-                isViewing = false;
+                else
+                {
+                    System.out.println("Invalid choice");
+                }
             }
-            else
+            catch(Exception e)
             {
-                choice = UserInput.displayFileChoice(allFiles);
+                choice = UserInput.displayFileChoice(choices);
             }
         }
     }
@@ -122,39 +112,43 @@ public class GradingApplication implements Runnable
     {
         // todo: 3 - allow the user to select a file name
         // load all student assignment scores from the file - display student statistics (low score, high score, average score)
-
+        boolean isValid = false;
         File directory = new File("files");
         String[] allFiles = directory.list();
-        String fileChoice;
 
-        int choice = UserInput.displayFileChoice(allFiles);
-        fileChoice = allFiles[choice-1];
+        int choice;
+        String chosenFile = "";
 
-
-        List<Assignment> allAssignments = gradesService.getAssignments(fileChoice);
-
-        if(!allAssignments.isEmpty())
+        while(!isValid)
         {
+            choice = UserInput.displayFileChoice(allFiles);
+            if(choice <= allFiles.length) {
+                chosenFile = allFiles[choice-1];
+                isValid = true;
+            }
+        }
+
+        try
+        {
+            List<Assignment> allAssignments = gradesService.getAssignments(chosenFile);
+
+            if (allAssignments.isEmpty()) return;
+
             var highestScore = allAssignments.stream().mapToInt(Assignment::getScore).max().getAsInt();
             var lowestScore = allAssignments.stream().mapToInt(Assignment::getScore).min().getAsInt();
             var averageScore = allAssignments.stream().mapToInt(Assignment::getScore).average().getAsDouble();
 
-
-            System.out.println();
-            System.out.printf("Viewing %s", fileChoice);
-            System.out.println();
-            System.out.println("-".repeat(30));
+            UserInput.displayHeaderWithTitle(String.format("Viewing %s", chosenFile));
             System.out.printf("Highest Score:     %d\n", highestScore);
             System.out.printf("Lowest Score:      %d\n", lowestScore);
             System.out.printf("Average Score:     %.2f", averageScore);
-            System.out.println();
-            System.out.println("Press Enter to continue...");
-            userInput.nextLine();
+            UserInput.enterToContinue();
         }
-        else
+        catch(Exception e)
         {
-            System.out.println("Not Found");
+            System.out.println("An unexpected error occurred: " + e.getMessage());
         }
+
     }
 
     private void displayAllStudentStatistics()
@@ -164,35 +158,19 @@ public class GradingApplication implements Runnable
         String[] allFiles = gradesService.getFileNames();
         List<Assignment> contentsOfDirectory = gradesService.getAllAssignments(allFiles);
 
-        if(!contentsOfDirectory.isEmpty())
-        {
-            var highestScore = contentsOfDirectory.stream()
-                    .max(Comparator.comparingInt(Assignment::getScore));
+        if(contentsOfDirectory.isEmpty()) return;
 
-            var lowestScore = contentsOfDirectory.stream()
-                    .min(Comparator.comparingInt(Assignment::getScore));
+        var highestScore = contentsOfDirectory.stream().mapToInt(Assignment::getScore).max().getAsInt();
+        var lowestScore = contentsOfDirectory.stream().mapToInt(Assignment::getScore).min().getAsInt();
+        var averageScore = contentsOfDirectory.stream().mapToInt(Assignment::getScore).average().getAsDouble();
 
-            var averageScore = contentsOfDirectory.stream()
-                    .mapToInt(Assignment::getScore)
-                    .average();
-
-            System.out.println();
-            System.out.println("Viewing All Students Summary");
-            System.out.println("-".repeat(30));
-            System.out.printf("Students: %d  Assignments: %d", allFiles.length, contentsOfDirectory.size());
-            System.out.println();
-            System.out.println("-".repeat(30));
-            System.out.println("Highest Score: " + highestScore.get().getScore());
-            System.out.println("Lowest Score: " + lowestScore.get().getScore());
-            System.out.println("Average Score: " + Math.round(averageScore.getAsDouble() * 10.0) / 10.0);
-            System.out.println();
-            System.out.println("Press Enter to continue...");
-            userInput.nextLine();
-        }
-        else
-        {
-            System.out.println("Not Found");
-        }
+        UserInput.displayHeaderWithTitle("Viewing All Students Summary");
+        System.out.printf("Students: %d  Assignments: %d\n", allFiles.length, contentsOfDirectory.size());
+        System.out.println("-".repeat(30));
+        System.out.printf("Highest Score:     %d\n", highestScore);
+        System.out.printf("Lowest Score:      %d\n", lowestScore);
+        System.out.printf("Average Score:     %.2f\n", averageScore);
+        UserInput.enterToContinue();
     }
 
     private void displayAssignmentStatistics()
@@ -228,22 +206,61 @@ public class GradingApplication implements Runnable
             var lowestScore = value.stream().min(Integer::compareTo);
             var averageScore = value.stream().mapToInt(Integer::intValue).average();
 
-            System.out.println();
-            System.out.println(key);
-            System.out.println("-".repeat(30));
-            System.out.println("Highest Score: " + highestScore.get());
-            System.out.println("Lowest Score: " + lowestScore.get());
-            System.out.println("Average Score: " + Math.round(averageScore.getAsDouble() * 100.0) / 100.0);
+            UserInput.displayHeaderWithTitle(key);
+            System.out.printf("Highest Score:     %d\n", highestScore.get());
+            System.out.printf("Lowest Score:      %d\n", lowestScore.get());
+            System.out.printf("Average Score:     %.2f\n", averageScore.getAsDouble());
         });
-        System.out.println();
-        System.out.println("Press Enter to continue...");
-        userInput.nextLine();
+        UserInput.enterToContinue();
     }
 
+    private void studentReportInterface()
+    {
+        LoggingService reports = new LoggingService("reports");
+        ReportsService buildReport = new ReportsService();
+
+        boolean isValid = false;
+        String[] allFiles = gradesService.getFileNames();
+
+        int choice;
+        String chosenFile = "";
+
+        while(!isValid)
+        {
+            choice = UserInput.displayFileChoice(allFiles);
+            if(choice <= allFiles.length) {
+                chosenFile = allFiles[choice-1];
+                isValid = true;
+            }
+        }
+
+        List<Assignment> studentFile = gradesService.getAssignments(chosenFile);
+        StudentData studentData = new StudentData(studentFile);
+
+        isValid = false;
+        while(!isValid)
+        {
+            choice = UserInput.displayReportChoices();
+            switch(choice)
+            {
+                case 1:
+                    buildReport.createMinimalPersonReport(studentData);
+                    isValid = true;
+                    break;
+                case 2:
+                    buildReport.createDetailedPersonReport(studentData);
+                    isValid = true;
+                    break;
+                case 0:
+                    return;
+            }
+        }
+
+    }
     private String parseStudentName(String fileName)
     {
         return fileName.replace(".csv", "")
-                        .replace("_", " ")
-                        .substring(10);
+                .replace("_", " ")
+                .substring(10);
     }
 }
