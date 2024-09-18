@@ -20,7 +20,7 @@ public class UserInput
         System.out.println("  ------------ Individual File ------------");
         System.out.println("  2) Student: display all scores");
         System.out.println("  3) Student: display average score");
-        System.out.println("  4) Student: generate & view report");
+        System.out.println("  4) Student: generate reports");
         System.out.println();
         System.out.println("  ---------- Challenge All Files ----------");
         System.out.println("  5) All Students: display average score");

@@ -1,0 +1,6 @@
+eric walker
+------------------------------
+Lowest Score:              82
+Highest Score:             96
+Average Score:          87.13
+------------------------------

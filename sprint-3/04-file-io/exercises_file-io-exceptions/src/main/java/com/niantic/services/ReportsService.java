@@ -10,8 +10,6 @@ import java.time.format.DateTimeFormatter;
 
 public class ReportsService {
 
-    // todo: Receive data and write to a file with the data.
-
     public void createMinimalPersonReport(StudentData studentData)
     {
         LocalDate today = LocalDate.now();

@@ -2,10 +2,12 @@ package com.niantic.services;
 
 import com.niantic.models.Category;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -13,23 +15,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class MySqlCategoryDao implements CategoryDao
 {
     private final JdbcTemplate jdbcTemplate;
 
-    public MySqlCategoryDao()
-    {
-        String databaseUrl = "jdbc:mysql://localhost:3306/northwind";
-        String userName = "root";
-        String password = "P@ssw0rd";
-        DataSource dataSource = new BasicDataSource(){{
-            setUrl(databaseUrl);
-            setUsername(userName);
-            setPassword(password);
-        }};
-
-        jdbcTemplate = new JdbcTemplate(dataSource);
-    }
+    @Autowired
+    MySqlCategoryDao(DataSource dataSource) { jdbcTemplate = new JdbcTemplate(dataSource); }
 
     public List<Category> getCategories()
     {
@@ -87,7 +79,6 @@ public class MySqlCategoryDao implements CategoryDao
                 VALUES (?,?)
                 """;
 
-
         // insert a new record and retrieve the generated id
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -104,7 +95,6 @@ public class MySqlCategoryDao implements CategoryDao
 
         return getCategory(newId);
     }
-
 
     public void updateCategory(int id, Category category)
     {
@@ -131,6 +121,4 @@ public class MySqlCategoryDao implements CategoryDao
 
         jdbcTemplate.update(sql, categoryId);
     }
-
-
 }
