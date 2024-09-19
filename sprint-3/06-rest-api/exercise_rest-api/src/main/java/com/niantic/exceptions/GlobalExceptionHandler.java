@@ -26,14 +26,11 @@ public class GlobalExceptionHandler {
 
     public ResponseEntity<HttpError> handleInternalServerError(Exception e)
     {
-
         errorLog.logMessage(e.getMessage());
-
         var error = new HttpError(HttpStatus.INTERNAL_SERVER_ERROR.value()
                 , HttpStatus.INTERNAL_SERVER_ERROR.toString()
                 , "Oops! Something went wrong on our end. Please try again later.");
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     };
-
 }
