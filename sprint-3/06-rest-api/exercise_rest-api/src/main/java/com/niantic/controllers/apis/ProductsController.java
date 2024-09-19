@@ -33,14 +33,12 @@ public class ProductsController
         try
         {
             var results = productDao.getAllProducts();
-
-            var error = new HttpError(HttpStatus.NOT_FOUND.value()
-                    , HttpStatus.NOT_FOUND.toString()
-                    , "Not Found");
-
-            return (results == null)
-                    ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(error)
-                    : ResponseEntity.ok(results);
+            if (results == null)
+            {
+                ResourceNotFoundException ex = new ResourceNotFoundException(resourceType);
+                return error.handleNotFound(ex);
+            }
+            return ResponseEntity.ok(results);
         }
         catch(Exception e)
         {

@@ -14,6 +14,12 @@ public class ResourceNotFoundException extends RuntimeException {
         this.message = String.format("%s %s couldn't be found", resourceType, searched);
     }
 
+    public ResourceNotFoundException(String resourceType)
+    {
+        this.resourceType = resourceType;
+        this.message = String.format("Couldn't find %s", resourceType);
+    }
+
     public String getResourceType() {
         return resourceType;
     }
