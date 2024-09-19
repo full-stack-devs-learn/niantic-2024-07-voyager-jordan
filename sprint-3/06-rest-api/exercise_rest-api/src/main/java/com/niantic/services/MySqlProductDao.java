@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -14,7 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Repository
 public class MySqlProductDao implements ProductDao
 {
     private final JdbcTemplate jdbcTemplate;
@@ -78,6 +78,47 @@ public class MySqlProductDao implements ProductDao
         {
             productId = row.getInt("product_id");
             String productName = row.getString("product_name");
+            int supplierId = row.getInt("supplier_id");
+            int categoryId = row.getInt("category_id");
+            String description = row.getString("quantity_per_unit");
+            double unitPrice = row.getDouble("unit_price");
+            int unitsInStock = row.getInt("units_in_stock");
+            int unitsOnOrder = row.getInt("units_on_order");
+            int reorderLevel = row.getInt("reorder_level");
+            boolean isDiscontinued = row.getBoolean("discontinued");
+
+            Product product = new Product(
+                    productId,
+                    productName,
+                    supplierId,
+                    categoryId,
+                    description,
+                    unitPrice,
+                    unitsInStock,
+                    unitsOnOrder,
+                    reorderLevel,
+                    isDiscontinued
+            );
+
+            return product;
+        }
+        return null;
+    }
+
+    public Product getProductByName(String productName)
+    {
+        String query = """
+                    SELECT *
+                    FROM products
+                    WHERE product_name = ?
+                    """;
+
+        SqlRowSet row = jdbcTemplate.queryForRowSet(query, productName);
+
+        if(row.next())
+        {
+            int productId = row.getInt("product_id");
+            productName = row.getString("product_name");
             int supplierId = row.getInt("supplier_id");
             int categoryId = row.getInt("category_id");
             String description = row.getString("quantity_per_unit");

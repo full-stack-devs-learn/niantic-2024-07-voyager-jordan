@@ -1,56 +1,162 @@
 package com.niantic.controllers.apis;
 
+import com.niantic.exceptions.GlobalExceptionHandler;
+import com.niantic.exceptions.ResourceNotFoundException;
+import com.niantic.models.HttpError;
 import com.niantic.models.Product;
+import com.niantic.services.CategoryDao;
+import com.niantic.services.LoggingService;
 import com.niantic.services.ProductDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/products")
 public class ProductsController
 {
     @Autowired
-    ProductDao productDao;
+    private ProductDao productDao;
+    @Autowired
+    private CategoryDao categoryDao;
+    @Autowired
+    private GlobalExceptionHandler error;
+    private LoggingService errorLog = new LoggingService("errors");
+    private String resourceType = "Products";
+
+    //todo: Error Handling & Log Errors
 
     @GetMapping
-    public List<Product> getAllProducts()
+    public ResponseEntity<?> getAllProducts()
     {
-        return productDao.getAllProducts();
+        try
+        {
+            var results = productDao.getAllProducts();
+
+            var error = new HttpError(HttpStatus.NOT_FOUND.value()
+                    , HttpStatus.NOT_FOUND.toString()
+                    , "Not Found");
+
+            return (results == null)
+                    ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(error)
+                    : ResponseEntity.ok(results);
+        }
+        catch(Exception e)
+        {
+            return error.handleInternalServerError(e);
+        }
+
     }
 
-    @GetMapping(path = "/{productId}")
-    public Product getProduct(@PathVariable int productId)
+    @GetMapping(path = "{productId}")
+    public ResponseEntity<?> getProduct(@PathVariable int productId)
     {
-        return productDao.getProductById(productId);
+        try
+        {
+            var results = productDao.getProductById(productId);
+            if (results == null)
+            {
+                ResourceNotFoundException ex = new ResourceNotFoundException(resourceType + " with id", String.valueOf(productId));
+                return error.handleNotFound(ex);
+            }
+           return ResponseEntity.ok(results);
+        }
+        catch(Exception e)
+        {
+            return error.handleInternalServerError(e);
+        }
     }
 
     @GetMapping(params = "catId")
-    public List<Product> getProductByCategoryId(@RequestParam int catId)
+    public ResponseEntity<?> getProductByCategoryId(@RequestParam int catId)
     {
-        return productDao.getProductsByCategoryId(catId);
+        try
+        {
+            var category = categoryDao.getCategory(catId);
+            if(category == null)
+            {
+                ResourceNotFoundException ex = new ResourceNotFoundException("Category with Id", String.valueOf(catId));
+                return error.handleNotFound(ex);
+            }
+
+            var results = productDao.getProductsByCategoryId(catId);
+            if (results == null || results.isEmpty())
+            {
+                ResourceNotFoundException ex = new ResourceNotFoundException(resourceType + " with category Id", String.valueOf(catId));
+                return error.handleNotFound(ex);
+            }
+            return ResponseEntity.ok(results);
+        }
+        catch(Exception e)
+        {
+            return error.handleInternalServerError(e);
+        }
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Product addProduct(@RequestBody Product product)
+    public ResponseEntity<?> addProduct(@RequestBody Product product)
     {
-        return productDao.addProduct(product);
+        try
+        {
+            var target = productDao.getProductByName(product.getProductName());
+            if(target != null)
+            {
+                var error = new HttpError(HttpStatus.CONFLICT.value()
+                        , HttpStatus.CONFLICT.toString()
+                        , String.format("Product %s already exist", product.getProductName()));
+
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+            }
+            productDao.addProduct(product);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
+        catch(Exception e)
+        {
+            return error.handleInternalServerError(e);
+        }
     }
 
-    @PutMapping(path = "/{productId}")
+    @PutMapping(path = "{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void putProduct(@PathVariable int productId, @RequestBody Product product)
+    public ResponseEntity<?> putProduct(@PathVariable int productId, @RequestBody Product product)
     {
-        productDao.updateProduct(productId, product);
+        try
+        {
+            var target = productDao.getProductById(productId);
+            if(target == null)
+            {
+                ResourceNotFoundException ex = new ResourceNotFoundException("Product with product id", String.valueOf(productId));
+                return error.handleNotFound(ex);
+            }
+            productDao.updateProduct(productId, product);
+            return ResponseEntity.noContent().build();
+        }
+        catch(Exception e)
+        {
+            return error.handleInternalServerError(e);
+        }
     }
 
-    @DeleteMapping(path = "/{productId}")
+    @DeleteMapping(path = "{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProduct(@PathVariable int productId)
+    public ResponseEntity<?> deleteProduct(@PathVariable int productId)
     {
-        productDao.deleteProduct(productId);
+        try
+        {
+            var target = productDao.getProductById(productId);
+            if(target == null)
+            {
+                ResourceNotFoundException ex = new ResourceNotFoundException("Product with product id", String.valueOf(productId));
+                return error.handleNotFound(ex);
+            }
+            productDao.deleteProduct(productId);
+            return ResponseEntity.noContent().build();
+        }
+        catch(Exception e)
+        {
+            return error.handleInternalServerError(e);
+        }
     }
 }

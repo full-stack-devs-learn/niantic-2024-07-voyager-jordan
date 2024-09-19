@@ -10,38 +10,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/categories")
 public class CategoriesController
 {
     @Autowired
     private CategoryDao categoryDao;
 
-    @GetMapping("/api/categories")
+    @GetMapping
     public List<Category> getAllCategories()
     {
         return categoryDao.getCategories();
     }
 
-    @GetMapping("/api/categories/{id}")
+    @GetMapping(path = "{id}")
     public Category getCategory(@PathVariable int id)
     {
         return categoryDao.getCategory(id);
     }
 
-    @PostMapping("/api/categories")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Category addCategory(@RequestBody Category category)
     {
         return categoryDao.addCategory(category);
     }
 
-    @PutMapping("/api/categories/{id}")
+    @PutMapping(path = "{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCategory(@PathVariable int id, @RequestBody Category category)
     {
         categoryDao.updateCategory(id, category);
     }
 
-    @DeleteMapping("/api/categories/{id}")
+    @DeleteMapping(path = "{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable int id)
     {

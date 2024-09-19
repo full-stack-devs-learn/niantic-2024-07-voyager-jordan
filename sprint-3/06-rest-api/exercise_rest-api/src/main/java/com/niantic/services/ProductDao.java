@@ -10,6 +10,8 @@ public interface ProductDao
 
     Product getProductById(int productId);
 
+    Product getProductByName(String productName);
+
     List<Product> getProductsByCategoryId(int categoryId);
 
     Product addProduct(Product product);
