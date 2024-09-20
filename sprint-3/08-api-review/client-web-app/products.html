@@ -38,23 +38,31 @@
     </div>
 </nav>
 
-<main class="container mt-4">
-    <h1>Products</h1>
-    <button id="add-button" class="btn btn-warning">Add</button>
+<main class="container-fluid">
+    <div class="row main-content">
+        <div class="col-md-2 d-flex flex-column justify-content-center align-items-center categories-sidebar" id="products-categories-container">
+            <h4 id="sidebar-header">Categories</h4>
+            <ul id="sidebar-list-categories">
+            </ul>
+        </div>
+        <div class="col-md-10 d-flex flex-column products-container" id="products-container">
+            <h1 id="products-header">Products - All</h1>
+            <button id="add-button" class="btn btn-warning">Add</button>
+            <div class="container d-flex flex-wrap products-card-container">
+
+            </div>
+        </div>
+    </div>
 </main>
 
-<main class="container mt-4 categories-container" id="categories-container">
-
-</main>
-
-<template id="category-template">
-    <div class="card category-card">
-        <div id="category-header" class="card-header"></div>
-        <div id="category-body" class="card-body">
-            <img id="category-image">
+<template id="products-template">
+    <div class="card products-card">
+        <div id="product-header" class="card-header"></div>
+        <div id="product-body" class="card-body">
+            <img id="products">
         </div>
         <div class="card-footer">
-            <div id="delete-button" class="btn btn-link">delete</div>
+            <div id="product-price" class="btn btn-link"></div>
         </div>
     </div>
 </template>
