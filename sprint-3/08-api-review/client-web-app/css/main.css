@@ -1,3 +1,9 @@
+* 
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .categories-container
 {
     display: flex;
@@ -56,12 +62,20 @@
 }
 
 /* <---------- Products ----------> */
+.main
+{
+    height: 100vh;
+}
+.main-content
+{
+    height: 100vh;
+}
 #products-categories-container
 {
     padding: 0;
-    min-height: 100vh;
     background-color: #77c2adae;
     border-top: 2px solid rgba(0, 0, 0, 0.292);
+    border-radius: 0 2vh 2vh 0;
 }
 #products-container
 {
@@ -90,7 +104,6 @@
     border-top: 2px solid rgba(0, 0, 0, 0.292);
     padding: 1vh 1vh 0 1vh;
 
-    
 }
 #sidebar-list-categories *
 {
@@ -105,15 +118,16 @@
 }
 .products-card-container
 {
+    justify-content: flex-start;
     margin-top: 2.5vh;
     gap: 3vh;
+    padding: 0;
 }
 #add-button
 {
     width: 8%;
     align-self: flex-end;
 }
-
 .products-card
 {
     width: 200px;

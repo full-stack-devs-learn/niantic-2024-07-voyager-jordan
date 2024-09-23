@@ -34,6 +34,19 @@ async function loadCategories()
     const parent = document.querySelector("#sidebar-list-categories")
     let categories = await categoryService.getAllCategories();
 
+    const li = document.createElement("li")
+    const button = document.createElement("button")
+
+    button.classList = "btn btn-warning"
+    button.id = "addCategoryButton"
+    button.textContent = "All"
+    button.type = "button"
+    button.addEventListener("click", loadProducts)
+
+    li.appendChild(button)
+    parent.appendChild(li)
+
+
     categories.forEach(category => {
 
         const li = document.createElement("li")
@@ -48,16 +61,6 @@ async function loadCategories()
         parent.appendChild(li)
     });
 
-    const li = document.createElement("li")
-    const button = document.createElement("button")
-
-    button.classList = "btn btn-warning"
-    button.id = "addCategoryButton"
-    button.textContent = "+"
-    button.type = "button"
-
-    li.appendChild(button)
-    parent.appendChild(li)
 }
 
 async function getProductsByCategoryId(e)
@@ -85,7 +88,8 @@ function displayProducts(productsData)
         const cardFooter = template.querySelector(".card-footer");
         const unitPrice = cardFooter.querySelector("#product-price")
 
-        unitPrice.textContent = product.unitPrice.toFixed(2);
+        unitPrice.textContent = `$${product.unitPrice.toFixed(2)}`;
+        unitPrice.style.textDecoration = "none";
    
         cardFooter.appendChild(unitPrice)
         parent.appendChild(template)
