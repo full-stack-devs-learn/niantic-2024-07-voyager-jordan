@@ -6,20 +6,19 @@ import Employees_List from "./employees_list"
 
 export default function Employees_Page({pageTitle})
 {
-    const [currentEmployee, setCurrentEmployee] = useState(null)
+    const [isViewingProfile, setIsViewingProfile] = useState(false)
     const [onProfile, setOnProfile] = useState(false)
     const [employeeObj, setEmployeeObj] = useState({})
 
     const employeeSelect = (person) => {
-        console.log(person)
         setOnProfile(true)
-        setCurrentEmployee(`${person.firstName} ${person.LastName}`)
+        setIsViewingProfile(true)
         setEmployeeObj(person)
     }
 
     return (
         <>
-            { currentEmployee == null 
+            { !isViewingProfile
                     ?   <Header pageTitle="All Employees"></Header>
                     :   <Header pageTitle="Profile"></Header>
             }
