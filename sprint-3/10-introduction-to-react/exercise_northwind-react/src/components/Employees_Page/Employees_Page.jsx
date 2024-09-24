@@ -24,8 +24,8 @@ export default function Employees_Page({pageTitle})
     return (
         <>
             { !isViewingProfile
-                    ?   <Header pageTitle="All Employees"></Header>
-                    :   <Header pageTitle={`Profile - ${employeeObj.firstName} ${employeeObj.lastName}`}></Header>
+                ? <Header pageTitle="All Employees"></Header>
+                : <Header pageTitle={`Profile - ${employeeObj.firstName} ${employeeObj.lastName}`}></Header>
             }
 
             <main className="container mt-4 employees-container" id="employees-container">
@@ -33,7 +33,6 @@ export default function Employees_Page({pageTitle})
                     ? <Employees_List employeeSelect={employeeSelect}></Employees_List>
                     : <Employee_Details employee={employeeObj} returnClick={returnClick}></Employee_Details>
                 }
-                
             </main>     
         </>
         
