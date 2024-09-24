@@ -1,13 +1,15 @@
+//HOOKS
 import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-
+//SERVICES
 import PeopleService from './services/people-service'
 
 function App() {
   const [count, setCount] = useState(0);
   const [people, setPeople] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
 
   const peopleService = new PeopleService();
 
@@ -18,20 +20,26 @@ function App() {
        let data = await peopleService.getAllPeople();
        setPeople(data.results)
        console.log(data.results)
+       setIsLoading(false);
     }
 
     fetchData();
   }, [])
 
-
-  return (
+  return isLoading ? 
+  (
+    <h1>Currently Loading</h1>
+  ) 
+  : 
+  (
     <ul>
       {people.map((person, index) => (
-        <li >{person.name}</li>
+        <li key={index}>{person.name}</li> // Use a unique id if available
       ))}
     </ul>
+  );
 
-  )
+  
 }
 
 export default App
