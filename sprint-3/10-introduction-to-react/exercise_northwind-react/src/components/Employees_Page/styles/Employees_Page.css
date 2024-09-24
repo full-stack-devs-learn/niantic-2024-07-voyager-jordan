@@ -1,6 +1,8 @@
 .profile-container
 {
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .upper-section
@@ -17,4 +19,10 @@
 .lower-section
 {
     margin: 2vh 0 0 0;
+}
+#returnButton
+{
+    margin-top: 5vh;
+    justify-self: center;
+    align-self: center;
 }

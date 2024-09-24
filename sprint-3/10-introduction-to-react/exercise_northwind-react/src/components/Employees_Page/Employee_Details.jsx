@@ -1,9 +1,13 @@
 import "./styles/Employees_Page.css"
 
-export default function Employee_Details({employee})
+export default function Employee_Details({employee, returnClick})
 {
     const fullName = `${employee.firstName} ${employee.lastName}`
     const imgSrc = `images/employees/${employee.employeeId}.webp`;
+
+    const clickHandler = () => {
+        returnClick()
+    }
 
     return (
         <>
@@ -22,6 +26,7 @@ export default function Employee_Details({employee})
                     <h4>Notes:</h4>
                     <h6>{employee.notes}</h6>                    
                 </div>
+                <button id="returnButton" onClick={clickHandler}>Return</button>
             </div>
         </>
     );
