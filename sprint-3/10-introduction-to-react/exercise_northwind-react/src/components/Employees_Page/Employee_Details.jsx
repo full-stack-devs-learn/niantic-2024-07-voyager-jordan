@@ -26,10 +26,3 @@ export default function Employee_Details({employee})
         </>
     );
 }
-/*
-    Larger Picture
-    Full Name
-    Title
-    Salary
-    Notes
-*/
