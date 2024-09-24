@@ -13,7 +13,6 @@ function App() {
 
   const peopleService = new PeopleService();
 
-
   useEffect(() => {
 
     const fetchData = async () => {
@@ -32,14 +31,12 @@ function App() {
   ) 
   : 
   (
-    <ul>
+    <ul style={{listStyle:'none'}}>
       {people.map((person, index) => (
-        <li key={index}>{person.name}</li> // Use a unique id if available
+        <li key={index}>{person.name}</li>
       ))}
     </ul>
   );
-
-  
 }
 
 export default App
