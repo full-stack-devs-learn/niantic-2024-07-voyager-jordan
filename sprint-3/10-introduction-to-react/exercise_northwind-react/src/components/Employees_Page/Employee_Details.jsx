@@ -1,4 +1,4 @@
-import "./Employees_Page.css"
+import "./styles/Employees_Page.css"
 
 export default function Employee_Details({employee})
 {
