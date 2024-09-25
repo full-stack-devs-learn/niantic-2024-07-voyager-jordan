@@ -28,5 +28,6 @@ class PeopleService
     }
 
 }
+const peopleService = new PeopleService();
 
-export default PeopleService;
+export { peopleService } ;

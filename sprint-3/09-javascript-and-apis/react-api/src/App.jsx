@@ -4,14 +4,13 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 //SERVICES
-import PeopleService from './services/people-service'
+import { peopleService } from './services/people-service'
 
 function App() {
   const [count, setCount] = useState(0);
   const [people, setPeople] = useState([]);
   const [isLoading, setIsLoading] = useState(true)
 
-  const peopleService = new PeopleService();
 
   useEffect(() => {
 
