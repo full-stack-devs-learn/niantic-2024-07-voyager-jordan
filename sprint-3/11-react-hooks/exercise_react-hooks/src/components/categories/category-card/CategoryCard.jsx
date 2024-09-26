@@ -1,14 +1,12 @@
 import categoryService from '../../../services/category-service'
 import './CategoryCard.css'
-import { XCircle, XCircleFill } from 'react-bootstrap-icons'
+import { Trash } from 'react-bootstrap-icons'
 
 export default function CategoryCard({id, category, onCategorySelected, onCategoryDeleted})
 {
     const imageUrl = `images/categories/${id}.webp`
     
     const categoryClicked = () => {
-        // console.log(id)
-        // console.log(category); 
         onCategorySelected(category)       
     }
 
@@ -29,7 +27,7 @@ export default function CategoryCard({id, category, onCategorySelected, onCatego
                 <img id="category-image" src={imageUrl} />
             </div>
             <div className="card-footer">
-                <XCircleFill onClick={deleteCategory} color="red" />
+                <Trash onClick={deleteCategory} color="red" />
             </div>
         </div>
     )

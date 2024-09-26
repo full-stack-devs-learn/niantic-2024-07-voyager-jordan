@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Header from "./components/header/Header"
 import CategoriesPage from "./components/categories/categories-page/CategoriesPage"
 import ProductsPage from "./components/products/products-page/ProductsPage"
@@ -19,9 +20,13 @@ function App() {
 
   return (
     <>
+    <Router>
       <Header {...props}></Header>
-      { (pageName=="categories") && <CategoriesPage {...props}></CategoriesPage> }
-      { (pageName=="products") && <ProductsPage {...props}></ProductsPage> }
+      <Routes>
+        <Route path="/" element={ <CategoriesPage {...props}></CategoriesPage> }exact> </Route>
+        <Route path="/products" element={ <ProductsPage {...props}></ProductsPage>}></Route>
+      </Routes>
+    </Router>
     </>
   )
 }

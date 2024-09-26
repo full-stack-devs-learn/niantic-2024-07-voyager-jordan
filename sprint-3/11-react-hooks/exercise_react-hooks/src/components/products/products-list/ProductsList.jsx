@@ -1,5 +1,6 @@
 import {useState, useEffect } from 'react'
 import productService from '../../../services/product-service';
+import { Trash } from 'react-bootstrap-icons'
 import './ProductsList.css'
 
 export default function ProductsList({categoryId, categoryName})
@@ -25,11 +26,10 @@ export default function ProductsList({categoryId, categoryName})
     return (
         <>
             {(categoryId == null) 
-            ? <h3>Viewing All Categories</h3>
-            : <h3>
-                    Products for category: {categoryName}
-            </h3>
+            ? <h3>Viewing All Products</h3>
+            : <h3> Products for category: {categoryName} </h3>
             }
+            <div className="container mt-4 products-list" id="products-list">
             {
                 products.map((product) => (
                     <div className="card product-card" key={product.id}>
@@ -38,10 +38,12 @@ export default function ProductsList({categoryId, categoryName})
                             <img id="product-image"/>
                         </div>
                         <div className="card-footer">
+                            <Trash id="product-trash-btn"></Trash>
                         </div>
                     </div>
                 ))
             }
+            </div>
         </>
     )
 }

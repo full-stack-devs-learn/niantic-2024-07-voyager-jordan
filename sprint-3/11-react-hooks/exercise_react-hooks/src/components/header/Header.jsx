@@ -1,20 +1,20 @@
 import './Header.css'
+import { NavLink } from "react-router-dom"
 
 export default function Header(props)
 {
-    const { setPageName, setCategoryId, setCategoryName } = props
+    const {setCategoryId} = props
 
-    function pageHandler(name){
+    function pageHandler(){
         setCategoryId(null)
-        setPageName(name)
     }
 
     return(
         <div id="navigation">
             <img src="images/logo.png" alt="Northwind Logo" />
             <h1>Northwind Traders</h1>
-            <div className="link" onClick={()=>pageHandler("categories")}>Categories</div>
-            <div className="link" onClick={()=>pageHandler("products")}>Products</div>
+            <NavLink to="/" className="link" onClick={pageHandler}>Categories</NavLink>
+            <NavLink to="/products" className="link" onClick={pageHandler}>Products</NavLink>
         </div>
     )
 }

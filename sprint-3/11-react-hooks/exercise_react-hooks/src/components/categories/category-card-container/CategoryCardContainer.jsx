@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from "react-router-dom"
 import CategoryCard from '../category-card/CategoryCard'
 import './CategoryCardContainer.css'
 import categoryService from '../../../services/category-service';
@@ -37,12 +38,16 @@ export default function CategoryCardContainer(props)
         <main className="container mt-4 categories-container" id="categories-container">
         {
             categories.map((category) => (
-                <CategoryCard key={category.categoryId} 
-                    category={category.categoryName} 
-                    id={category.categoryId}
-                    onCategorySelected={categorySelected}
-                    onCategoryDeleted={categoryDeleted}
-                    ></CategoryCard>
+                
+                <Link to={`/products?catId=${category.categoryId}`}> 
+                    <CategoryCard key={category.categoryId} 
+                        category={category.categoryName} 
+                        id={category.categoryId}
+                        onCategorySelected={categorySelected}
+                        onCategoryDeleted={categoryDeleted}
+                        ></CategoryCard>
+                </Link>
+            
             ))
         }
         </main>

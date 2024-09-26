@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react'
 import ProductsList from '../products-list/ProductsList'
-import './ProductsPage.css'
+import '../styles/products-page.css'
 
 export default function ProductsPage(props)
 {   
