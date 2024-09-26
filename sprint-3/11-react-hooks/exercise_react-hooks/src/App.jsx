@@ -1,26 +1,27 @@
 import { useState } from "react"
 import Header from "./components/header/Header"
-import CategoriesPage from "./components/categories/cagtegories-page/CategoriesPage"
+import CategoriesPage from "./components/categories/categories-page/CategoriesPage"
 import ProductsPage from "./components/products/products-page/ProductsPage"
 
 function App() {
   const [pageName, setPageName] = useState("categories")
+  const [categoryId, setCategoryId] = useState(null)
+  const [categoryName, setCategoryName] = useState("None Selected")
 
-  const pageChangeHanlder = (newPage) =>
-  {
-    setPageName(newPage);
-    console.log("changing page to: " + pageName); 
+  const props = {
+      pageName,
+      setPageName,
+      categoryId,
+      setCategoryId,
+      categoryName,
+      setCategoryName
   }
-
-  console.log("page render: " + pageName)
-  
 
   return (
     <>
-      <Header onPageChanged={pageChangeHanlder}></Header>
-
-      { (pageName=="categories") ? <CategoriesPage></CategoriesPage> : null}
-      { (pageName=="products") && <ProductsPage></ProductsPage> }
+      <Header {...props}></Header>
+      { (pageName=="categories") && <CategoriesPage {...props}></CategoriesPage> }
+      { (pageName=="products") && <ProductsPage {...props}></ProductsPage> }
     </>
   )
 }

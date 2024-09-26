@@ -3,7 +3,7 @@ import CategoryAdd from '../category-add/CategoryAdd'
 import CategoryCardContainer from '../category-card-container/CategoryCardContainer'
 import './CategoriesPage.css'
 
-export default function CategoriesPage()
+export default function CategoriesPage(props)
 {
     const [action, setAction] = useState("list");
 
@@ -14,10 +14,10 @@ export default function CategoriesPage()
             </header>
             <button className="btn btn-danger" onClick={()=> setAction("add")}>Add</button>
 
-            {action === "list" && <CategoryCardContainer></CategoryCardContainer>}
-            {action === "add" && <CategoryAdd onCancel={()=>setAction("list")}
-                                              onCategoryAdded={()=>setAction("list")}
-                ></CategoryAdd>}
+                {action === "list" && <CategoryCardContainer {...props}></CategoryCardContainer>}
+                {action === "add" && <CategoryAdd onCancel={()=>setAction("list")}
+                                            onCategoryAdded={()=>setAction("list")}
+                                    ></CategoryAdd>}
             
         </div>
     )

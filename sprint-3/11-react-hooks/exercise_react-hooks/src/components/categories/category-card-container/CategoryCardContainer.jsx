@@ -3,37 +3,28 @@ import CategoryCard from '../category-card/CategoryCard'
 import './CategoryCardContainer.css'
 import categoryService from '../../../services/category-service';
 import ProductsList from '../../products/products-list/ProductsList';
-// import { categories } from '../../../data'
 
-export default function CategoryCardContainer()
+export default function CategoryCardContainer(props)
 {
-    const [selectedCategory, setSelectedCategory] = useState("None Selected");
-    const [selectedCategoryId, setSelectedCategoryId] = useState(0);
+    const {setPageName, categoryId, setCategoryId, categoryName, setCategoryName}  = props
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
 
         categoryService.getAllCategories().then(data => {
-
-            console.log("data being returned:");            
-            console.log(data);
             setCategories(data);   
         })
 
-    }, 
-    // an emptry array says that I only want
-    // this code to run one time before the first render
-    [])
+    }, [])
    
 
     const categorySelected = (name) =>
     {
-        setSelectedCategory(name);
 
         const categoryId = categories.filter(cat => cat.categoryName === name)[0].categoryId;
-
-        setSelectedCategoryId(categoryId);
-        console.log(name)
+        setCategoryId(categoryId);
+        setCategoryName(name)
+        setPageName("products")
     }
 
     const categoryDeleted = (categoryId) => {
@@ -43,7 +34,6 @@ export default function CategoryCardContainer()
 
     return(
         <>
-        <h5 className="container">Selected Category: {selectedCategory}</h5>
         <main className="container mt-4 categories-container" id="categories-container">
         {
             categories.map((category) => (
@@ -56,7 +46,6 @@ export default function CategoryCardContainer()
             ))
         }
         </main>
-        <ProductsList categoryId={selectedCategoryId}></ProductsList>
         </>
     )
 }
