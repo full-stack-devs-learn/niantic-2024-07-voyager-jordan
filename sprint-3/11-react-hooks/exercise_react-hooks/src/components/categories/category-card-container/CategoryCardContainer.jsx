@@ -7,7 +7,7 @@ import ProductsList from '../../products/products-list/ProductsList';
 
 export default function CategoryCardContainer(props)
 {
-    const {setPageName, categoryId, setCategoryId, categoryName, setCategoryName}  = props
+    const {categoryId, setCategoryId, categoryName, setCategoryName}  = props
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
@@ -21,11 +21,9 @@ export default function CategoryCardContainer(props)
 
     const categorySelected = (name) =>
     {
-
         const categoryId = categories.filter(cat => cat.categoryName === name)[0].categoryId;
         setCategoryId(categoryId);
         setCategoryName(name)
-        setPageName("products")
     }
 
     const categoryDeleted = (categoryId) => {
@@ -39,7 +37,7 @@ export default function CategoryCardContainer(props)
         {
             categories.map((category) => (
                 
-                <Link to={`/products?catId=${category.categoryId}`}> 
+                <Link to={`/products?catId=${category.categoryId}`} key={category.categoryId}> 
                     <CategoryCard key={category.categoryId} 
                         category={category.categoryName} 
                         id={category.categoryId}

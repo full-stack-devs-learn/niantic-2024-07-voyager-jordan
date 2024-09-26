@@ -5,13 +5,10 @@ import CategoriesPage from "./components/categories/categories-page/CategoriesPa
 import ProductsPage from "./components/products/products-page/ProductsPage"
 
 function App() {
-  const [pageName, setPageName] = useState("categories")
   const [categoryId, setCategoryId] = useState(null)
   const [categoryName, setCategoryName] = useState("None Selected")
 
   const props = {
-      pageName,
-      setPageName,
       categoryId,
       setCategoryId,
       categoryName,

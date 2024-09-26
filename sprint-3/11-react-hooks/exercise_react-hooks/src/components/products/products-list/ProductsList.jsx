@@ -10,14 +10,12 @@ export default function ProductsList({categoryId, categoryName})
     useEffect(() => {
         if(categoryId === null){
             productService.getAllProducts().then(data => {
-                console.log(data);
                 setProducts(data)
             })
         } 
         else
         {
             productService.getProductsByCategoryId(categoryId).then(data => {
-                console.log(data);
                 setProducts(data)
             })
         }

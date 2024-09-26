@@ -13,12 +13,9 @@ export default function CategoryCard({id, category, onCategorySelected, onCatego
     async function deleteCategory(event)
     {
         event.stopPropagation();
-
         await categoryService.delete(id);
-
         onCategoryDeleted(id);
     }
-
 
     return(
         <div className="card category-card" onClick={categoryClicked}>
