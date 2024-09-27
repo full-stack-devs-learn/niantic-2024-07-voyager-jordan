@@ -22,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={ <CategoriesPage {...props}></CategoriesPage> }exact> </Route>
         <Route path="/products" element={ <ProductsPage {...props}></ProductsPage>}></Route>
+        <Route path="/products?catId=*" element={ <ProductsPage {...props}></ProductsPage>}></Route>
       </Routes>
     </Router>
     </>
