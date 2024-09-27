@@ -1,5 +1,5 @@
 import './Header.css'
-import { NavLink } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 
 export default function Header(props)
 {
@@ -13,8 +13,8 @@ export default function Header(props)
         <div id="navigation">
             <img src="images/logo.png" alt="Northwind Logo" />
             <h1>Northwind Traders</h1>
-            <NavLink to="/" className="link" onClick={pageHandler}>Categories</NavLink>
-            <NavLink to="/products" className="link" onClick={pageHandler}>Products</NavLink>
+            <Link to="/" className="link" onClick={pageHandler}>Categories</Link>
+            <Link to="/products" className="link" onClick={pageHandler}>Products</Link>
         </div>
     )
 }

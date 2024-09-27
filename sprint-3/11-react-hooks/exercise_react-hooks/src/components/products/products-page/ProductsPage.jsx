@@ -22,7 +22,6 @@ export default function ProductsPage(props)
             getCategoryName();
         }
     },[categoryId])
-    
 
     return (
         <>

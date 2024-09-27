@@ -8,7 +8,7 @@ export default function ProductsList({categoryId, categoryName})
     const [products, setProducts] = useState([])
 
     useEffect(() => {
-        if(categoryId === null){
+        if(!categoryId){
             productService.getAllProducts().then(data => {
                 setProducts(data)
             })
@@ -19,7 +19,7 @@ export default function ProductsList({categoryId, categoryName})
                 setProducts(data)
             })
         }
-    }, [])
+    }, [categoryId])
 
     return (
         <>
