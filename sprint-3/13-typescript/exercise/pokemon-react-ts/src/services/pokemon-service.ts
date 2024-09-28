@@ -10,6 +10,16 @@ class Pokemon_Service
         return response.data
     }
 
+    async getPokemonNext(url:string){
+        const response = await axios.get(url);
+        return response.data
+    }
+
+    async getPokemonPrev(url:string){
+        const response = await axios.get(url);    
+        return response.data
+    }
+
     async getPokemonOfType(type:any){
         const response = await axios.get(`${this.baseUrl}/${type}/`);
         const result:PokemonResponse[] = response.data.pokemon

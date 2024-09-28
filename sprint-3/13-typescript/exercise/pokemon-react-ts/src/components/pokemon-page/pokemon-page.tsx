@@ -13,6 +13,7 @@ export default function Pokemon_Page()
     const [pokemonData, setPokemonData] = useState<Pokemon[]>([])
     const [pokemonType, setPokemonType] = useState<string>("")
     const [nextPage, setNextPage] = useState<string>("");
+    const [prevPage, setPrevPage] = useState<string>("");
 
 
     useEffect(()=>{
@@ -34,10 +35,11 @@ export default function Pokemon_Page()
                 }))            
                 
                 setPokemonData(pokemons)
-            } else {
+            } else if(typeParam == null) {
                 const response = await pokemonService.getPokemon()
                 setNextPage(response.next)
                 setPokemonData(response.results)
+                console.log(response)
             }
         }
         pokemonOfType();
@@ -45,9 +47,34 @@ export default function Pokemon_Page()
     }, [pokemonType])
 
 
+    useEffect(()=>{
+
+    }, )
+
+    const getNext = async (nextPage:string) => {
+        const response = await pokemonService.getPokemonNext(nextPage)  
+        setNextPage(response.next)
+        setPrevPage(response.previous)
+        setPokemonData(response.results)
+    }
+
+    const getPrev = async (prevPage:string) => {
+        const response = await pokemonService.getPokemonPrev(prevPage)  
+        setNextPage(response.next)
+        setPrevPage(response.previous)
+        setPokemonData(response.results)
+        if(response.previous == null){
+            setPrevPage("")
+        }
+    }
+
+
     return (
         <main className='container'>
             <Pokemon_List pokemonData={pokemonData}/>
+            {prevPage && <button value="prev" onClick={()=>{getPrev(prevPage)}}>Previous</button>}
+            {nextPage && <button value="next" onClick={()=>{getNext(nextPage)}}>Next</button>}
+            
         </main>
     )
 }
