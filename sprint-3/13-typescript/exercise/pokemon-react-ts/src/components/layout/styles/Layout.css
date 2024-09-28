@@ -1,0 +1,30 @@
+/* <---------- HEADER ----------> */
+#navigation {
+    display: flex;
+    gap: 25px;
+    background-color: #e2e2e2;
+    padding: 10px;
+    padding-bottom: 5px;
+}
+#navigation h1 {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: black;
+}
+.link:hover {
+    color: rgb(255, 85, 0)
+}
+/* <---------- Footer ----------> */
+footer {
+    background-color: #e2e2e2;
+    height: 4vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
