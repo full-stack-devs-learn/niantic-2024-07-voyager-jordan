@@ -16,7 +16,7 @@ export default function Category_Details()
 
     return (
         <>
-            <h1>Category Details</h1>
+            <h3>Category Details</h3>
         </>
     )
 }

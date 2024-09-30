@@ -1,6 +1,6 @@
 export default function Product_Details()
 {
     return (
-        <h1>Product Details</h1>
+        <h3>Product Details</h3>
     )
 }

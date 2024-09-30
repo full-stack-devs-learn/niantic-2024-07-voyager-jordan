@@ -2,7 +2,7 @@ export default function Category_Add()
 {
     return (
         <>
-            <h1>Adding Category</h1>
+            <h3>Adding Category</h3>
         </>
     )
 }

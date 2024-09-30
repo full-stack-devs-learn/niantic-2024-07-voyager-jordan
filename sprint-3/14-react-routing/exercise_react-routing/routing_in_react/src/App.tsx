@@ -1,6 +1,6 @@
 import "bootswatch/dist/flatly/bootstrap.min.css"
+import "bootstrap/dist/js/bootstrap.bundle.min.js"
 import "./App.css"
-import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/shared/layout'
 //HOME
@@ -15,6 +15,7 @@ import Products_Page from './components/products-page/products-page'
 import Product_Add from "./components/products-page/product-add"
 import Product_Details from "./components/products-page/product-details"
 import Product_Edit from "./components/products-page/product-edit"
+//404
 import Not_Found from "./components/404-page/not-found"
 
 function App() {
