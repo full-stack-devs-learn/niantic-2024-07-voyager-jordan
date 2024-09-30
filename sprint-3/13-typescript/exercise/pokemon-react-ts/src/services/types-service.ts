@@ -27,10 +27,8 @@ class Types_Service
             }
 
         }
-
         return allTypes
     }
-
 }
 
 const typesService = new Types_Service();

@@ -3,16 +3,13 @@ import Header from "./Header"
 import Footer from "./Footer"
 import './styles/Layout.css'
 
-
-const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
-    
+export default function Layout({children}: {children: ReactNode})
+{
     return(
-        <>
+        <> 
             <Header />
             {children}
-            <Footer/>
+            <Footer />
         </>
     )
 }
-
-export default Layout;
