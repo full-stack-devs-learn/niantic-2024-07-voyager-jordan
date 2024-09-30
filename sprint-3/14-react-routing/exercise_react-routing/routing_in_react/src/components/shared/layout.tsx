@@ -1,3 +1,5 @@
+import "./styles/layout.css"
+import Footer from "./footer";
 import Header from "./header";
 
 interface ChildrenProps {
@@ -7,8 +9,9 @@ interface ChildrenProps {
 export default function Layout({children}: ChildrenProps){
     return (
         <>
-            <Header></Header>
+            <Header/>
             {children}
+            <Footer/>
         </>
     )
 }
