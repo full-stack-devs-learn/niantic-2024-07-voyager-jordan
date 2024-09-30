@@ -17,7 +17,6 @@ export default function Pokemon_Page()
     const [nextPage, setNextPage] = useState<string>("");
     const [prevPage, setPrevPage] = useState<string>("");
 
-
     useEffect(()=>{
         if(typeParam){
             setPokemonType(typeParam)
