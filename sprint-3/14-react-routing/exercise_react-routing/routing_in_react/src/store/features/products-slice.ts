@@ -49,7 +49,7 @@ const productsSlice = createSlice({
     initialState, //Initial state before anything is dispatched
     reducers: {}, //Synchronous actions
     extraReducers: (builder) => { //asynchronous actions
-                // Fetch Actors
+      // Fetch Products
       builder.addCase(getProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
