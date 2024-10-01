@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/products")
+@CrossOrigin
 public class ProductsController
 {
     private final ProductDao productDao;
@@ -26,42 +27,37 @@ public class ProductsController
         this.logger = logger;
     }
 
-    @GetMapping
-    public ResponseEntity<?> searchByCategory(@RequestParam(defaultValue = "1", name = "catId") Integer  categoryId)
+    @GetMapping({"", "/"})
+    public ResponseEntity<?> getAllProducts()
     {
         try
         {
-            var category = categoryDao.getCategory(categoryId);
-            if(category == null)
-            {
-                logger.logMessage("Category id " + categoryId + " not found");
-                var error = new HttpError(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND.toString(), "Category " + categoryId + " is invalid");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-            }
-
-            var products = productDao.getByCategoryId(categoryId);
+            var products = productDao.getAllProducts();
 
             return ResponseEntity.ok(products);
         }
         catch (Exception e)
         {
+            // log the error then return the exception
             logger.logMessage(e.getMessage());
-            var error = new HttpError(HttpStatus.INTERNAL_SERVER_ERROR.value(),HttpStatus.INTERNAL_SERVER_ERROR.toString(), "Oops something went wrong");
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+            var error = new HttpError(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), "Oops something went wrong");
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(error);
         }
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<?> getById(@PathVariable int id)
+    @GetMapping(params = "catId")
+    public ResponseEntity<?> getByCategoryId(@RequestParam int catId)
     {
         try
         {
-            var product = productDao.getById(id);
+            var product = productDao.getByCategoryId(catId);
             if(product == null)
             {
-                logger.logMessage("Product id " + id + " not found");
-                var error = new HttpError(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND.toString(), "Product id " + id + " is invalid");
+                logger.logMessage("Product category id " + catId + " not found");
+                var error = new HttpError(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND.toString(), "Category id " + catId + " is invalid");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
             }
 
@@ -95,7 +91,7 @@ public class ProductsController
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> udpate(@PathVariable int id, @RequestBody Product product)
+    public ResponseEntity<?> update(@PathVariable int id, @RequestBody Product product)
     {
         try
         {
@@ -121,7 +117,7 @@ public class ProductsController
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> udpate(@PathVariable int id)
+    public ResponseEntity<?> update(@PathVariable int id)
     {
         try
         {
