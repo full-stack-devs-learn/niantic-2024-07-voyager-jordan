@@ -4,14 +4,25 @@ import { Product } from '../models/products';
 class Products_Service
 {
     baseUrl = `${import.meta.env.VITE_API_BASE_URL}/products`
+    // baseUrl = "http://localhost:8080/products"
 
     //todo: need queries for min, max, category id, name
 
     //GET
-    async getAllProducts()
+    async getAllProducts(): Promise<Product[]>
     {
         const response = await axios.get(this.baseUrl)
-        return response.data;
+
+        const results: Product[] = response.data.map((res: any) => ({
+            productId: res.id
+            , productName: res.name
+            , unitPrice: res.unitPrice
+            , description: res.quantityPerUnit
+            , categoryId: res.categoryId
+
+        }));
+
+        return results;
     }
 
     async getProductsByCategoryId(categoryId:number)

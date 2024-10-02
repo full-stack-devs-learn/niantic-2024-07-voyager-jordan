@@ -17,6 +17,7 @@ import Product_Details from "./components/products-page/product-details"
 import Product_Edit from "./components/products-page/product-edit"
 //404
 import Not_Found from "./components/404-page/not-found"
+import Products_List from "./components/products-page/products-list"
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
             <Route path=":id" element={<Category_Details/>}/>
           </Route>
           <Route path="/products" element={<Products_Page />}>
+            <Route path="" element={<Products_List />} />
             <Route path="add" element={<Product_Add />}/>
             <Route path=":id/edit" element={<Product_Edit/>}/> 
             <Route path=":id" element={<Product_Details/>}/>
