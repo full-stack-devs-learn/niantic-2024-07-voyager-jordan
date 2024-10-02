@@ -22,17 +22,20 @@ export default function Products_List({})
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <ul className="list-container">
-            {
-                products.map((product: Product, index: number) => (
+        <>
+            <h3>All Products</h3>
+            <ul className="list-container">
+                {
+                    products.map((product: Product, index: number) => (
 
-                    <Link to={`/products/${product.productId}`} key={index}>
-                        <li className="list-item">
-                                <Product_Card data={product}/>
-                        </li>
-                    </Link>
-                ))
-            }
-        </ul>
+                        <Link to={`/products/${product.productId}`} key={index}>
+                            <li className="list-item">
+                                    <Product_Card data={product}/>
+                            </li>
+                        </Link>
+                    ))
+                }
+            </ul>
+        </>
     )
 }

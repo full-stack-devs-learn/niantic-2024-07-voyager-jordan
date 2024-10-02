@@ -11,13 +11,12 @@ export default function Product_Card({data}: cardData)
         <>
             <article>
                 <header>
-                    <h4>{data.productName}</h4>
+                    <p id="product-card-name">{data.productName}</p>
                 </header>
                 <img className="list-item-img">
                 </img>
-                <section>
+                <section className="card-section">
                     <p>$ {data.unitPrice.toFixed(2)}</p>
-                    <p>{data.description}</p>
                 </section>
             </article>
         </>

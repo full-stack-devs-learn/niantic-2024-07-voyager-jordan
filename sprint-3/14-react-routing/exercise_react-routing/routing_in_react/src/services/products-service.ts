@@ -4,7 +4,6 @@ import { Product } from '../models/products';
 class Products_Service
 {
     baseUrl = `${import.meta.env.VITE_API_BASE_URL}/products`
-    // baseUrl = "http://localhost:8080/products"
 
     //todo: need queries for min, max, category id, name
 
