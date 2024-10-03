@@ -30,12 +30,6 @@ class Products_Service
         return response.data;
     }
 
-    // async getProductsByPriceRange(min:number, max:number)
-    // {
-    //     const response = await axios.get(this.baseUrl + `?minPrice=${min}&maxPrice=${max}`)
-    //     return response.data;
-    // }
-
     //POST
     async addProducts(product: Product): Promise<Product>
     {

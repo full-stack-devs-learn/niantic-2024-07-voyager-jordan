@@ -34,12 +34,12 @@ export const addProduct = createAsyncThunk("products/addProducts", async (produc
     return newProduct;
 })
 
-export const updateProduct = createAsyncThunk("products/addProducts", async (product: Product) => {
+export const updateProduct = createAsyncThunk("products/updateProduct", async (product: Product) => {
     await productsService.updateProducts(product);
     return product;
 })
 
-export const deleteProduct = createAsyncThunk("products/addProducts", async (productId: number) => {
+export const deleteProduct = createAsyncThunk("products/deleteProduct", async (productId: number) => {
     await productsService.deleteProducts(productId);
     return productId;
 })
